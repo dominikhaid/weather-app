@@ -62,11 +62,11 @@ export default function SearchView(weatherStates) {
           : element.LocalizedName === ''
           ? element.EnglishName
           : element.LocalizedName;
-        newCity.key = element.Key;
+        newCity.Key = element.Key;
         newCity.current = false;
         newCity.tomorrow = false;
         newCity.fiveday = false;
-        newCity.plz = element.PrimaryPostalCode;
+        newCity.PrimaryPostalCode = element.PrimaryPostalCode;
         newCity.lastSearch = searchRadio;
         return newCity;
       });

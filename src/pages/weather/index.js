@@ -532,7 +532,7 @@ export default function Weather(weatherStates) {
    */
   const getWeather = locObj => {
     if (process.env.NEXT_PUBLIC_DEBUG !== 'false') {
-      console.debug('WEATHER REQUEST FAKE');
+      console.debug('WEATHER REQUEST FAKE', locObj);
       if (locObj.lastSearch === 'current') {
         locObj.current = fakeCurrent;
         weatherStates.updateCitysState(locObj);
@@ -551,13 +551,13 @@ export default function Weather(weatherStates) {
       let url;
 
       if (locObj.lastSearch === 'current') {
-        url = `https://dataservice.accuweather.com/currentconditions/v1/${locObj.key}?apikey=${process.env.NEXT_PUBLIC_API}&q=${locObj.city}&language=de&details=true&metric=true`;
+        url = `https://dataservice.accuweather.com/currentconditions/v1/${locObj.Key}?apikey=${process.env.NEXT_PUBLIC_API}&q=${locObj.city}&language=de&details=true&metric=true`;
       } else if (locObj.lastSearch === 'tomorrow') {
-        url = `https://dataservice.accuweather.com/forecasts/v1/daily/1day/${locObj.key}?apikey=${process.env.NEXT_PUBLIC_API}&q=${locObj.city}&language=de&details=true&metric=true`;
+        url = `https://dataservice.accuweather.com/forecasts/v1/daily/1day/${locObj.Key}?apikey=${process.env.NEXT_PUBLIC_API}&q=${locObj.city}&language=de&details=true&metric=true`;
       } else if (locObj.lastSearch === 'fiveday') {
-        url = `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${locObj.key}?apikey=${process.env.NEXT_PUBLIC_API}&q=${locObj.city}&language=de&details=true&metric=true`;
+        url = `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${locObj.Key}?apikey=${process.env.NEXT_PUBLIC_API}&q=${locObj.city}&language=de&details=true&metric=true`;
       } else {
-        url = `https://dataservice.accuweather.com/forecasts/v1/daily/1day/${locObj.key}?apikey=${process.env.NEXT_PUBLIC_API}&q=${locObj.city}&language=de&details=true&metric=true`;
+        url = `https://dataservice.accuweather.com/forecasts/v1/daily/1day/${locObj.Key}?apikey=${process.env.NEXT_PUBLIC_API}&q=${locObj.city}&language=de&details=true&metric=true`;
       }
       console.debug('WEATHER REQUEST');
       fetch(url, {
@@ -588,7 +588,7 @@ export default function Weather(weatherStates) {
         })
         .catch(error => {
           console.error('Error:', error);
-          weatherStates.updateRequestState();
+          router.push('/limit');
           return;
         });
     }
