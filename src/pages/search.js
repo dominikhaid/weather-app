@@ -100,7 +100,7 @@ export default function SearchView(weatherStates) {
       console.debug('LOCATION REQUEST');
       let url;
       if (searchText.replace(/\d{5}(?:-?\d{4})?/i, '') === '') {
-        url = `http://dataservice.accuweather.com/locations/v1/postalcodes/search?apikey=${process.env.NEXT_PUBLIC_API}&q=${searchText}&language=de&details=false`;
+        url = `https://dataservice.accuweather.com/locations/v1/postalcodes/search?apikey=${process.env.NEXT_PUBLIC_API}&q=${searchText}&language=de&details=false`;
       } else if (
         searchText.replace(
           /^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$/g,
@@ -110,7 +110,7 @@ export default function SearchView(weatherStates) {
         console.log('wrong');
         return;
       } else {
-        url = `http://dataservice.accuweather.com/locations/v1/cities/search?apikey=${process.env.NEXT_PUBLIC_API}&q=${searchText}&language=de&details=false`;
+        url = `https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${process.env.NEXT_PUBLIC_API}&q=${searchText}&language=de&details=false`;
       }
 
       fetch(url, {

@@ -41,13 +41,10 @@ export default function Info(weatherStates) {
                 Next.js
               </a>
               &nbsp; erstellt.
-              <br /> Als Api verwendet Weather-App die &nbsp;
+              <br /> Api &nbsp;
               <a href="https://developer.accuweather.com/" traget="blank">
-                AccuWeather
+                AccuWeather FREE.
               </a>
-              .<br />
-              Die Anzahl der Suche Anfragen ist pro Benutzer ist auf 5
-              beschränkt.
               <br />
               Die Icons stammen von&nbsp;
               <a

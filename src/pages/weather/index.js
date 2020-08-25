@@ -551,13 +551,13 @@ export default function Weather(weatherStates) {
       let url;
 
       if (locObj.lastSearch === 'current') {
-        url = `http://dataservice.accuweather.com/currentconditions/v1/${locObj.key}?apikey=${process.env.NEXT_PUBLIC_API}&q=${locObj.city}&language=de&details=true&metric=true`;
+        url = `https://dataservice.accuweather.com/currentconditions/v1/${locObj.key}?apikey=${process.env.NEXT_PUBLIC_API}&q=${locObj.city}&language=de&details=true&metric=true`;
       } else if (locObj.lastSearch === 'tomorrow') {
-        url = `http://dataservice.accuweather.com/forecasts/v1/daily/1day/${locObj.key}?apikey=${process.env.NEXT_PUBLIC_API}&q=${locObj.city}&language=de&details=true&metric=true`;
+        url = `https://dataservice.accuweather.com/forecasts/v1/daily/1day/${locObj.key}?apikey=${process.env.NEXT_PUBLIC_API}&q=${locObj.city}&language=de&details=true&metric=true`;
       } else if (locObj.lastSearch === 'fiveday') {
-        url = `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${locObj.key}?apikey=${process.env.NEXT_PUBLIC_API}&q=${locObj.city}&language=de&details=true&metric=true`;
+        url = `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${locObj.key}?apikey=${process.env.NEXT_PUBLIC_API}&q=${locObj.city}&language=de&details=true&metric=true`;
       } else {
-        url = `http://dataservice.accuweather.com/forecasts/v1/daily/1day/${locObj.key}?apikey=${process.env.NEXT_PUBLIC_API}&q=${locObj.city}&language=de&details=true&metric=true`;
+        url = `https://dataservice.accuweather.com/forecasts/v1/daily/1day/${locObj.key}?apikey=${process.env.NEXT_PUBLIC_API}&q=${locObj.city}&language=de&details=true&metric=true`;
       }
       console.debug('WEATHER REQUEST');
       fetch(url, {

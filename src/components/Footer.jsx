@@ -3,7 +3,7 @@ import React from 'react';
 export default function FooterContainer(props) {
   return (
     <React.Fragment>
-      <footer className="material-grid material-grid__col--medium--12 felx-center">
+      <footer className="felx-center">
         <p style={{textAlign: 'center'}}>
           <small>
             © Dominik Haid{' '}
