@@ -1,0 +1,656 @@
+@import '../semantic/themes/default/globals/site.variables';
+
+body {
+  // height: 100vh;
+  margin: 0;
+  padding: 2rem;
+  height: auto;
+  width: 100%;
+  position: relative;
+  font-size: 16px;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+}
+
+#__next {
+  display: grid;
+  grid-template-rows: auto auto auto auto auto;
+  // min-height: 100vh;
+  // max-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 5rem;
+}
+
+#__next .ui.container .segment {
+  padding: 0rem;
+}
+
+#requestCount i {
+  font-size: 1.8rem;
+}
+
+#__next .ui.icon.header .circular.icon,
+#__next .ui.icon.circular,
+#__next .wi.wi-day-cloudy.circular {
+  font-size: 6rem;
+  margin-bottom: 1rem;
+}
+
+#requestCount p {
+  font-size: 1.5rem;
+}
+
+#info .segment,
+#search .segment,
+#weather .segment {
+  padding-bottom: 1rem !important;
+  box-sizing: border-box !important;
+}
+
+form > .field {
+  margin-right: 30px !important;
+}
+
+main div:nth-child(2) .segment > :last-child {
+  margin-bottom: 2rem !important;
+  padding-bottom: 0px !important;
+}
+
+main {
+  margin-top: 5rem;
+  z-index: 10;
+}
+
+#__next .ui.container .segment {
+  box-sizing: border-box;
+}
+
+footer.material-grid {
+  bottom: 50px;
+  bottom: 1rem;
+}
+
+footer,
+header {
+  z-index: 100;
+  position: relative;
+  overflow: hidden;
+}
+
+#__next main > div:nth-child(2) {
+  box-shadow: 0px -0px 40px @secondaryColor;
+  z-index: -1;
+}
+
+#__next main {
+  position: relative;
+}
+
+#__next main > * {
+  padding: 0;
+  position: relative;
+}
+
+#__next.dimmedRoot > *:not([id='mobile-menu']) {
+  opacity: 0.4;
+}
+
+#__next.dimmedRoot .sidebar,
+#__next.dimmedRoot .sidebar * {
+  opacity: 1;
+}
+
+#navCon {
+  width: 100%;
+  max-width: 1800px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+@import '../semantic/semantic';
+
+@import 'material-grid';
+
+#__next main *[class*='material-grid__col'] {
+  padding: 2.5rem;
+}
+
+#__next *[class*='material-grid__col'] {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -webkit-flexbox;
+  display: -moz-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -moz-box-pack: left;
+  -webkit-box-pack: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-flow: row;
+  -webkit-box-flex: row;
+  flex-flow: row;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+  flex-flow: row wrap;
+  box-sizing: border-box;
+}
+
+main.material-grid {
+  padding: 2.5rem;
+  box-sizing: border-box;
+}
+
+main.material-grid > *:not([class*='fluid']),
+main.material-grid > div.fluid > *:not([class*='fluid']) {
+  max-width: 1627px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+main.material-grid {
+  max-width: 100vw;
+  margin-left: 0;
+  margin-right: 0;
+  padding: 0;
+  box-sizing: border-box;
+  width: 100%;
+  overflow: visible;
+}
+
+#__next.material-container {
+  margin-left: 0;
+  margin-right: 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+#__next main div[class*='material-grid__col'],
+#__next main.material-grid > div {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+#__next .ui.fluid.container .material-grid {
+  grid-gap: 1.25rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0;
+  max-width: 1800px;
+}
+
+#__next main {
+  max-width: 1920px;
+  margin-right: auto;
+  margin-left: auto;
+  width: 95%;
+}
+
+main .ui.container {
+  width: unset !important;
+}
+
+// #__next main div.ui.fluid.container {
+//   display: grid;
+//   max-width: none !important;
+// }
+
+#__next .ui.container.material-grid {
+  display: grid;
+}
+
+// #__next main > div:not([class*='fluid']) {
+//   margin-left: 2.5rem !important;
+//   margin-right: 2.5rem !important;
+// }
+
+// #__next main > div,
+// #__next main > div.fluid > div {
+//   padding: 2.5rem 0;
+// }
+
+#__next main > div,
+#__next main > div > div {
+  overflow: hidden;
+}
+
+// #__next main > div.fluid {
+//   padding: 0;
+// }
+
+#__next > *:not([id='main']) {
+  display: grid !important;
+}
+
+.material-grid.two-column {
+  grid-auto-flow: dense;
+  grid-template-columns: 2fr 1.5fr;
+  grid-column-start: revert;
+}
+
+.material-grid.one-column {
+  grid-auto-flow: dense;
+  grid-template-columns: unset;
+  grid-template-areas: '1' '2';
+  grid-column-start: revert;
+}
+
+.material-grid.one-column.reverse {
+  grid-template-areas: '2' '1';
+}
+
+.material-grid.two-column.reverse > div:nth-child(1) {
+  grid-column: 2;
+  min-width: 100%;
+}
+
+.material-grid.two-column.reverse > div:nth-child(2) {
+  grid-column: 1;
+  min-width: 100%;
+}
+
+.material-grid.one-column.reverse > div:nth-child(1) {
+  grid-area: 2;
+  min-width: 100%;
+}
+
+.material-grid.one-column.reverse > div:nth-child(2) {
+  grid-area: 1;
+  min-width: 100%;
+}
+
+.material-grid.one-column > div:nth-child(1) {
+  grid-area: 1;
+  min-width: 100%;
+}
+
+.material-grid.one-column > div:nth-child(2) {
+  grid-area: 2;
+  min-width: 100%;
+}
+
+#__next main > div {
+  max-width: calc(1600px - 100px) !important;
+}
+
+#__next blockquote {
+  text-align: center;
+  font-style: italic;
+}
+
+@import 'flex';
+
+.ui.labeled.icon.menu .item * {
+  display: block;
+  text-decoration: none;
+  color: black;
+  text-align: center;
+}
+
+.ui.labeled.icon.menu .item i {
+  font-size: 2rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0.5rem;
+}
+
+#requestCount > div > div > * {
+  display: initial;
+}
+
+@import 'weather/weather-icons.min.less';
+
+// #weather > div:nth-child(1) > div:nth-child(1) {
+//   flex: 1 1 200px;
+//   margin: 0 1rem 0 1rem;
+// }
+
+// #weather > div:nth-child(1) > div:nth-child(2) {
+//   flex: 1 1 200px;
+// }
+
+#__next main div.weatherBoxDay {
+  background-color: fade(@secondaryColor, 5);
+  padding: 1rem !important;
+  width: 20%;
+  border: 1px solid @secondaryColor;
+  border-radius: 10px;
+  margin: 0.5rem 1rem !important;
+  position: relative;
+  box-shadow: inset 0 0 1rem rgba(40, 50, 100, 0.2);
+  flex: 1 1 45% !important;
+  position: relative;
+  max-width: 38%;
+  min-width: 340px;
+}
+
+.weatherBoxDay > h4:first-child {
+  position: absolute;
+  top: 5px;
+  color: @primaryColor;
+  padding: 0.5rem 2rem;
+  left: 0px;
+  margin-bottom: 4rem;
+  border-radius: 10px;
+}
+
+.weatherBoxDay > div:nth-child(2) {
+  position: relative;
+  margin-top: 4.5rem;
+}
+
+#__next div.weatherBoxDay .weatherBoxDayDetails > div {
+  width: 49%;
+  min-width: 100px;
+  flex: 1 1 100px;
+  margin: 0px;
+  border: none;
+  border-radius: 0px;
+  display: flex;
+  justify-content: left;
+  align-content: space-evenly;
+  flex-wrap: wrap;
+  padding: 1rem;
+}
+
+div.weatherBoxDay .weatherBoxDayDetailsWrappper {
+  background-color: @white !important;
+  border-radius: 10px;
+  border: 1px solid @secondaryColor;
+  margin-top: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.weatherBoxDayDetails {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  flex-direction: row;
+  margin-bottom: 1rem;
+}
+
+#__next .weatherBoxDayDetails .item {
+  border: none;
+}
+
+// #__next.weatherBoxDayDetails > div {
+//   display: flex;
+//   justify-content: center;
+//   align-content: space-evenly;
+//   flex-wrap: wrap;
+// }
+
+#__next .weatherBoxDayDetails > div > * {
+  flex: 1 1 100%;
+  width: 100%;
+  // padding: 1rem;
+}
+#__next .weatherBoxDayDetails * {
+  font-size: 1rem;
+}
+.weatherBoxDay i {
+  color: @primaryColor;
+  font-size: 2rem;
+  margin: 0 0.5rem;
+}
+
+#__next i.icon {
+  color: @primaryColor;
+}
+
+#__next .ui.circular,
+#__next i.circular.icon {
+  box-shadow: 0em 0em 0em 0.1em fade(@primaryColor, 50) inset;
+}
+
+.content.weatherIcon,
+.content.weatherIcon * {
+  color: @primaryColor !important;
+}
+
+.weatherPhraseLong {
+  color: @black;
+  padding: 0.2rem;
+  border-radius: 10px;
+  border: solid 1px @secondaryColor;
+}
+
+.weatherBoxDayWindGeneral {
+  border: 1px solid @secondaryColor;
+  padding: 1rem;
+  border-radius: 10px;
+  text-align: left;
+}
+
+#__next .weatherBoxDayWindGeneral i {
+  font-size: 1.5rem;
+}
+
+.weatherBoxDay div.label {
+  display: none;
+}
+
+.weatherBoxDay > div.general {
+  background-color: @white;
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid @secondaryColor;
+  box-shadow: 0px 0px 3rem rgba(40, 50, 100, 0.2);
+}
+
+// .ui.divider:not(.vertical):not(.horizontal) {
+//   border-top: 1px solid @primaryColor;
+//   border-bottom: 1px solid @primaryColor;
+// }
+
+.ui.horizontal.divider,
+.ui.horizontal.divider {
+  color: @primaryColor;
+}
+
+body {
+  background: #606c88; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #606c88,
+    #3f4c6b
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #606c88,
+    #3f4c6b
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+#__next:after {
+  background-image: url('/app/weather-app/images/sky.webp');
+  background-repeat: no-repeat;
+  background-size: cover;
+  content: ' ';
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100%;
+  opacity: 0.4;
+  z-index: -1;
+}
+footer p {
+  color: white;
+}
+footer a {
+  color: black;
+}
+
+#__next main > div,
+#__next main > div .segment {
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 0 2000px rgba(255, 255, 255, 1);
+  // filter: blur(10px);
+  backdrop-filter: blur(5px);
+}
+
+#__next .active.item,
+#__next .active.item i {
+  // background-color: red;
+  color: @secondaryColor !important;
+}
+
+#__next footer {
+  background-color: transparent;
+  color: @primaryColor;
+  height: 80px;
+  width: 100vw;
+  padding-top: 2rem;
+  position: absolute;
+  bottom: 0px;
+  z-index: -1;
+  text-align: center;
+}
+
+#__next main div.segment.mainSegment {
+  border: 1px solid rgba(240, 240, 255, 0.5);
+  border-radius: 0px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: baseline;
+}
+
+#__next nav > div > div {
+  border: 1px solid rgba(240, 240, 255, 0.5);
+  border-radius: 0px;
+  max-width: max-content;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0rem;
+  margin-bottom: 2rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 0 2000px rgba(255, 255, 255, 0.1);
+  // filter: blur(10px);
+  backdrop-filter: blur(5px);
+}
+
+#__next nav > div {
+  display: flex;
+  justify-content: center;
+}
+
+#__next nav * {
+  color: @black;
+}
+
+#__next nav *.active.item * {
+  color: @secondaryColor;
+}
+.weatherBoxDay.currentDay .ui.list .content {
+  font-size: 1rem;
+}
+
+.weatherBoxDay.currentDay .ui.list .content i {
+  font-size: 1.5rem;
+}
+
+#info h2,
+#search h2 {
+  color: @primaryColor;
+  font-size: 2rem;
+}
+
+#__next #info h2 i,
+#__next #search h2 i {
+  color: #255d7a;
+  font-size: 3rem;
+}
+
+#title {
+  color: #255d7a;
+}
+
+#__next main > div:nth-child(1) {
+  box-shadow: 0px -10px 20px #313b5194;
+}
+
+#__next .disabled.item * {
+  color: gray !important;
+  cursor: default !important;
+  background-color: transparent !important;
+  color: rgba(40, 40, 40, 0.3) !important;
+}
+
+.ui.modal .item .content.active {
+  display: block;
+  width: max-content;
+  float: left;
+}
+
+.ui.modal .item .content.active + .check.circle.icon {
+  font-size: 2rem;
+  float: left;
+  margin-left: 1rem;
+  color: @green;
+  margin-top: 7px;
+}
+#requestCount > div:nth-child(1) {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+.results .result:first-child(1) {
+  margin-top: -0.5rem;
+}
+.result {
+  background-color: lighten(@secondaryColor, 20);
+  padding: 1rem 0rem 0.5rem 0rem;
+  border: 1px solid @secondaryColor;
+  cursor: pointer;
+  font-weight: bold;
+  color: white;
+}
+.search.icon {
+  font-size: 1.2rem;
+}
+.message.empty {
+  display: none;
+}
+
+.ui.horizontal.divider {
+  margin: 3rem 0rem 0rem 0rem;
+}
+.divider .ui.header {
+  font-size: 1.5rem;
+  color: @primaryColor;
+}
+
+.content.weatherIcon i {
+  font-size: 2.5rem !important;
+}
+.weatherBoxDayDetailsWrappper .ui.divider {
+  margin: 0.5rem 0rem 0rem 0rem;
+}
+
+.weatherBoxDay .ui.list .item {
+  cursor: pointer;
+  position: relative;
+}
+
+.weatherBoxDay .ui.list .item:hover div.label {
+  right: 0.5rem;
+  top: 2px;
+  padding: 0.4rem;
+  font-size: 0.8rem;
+  background-color: @primaryColor;
+  color: white;
+  display: inherit;
+  position: absolute;
+}

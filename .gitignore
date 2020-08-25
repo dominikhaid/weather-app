@@ -1,0 +1,13 @@
+**/gitignore
+.env.development
+.env.production
+/log
+/logs
+/.next
+**/build
+/node_modules
+**/samples
+**/certificates
+/docker-backups
+**/node_modules
+/out
