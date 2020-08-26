@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {Header, Icon} from 'semantic-ui-react';
 import MainContainer from '@/components/MainContainer';
-import {useRouter} from 'next/router';
+import Link from 'next/link';
 
 export default function Limit(weatherStates) {
   if (!process.browser) {
@@ -33,6 +33,10 @@ export default function Limit(weatherStates) {
               Leider müsssen wir bei diesser Demo ein Limit für Requests auf die
               Accuweather API setzten. Das heutige Limit für Suchanfragen wurde
               erreicht.
+            </p>
+            <p>
+              Du kannst dir trotzdem ein&nbsp;
+              <Link href="/demo">Beispiel ansehen</Link>
             </p>
           </div>
         </div>

@@ -32073,3 +32073,23 @@ footer a {
   display: inherit;
   position: absolute;
 }
+@media all and (max-width: 767px) {
+  #__next main {
+    width: 100%;
+    margin-top: 2rem;
+  }
+  #__next main > div {
+    margin-left: 0px !important;
+  }
+  #weather > div > div:first-child {
+    margin-top: 1rem;
+  }
+  nav .ui.container {
+    margin-left: 0px !important;
+  }
+  nav > div .ui.labeled.icon.menu {
+    margin-left: -10px !important;
+    margin-right: 0rem !important;
+    width: 100%;
+  }
+}

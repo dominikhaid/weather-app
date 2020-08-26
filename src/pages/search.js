@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import {Radio, Form, Input, Button, Header, Search} from 'semantic-ui-react';
 import MainContainer from '@/components/MainContainer';
+import {useRouter} from 'next/router';
 
 //example responses from data folder set debug state to true to use this app will run without api then
 import fakeLocation from '../data/location';
 
 export default function SearchView(weatherStates) {
+  const router = useRouter();
   /**
    * SEARCHBOX
    */
@@ -129,9 +131,8 @@ export default function SearchView(weatherStates) {
         })
         .catch(error => {
           console.error('Error:', error);
-          weatherStates.updateRequestState();
+          router.push('/limit');
           return;
-          weatherStates.updateRequestState();
         });
     }
   };

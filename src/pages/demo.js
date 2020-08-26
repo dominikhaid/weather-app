@@ -1,21 +1,22 @@
 import React, {useEffect, useState} from 'react';
 import MainContainer from '@/components/MainContainer';
 import {Menu, Header, List, Label, Divider, Segment} from 'semantic-ui-react';
-import weatherIcons from '../../../public/fonts/weather/icon';
+import weatherIcons from '../../public/fonts/weather/icon';
 import {useRouter} from 'next/router';
 
 //example responses from data folder set debug state to true to use this app will run without api then
-import fakeCurrent from '../../data/current';
-import fakeTomorrow from '../../data/tomorrow';
-import fakeFiveday from '../../data/fiveday';
+import fakeCurrent from '../data/current';
+import fakeTomorrow from '../data/tomorrow';
+import fakeFiveday from '../data/fiveday';
+import fakeLocation from '../data/location';
 
-export default function Weather(weatherStates) {
+export default function Demo(weatherStates) {
   const [metric, setMetric] = useState(true);
   const router = useRouter();
 
   if (!process.browser) {
   } else {
-    console.debug('Weather CLIENT', weatherStates);
+    console.debug('Demo CLIENT', weatherStates);
     // if (weatherStates.activePageState !== '/weather')
     //   weatherStates.setAppState({
     //     activePageState: '/weather',
@@ -623,18 +624,35 @@ export default function Weather(weatherStates) {
    * CHECK IF VIEW DATA EXISTS
    */
   useEffect(() => {
-    if (weatherStates.activeCity.lastSearch === 'current') {
-      !weatherStates.activeCity.current
-        ? getWeather(weatherStates.activeCity)
-        : false;
-    } else if (weatherStates.activeCity.lastSearch === 'tomorrow') {
-      !weatherStates.activeCity.tomorrow
-        ? getWeather(weatherStates.activeCity)
-        : false;
-    } else if (weatherStates.activeCity.lastSearch === 'fiveday') {
-      !weatherStates.activeCity.fiveday
-        ? getWeather(weatherStates.activeCity)
-        : false;
+    if (!weatherStates.activeCity) {
+      let newCity = {};
+      newCity.city = fakeLocation[0].city
+        ? fakeLocation[0].city
+        : fakeLocation[0].LocalizedName === ''
+        ? fakeLocation[0].EnglishName
+        : fakeLocation[0].LocalizedName;
+      newCity.Key = fakeLocation[0].Key;
+      newCity.current = fakeCurrent;
+      newCity.tomorrow = fakeTomorrow;
+      newCity.fiveday = false;
+      newCity.PrimaryPostalCode = fakeLocation[0].PrimaryPostalCode;
+      newCity.lastSearch = 'current';
+
+      let newCity1 = {};
+      newCity1.city = fakeLocation[1].city
+        ? fakeLocation[1].city
+        : fakeLocation[1].LocalizedName === ''
+        ? fakeLocation[1].EnglishName
+        : fakeLocation[1].LocalizedName;
+      newCity1.Key = fakeLocation[1].Key;
+      newCity1.current = false;
+      newCity1.tomorrow = false;
+      newCity1.fiveday = fakeFiveday;
+      newCity1.PrimaryPostalCode = fakeLocation[1].PrimaryPostalCode;
+      newCity1.lastSearch = 'fiveday';
+
+      weatherStates.setAppState({citysState: [newCity, newCity1]});
+      weatherStates.updateActiveCity(newCity);
     }
 
     return () => {};
@@ -664,7 +682,7 @@ export default function Weather(weatherStates) {
               weatherStates.setWeatherView(e.target.id);
             }}
           >
-            Jetzt
+            Heute
           </Menu.Item>
         ) : (
           false
@@ -678,7 +696,7 @@ export default function Weather(weatherStates) {
               weatherStates.setWeatherView(e.target.id);
             }}
           >
-            Heute
+            Morgen
           </Menu.Item>
         ) : (
           false
@@ -747,14 +765,6 @@ export default function Weather(weatherStates) {
    * COLLECT DATA TO REENDER
    */
   function renderWeather() {
-    if (
-      !weatherStates.activeCity &&
-      weatherStates.modal.modalData.length < 1 &&
-      weatherStates.citysState.length < 1 &&
-      process.browser
-    )
-      router.push('/');
-
     let weatherArray = [];
 
     if (

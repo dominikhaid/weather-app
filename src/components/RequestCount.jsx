@@ -28,7 +28,11 @@ export default function RequestCount(appStates) {
     let test = new Date();
     test = test.toGMTString(test).replace(/(\d\d:\d\d:\d\d.*)/, '');
 
-    if (limit === test && window.location.pathname !== '/app/weather-app/limit')
+    if (
+      limit === test &&
+      window.location.pathname !== '/app/weather-app/limit' &&
+      window.location.pathname !== '/app/weather-app/demo'
+    )
       router.push('/limit');
   }
 
@@ -59,7 +63,7 @@ export default function RequestCount(appStates) {
             <p
               style={{
                 color:
-                  appStates.requestState === 0
+                  appStates.requestState <= 0
                     ? 'red'
                     : appStates.requestState <= 2
                     ? 'orange'
@@ -68,7 +72,9 @@ export default function RequestCount(appStates) {
                 margin: '-6px',
               }}
             >
-              {appStates.requestState}
+              {appStates.requestState <= 0
+                ? 'REQUEST LIMIT'
+                : appStates.requestState}
             </p>
           </div>
           {/* <h1 id="title">WEAHTER-APP</h1> */}

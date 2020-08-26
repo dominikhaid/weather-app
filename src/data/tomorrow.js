@@ -3,7 +3,7 @@ export default {
     EffectiveDate: '2020-08-17T02:00:00+02:00',
     EffectiveEpochDate: 1597622400,
     Severity: 3,
-    Text: 'Regen und Gewitter Sonntagnacht spÃ¤t bis Montagmorgen',
+    Text: 'Regen und Gewitter Sonntagnacht spät bis Montagmorgen',
     Category: 'thunderstorm',
     EndDate: '2020-08-17T14:00:00+02:00',
     EndEpochDate: 1597665600,
@@ -79,7 +79,7 @@ export default {
         PrecipitationIntensity: 'Light',
         ShortPhrase: 'Am Morgen zeitweise Regen',
         LongPhrase:
-          'KÃƒÂ¼hler; am Morgen Regenschauer; spÃƒÂ¤ter im Verlauf des Tages Schauer oder Gewitter',
+          'Kühler am Morgen Regenschauer später im Verlauf des Tages Schauer oder Gewitter',
         PrecipitationProbability: 65,
         ThunderstormProbability: 40,
         RainProbability: 65,
