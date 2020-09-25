@@ -18,8 +18,10 @@ To turn the Api on turn debug to false in .env files.
 ## Api
 
 ```
-https://developer.accuweather.com/ free licence (limit 50 querys per day)
-querys:{
+get a free account @ https://developer.accuweather.com/
+free licence (limit 50 querys per day)
+
+used querys:{
 "current":false,
 "tomorrow":false,
 "fivedays":false,
