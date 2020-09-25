@@ -84,8 +84,7 @@
     "start": "NODE_ENV=production node ./server.js",
     "dev": "cross-env NODE_ENV=development node ./server.js",
     "webpack-build": "NODE_ENV=production webpack  --env.NODE_DEBUG=false --config ./src/webpack/config/webpack.production.js",
-    "format": "prettier-eslint --write \"{,!(node_modules)/**/}src/**/*.{js,jsx}\"",
-    "prettier-format": "prettier --config .prettierrc \"{,!(node_modules)/**/}src/**/*.{js,jsx}\" --write"
+    "format": "prettier --config .prettierrc \"{,!(node_modules)/**/}src/**/*.{js,jsx}\" --write"
   },
   "browserslist": {
     "production": [

@@ -33,10 +33,15 @@ export default function RequestCount(appStates) {
       window.location.pathname !== '/app/weather-app/limit' &&
       window.location.pathname !== '/app/weather-app/demo'
     )
+      // appStates.requestState > -1
+      //   ? appStates.setAppState({requestState: -1})
+      //   : false;
       router.push('/limit');
   }
 
-  return (
+  return process.browser &&
+    window.location.pathname !== '/app/weather-app/limit' &&
+    window.location.pathname !== '/app/weather-app/demo' ? (
     <React.Fragment>
       <MainContainer id={'requestCount'}>
         <div>
@@ -78,6 +83,21 @@ export default function RequestCount(appStates) {
             </p>
           </div>
           {/* <h1 id="title">WEAHTER-APP</h1> */}
+        </div>
+      </MainContainer>
+    </React.Fragment>
+  ) : (
+    <React.Fragment>
+      <MainContainer id={'requestCount'}>
+        <div>
+          <div
+            style={{
+              display: 'flex',
+              position: 'absolute',
+              bottom: '0.5rem',
+              left: '2rem',
+            }}
+          ></div>
         </div>
       </MainContainer>
     </React.Fragment>

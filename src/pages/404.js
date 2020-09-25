@@ -56,7 +56,9 @@ export default function NotFoundPage(props) {
               <Divider className="flex-item-4" />
               <p className="flex-item-4">
                 <strong>
-                  <Link href="/">Startseite</Link>
+                  <Link href="/">
+                    <a>Startseite</a>
+                  </Link>
                 </strong>
               </p>
             </p>

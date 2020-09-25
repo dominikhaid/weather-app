@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import MainContainer from '@/components/MainContainer';
 import {Menu, Header, List, Label, Divider, Segment} from 'semantic-ui-react';
 import weatherIcons from '../../public/fonts/weather/icon';
-import {useRouter} from 'next/router';
 
 //example responses from data folder set debug state to true to use this app will run without api then
 import fakeCurrent from '../data/current';
@@ -12,7 +11,6 @@ import fakeLocation from '../data/location';
 
 export default function Demo(weatherStates) {
   const [metric, setMetric] = useState(true);
-  const router = useRouter();
 
   if (!process.browser) {
   } else {
@@ -528,96 +526,6 @@ export default function Demo(weatherStates) {
     );
   };
 
-  /**
-   *REQUEST METHOD FOR WEATHER DATA
-   */
-  const getWeather = locObj => {
-    if (process.env.NEXT_PUBLIC_DEBUG !== 'false') {
-      console.debug('WEATHER REQUEST FAKE', locObj);
-      if (locObj.lastSearch === 'current') {
-        locObj.current = fakeCurrent;
-        weatherStates.updateCitysState(locObj);
-      } else if (locObj.lastSearch === 'tomorrow') {
-        locObj.tomorrow = fakeTomorrow;
-        weatherStates.updateCitysState(locObj);
-      } else if (locObj.lastSearch === 'fiveday') {
-        locObj.fiveday = fakeFiveday;
-        weatherStates.updateCitysState(locObj);
-      } else {
-        locObj.current = fakeCurrent;
-        weatherStates.updateCitysState(locObj);
-      }
-      weatherStates.updateRequestState();
-    } else {
-      let url;
-
-      if (locObj.lastSearch === 'current') {
-        url = `https://dataservice.accuweather.com/currentconditions/v1/${locObj.Key}?apikey=${process.env.NEXT_PUBLIC_API}&q=${locObj.city}&language=de&details=true&metric=true`;
-      } else if (locObj.lastSearch === 'tomorrow') {
-        url = `https://dataservice.accuweather.com/forecasts/v1/daily/1day/${locObj.Key}?apikey=${process.env.NEXT_PUBLIC_API}&q=${locObj.city}&language=de&details=true&metric=true`;
-      } else if (locObj.lastSearch === 'fiveday') {
-        url = `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${locObj.Key}?apikey=${process.env.NEXT_PUBLIC_API}&q=${locObj.city}&language=de&details=true&metric=true`;
-      } else {
-        url = `https://dataservice.accuweather.com/forecasts/v1/daily/1day/${locObj.Key}?apikey=${process.env.NEXT_PUBLIC_API}&q=${locObj.city}&language=de&details=true&metric=true`;
-      }
-      console.debug('WEATHER REQUEST');
-      fetch(url, {
-        method: 'GET', // or 'PUT'
-        // headers: {
-        //   // 'Content-Type': 'application/json',
-        //   credentials: 'include',
-        // },
-        // body: JSON.stringify(data),
-      })
-        .then(response => response.json())
-        .then(data => {
-          console.debug('Success:', data);
-          if (locObj.lastSearch === 'current') {
-            locObj.current = data;
-            weatherStates.updateCitysState(locObj);
-          } else if (locObj.lastSearch === 'tomorrow') {
-            locObj.tomorrow = data;
-            weatherStates.updateCitysState(locObj);
-          } else if (locObj.lastSearch === 'fiveday') {
-            locObj.fiveday = data;
-            weatherStates.updateCitysState(locObj);
-          } else {
-            locObj.current = data;
-            weatherStates.updateCitysState(locObj);
-          }
-          weatherStates.updateRequestState();
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          router.push('/limit');
-          return;
-        });
-    }
-  };
-
-  /**
-   * READ THE SELECTED DATA FROM SEARCH MOPDAL
-   */
-  const getDataFromSearch = () => {
-    weatherStates.setWeatherView(
-      weatherStates.modal.modalData[weatherStates.modal.modalActiveItem]
-        .lastSearch,
-    );
-
-    weatherStates.modal.setNewState({
-      modalState: false,
-      modalMode: false,
-      modalData: [],
-      modalHeader: false,
-      modalHeaderDes: false,
-      modalActiveItem: false,
-    });
-
-    weatherStates.updateActiveCity(
-      weatherStates.modal.modalData[weatherStates.modal.modalActiveItem],
-    );
-  };
-
   weatherStates.modal.modalState && getDataFromSearch();
 
   /**
@@ -682,7 +590,7 @@ export default function Demo(weatherStates) {
               weatherStates.setWeatherView(e.target.id);
             }}
           >
-            Heute
+            Jetzt
           </Menu.Item>
         ) : (
           false
@@ -696,7 +604,7 @@ export default function Demo(weatherStates) {
               weatherStates.setWeatherView(e.target.id);
             }}
           >
-            Morgen
+            Heute
           </Menu.Item>
         ) : (
           false

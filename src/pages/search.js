@@ -207,16 +207,18 @@ export default function SearchView(weatherStates) {
                   }}
                 />
               </Form.Field>
-              <Button
-                className="flex-item-4"
-                style={{maxWidth: '150px', marginLeft: '25px'}}
-                content="suchen"
-                primary
-                onClick={e => {
-                  e.preventDefault();
-                  findLocation();
-                }}
-              />
+              <div className="flex-item-4">
+                <Button
+                  className="flex-item-4"
+                  style={{maxWidth: '150px', marginLeft: '25px'}}
+                  content="suchen"
+                  primary
+                  onClick={e => {
+                    e.preventDefault();
+                    findLocation();
+                  }}
+                />
+              </div>
             </Form>
           </div>
         </div>

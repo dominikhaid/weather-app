@@ -36,7 +36,9 @@ export default function Limit(weatherStates) {
             </p>
             <p>
               Du kannst dir trotzdem ein&nbsp;
-              <Link href="/demo">Beispiel ansehen</Link>
+              <Link href="/demo">
+                <a>Beispiel ansehen</a>
+              </Link>
             </p>
           </div>
         </div>
