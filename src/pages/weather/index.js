@@ -1,26 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import MainContainer from '@/components/MainContainer';
-import {Menu, Header, List, Label, Divider, Segment} from 'semantic-ui-react';
 import weatherIcons from '../../../public/fonts/weather/icon';
 import {useRouter} from 'next/router';
 
-//example responses from data folder set debug state to true to use this app will run without api then
-import fakeCurrent from '../../data/current';
-import fakeTomorrow from '../../data/tomorrow';
-import fakeFiveday from '../../data/fiveday';
-
-export default function Weather(weatherStates) {
+export default function Weather(appStates) {
   const [metric, setMetric] = useState(true);
   const router = useRouter();
-
-  if (!process.browser) {
-  } else {
-    console.debug('Weather CLIENT', weatherStates);
-    // if (weatherStates.activePageState !== '/weather')
-    //   weatherStates.setAppState({
-    //     activePageState: '/weather',
-    //   });
-  }
 
   /**
    *CONVERT ACCU WEATHER ICON TO FONT
@@ -45,7 +29,6 @@ export default function Weather(weatherStates) {
 
     if (format === 'GMT') {
       date = date.toGMTString(date).replace(/(\d\d:\d\d:\d\d.*)/, '');
-      //date = date.replace(/(\d\d:\d\d:\d\d.*)/, '');
     }
     if (format === 'TIME') {
       date = date.toTimeString(date).match(/(\d\d:\d\d)|(GMT.*)/);
@@ -82,54 +65,36 @@ export default function Weather(weatherStates) {
     return (
       <div className={'weatherBoxDay'}>
         <div className="general">
-          <Header
-            as="h4"
-            icon
-            textAlign="left"
-            style={{width: '100%', minWidth: '250px'}}
-          >
-            <Header.Content>
-              {style === 'night' ? 'Nacht' : 'Tag'}
+          <h4>
+            {style === 'night' ? 'Nacht' : 'Tag'}
+            <br />
+            {`${parseDate({
+              date: obj.Date,
+              format: 'GMT',
+            })}`}
+          </h4>
+          <h2>
+            <i
+              style={{fontSize: '3rem'}}
+              className={'circular ui ' + iconClass}
+            />
+            {metric
+              ? [temperature.Value, <i className="ui wi wi-celsius" />]
+              : [temperature.Value, <i className="ui wi wi-celsius" />]}
+            <br />
+            <p>
+              {`${daytime.IconPhrase}`}
               <br />
-              {`${parseDate({
-                date: obj.Date,
-                format: 'GMT',
-              })}`}
-            </Header.Content>
-          </Header>
-          <Header
-            as="h2"
-            icon
-            textAlign="center"
-            style={{width: '50%', minWidth: '250px'}}
-          >
-            <Header.Content className="weatherIcon">
-              <i
-                style={{fontSize: '3rem'}}
-                className={'circular ui ' + iconClass}
-              />
-              {metric
-                ? [temperature.Value, <i className="ui wi wi-celsius" />]
-                : [temperature.Value, <i className="ui wi wi-celsius" />]}
-              <br />
-              <p style={{fontSize: '1rem'}}>
-                {`${daytime.IconPhrase}`}
-                <br />
-                <small style={{fontSize: '0.8rem', fontWeight: 'normal'}}>
-                  {`gefühlt ${
-                    temperatureReel.Value + '°' + temperatureReel.Unit
-                  }`}
-                  {` im Schatten ${
-                    temperatureReelShade.Value + '°' + temperatureReelShade.Unit
-                  }`}
-                </small>
-              </p>
-            </Header.Content>
-            <Divider />
-            <div
-              className={'weatherBoxDayWindGeneral'}
-              style={{fontSize: '0.8rem'}}
-            >
+              <small style={{fontSize: '0.8rem', fontWeight: 'normal'}}>
+                {`gefühlt ${
+                  temperatureReel.Value + '°' + temperatureReel.Unit
+                }`}
+                {` im Schatten ${
+                  temperatureReelShade.Value + '°' + temperatureReelShade.Unit
+                }`}
+              </small>
+            </p>
+            <div>
               <p>
                 <em>{`"${daytime.LongPhrase}"`}</em>
                 <em>
@@ -166,12 +131,7 @@ export default function Weather(weatherStates) {
                 </em>
               </p>
               {daytime.RainProbability > 0 ? (
-                <p
-                  className="weatherBoxDayRain"
-                  style={{
-                    textAlign: 'center',
-                  }}
-                >
+                <p>
                   <em>
                     <span>
                       {listItemInvert({
@@ -196,7 +156,7 @@ export default function Weather(weatherStates) {
                 <p>
                   <em>
                     {listItemInvert({
-                      item: daytime.Snow.Value + daytime.Unit.Unit,
+                      item: daytime.Snow.Value + daytime.Snow.Unit,
                       icon: 'ui wi wi-snow',
                       label: 'Schnee',
                     })}
@@ -211,14 +171,12 @@ export default function Weather(weatherStates) {
                 ''
               )}
             </div>
-          </Header>
+          </h2>
         </div>
 
-        <div className={'weatherBoxDayDetailsWrappper'}>
-          <Divider horizontal>Details</Divider>
-          <div className={'weatherBoxDayDetails'}>
-            <List celled>
-              {/* {Precip1hr()} */}
+        <div>
+          <div>
+            <ul>
               {style !== 'night'
                 ? listItem({
                     item: [obj.HoursOfSun + ' Std'],
@@ -241,8 +199,8 @@ export default function Weather(weatherStates) {
                 icon: 'ui wi wi-sleet',
                 label: 'Eisregen',
               })}
-            </List>
-            <Segment celled>
+            </ul>
+            <section>
               <p>
                 <p>{style === 'night' ? 'Mondaufgang' : 'Sonnenaufgang'}</p>
                 <i
@@ -254,9 +212,9 @@ export default function Weather(weatherStates) {
                   date: style === 'night' ? obj.Moon.Rise : obj.Sun.Rise,
                   format: 'TIME',
                 })}
-                <Label pointing="left">
+                <label>
                   {style === 'night' ? 'Mondaufgang' : 'Sonnenaufgang'}
-                </Label>
+                </label>
               </p>
 
               <p>
@@ -270,11 +228,11 @@ export default function Weather(weatherStates) {
                   date: style === 'night' ? obj.Moon.Set : obj.Sun.Set,
                   format: 'TIME',
                 })}
-                <Label pointing="left">
+                <label>
                   {style === 'night' ? 'Monduntergang' : 'Sonnenuntergang'}
-                </Label>
+                </label>
               </p>
-            </Segment>
+            </section>
           </div>
         </div>
       </div>
@@ -286,13 +244,11 @@ export default function Weather(weatherStates) {
    */
   function listItem({item = false, icon = false, label = false}) {
     return (
-      <List.Item>
-        <List.Content>
-          {icon ? <i className={icon} /> : ''}
-          {item && Array.isArray(item) ? [...item] : item ? item : ''}
-          {label ? <Label>{label}</Label> : ''}
-        </List.Content>
-      </List.Item>
+      <li>
+        {icon ? <i className={icon} /> : ''}
+        {item && Array.isArray(item) ? [...item] : item ? item : ''}
+        {label ? <label>{label}</label> : ''}
+      </li>
     );
   }
 
@@ -301,13 +257,11 @@ export default function Weather(weatherStates) {
    */
   function listItemInvert({item = false, icon = false, label = false}) {
     return (
-      <List.Item style={{textAlign: 'center'}}>
-        <List.Content>
-          {item && Array.isArray(item) ? [...item] : item ? item : ''}
-          {icon ? <i className={icon} /> : ''}
-          {label ? <Label>{label}</Label> : ''}
-        </List.Content>
-      </List.Item>
+      <li>
+        {item && Array.isArray(item) ? [...item] : item ? item : ''}
+        {icon ? <i className={icon} /> : ''}
+        {label ? <label>{label}</label> : ''}
+      </li>
     );
   }
 
@@ -317,10 +271,8 @@ export default function Weather(weatherStates) {
   const weatherTomorrow = queryResTomorrow => {
     return (
       <React.Fragment>
-        <div className="flex-item-4">
-          <Divider horizontal>
-            <Header as="h4">Heute</Header>
-          </Divider>
+        <div>
+          <h4>Heute</h4>
           {createDay({
             obj: queryResTomorrow.DailyForecasts[0],
             daytime: queryResTomorrow.DailyForecasts[0].Day,
@@ -361,10 +313,8 @@ export default function Weather(weatherStates) {
 
     return (
       <React.Fragment>
-        <div className="flex-item-4">
-          <Divider horizontal>
-            <Header as="h4">5 Tage</Header>
-          </Divider>
+        <div>
+          <h4>5 Tage</h4>
           {[...days]}
         </div>
       </React.Fragment>
@@ -382,72 +332,63 @@ export default function Weather(weatherStates) {
 
     return (
       <React.Fragment>
-        <Divider className={'felx-item-4'} horizontal>
-          <Header as="h4">Jetzt</Header>
-        </Divider>
-        <div className={'weatherBoxDay currentDay felx-item-4'}>
-          <div class="general">
-            <Header as="h4" icon textAlign="left">
-              <Header.Content>
-                {`${parseDate({
-                  date: new Date(),
-                  format: 'GMT',
-                })}`}
-              </Header.Content>
-            </Header>
-            <Header as="h2" icon textAlign="center">
-              <Header.Content className="weatherIcon">
-                <i
-                  style={{fontSize: '3rem'}}
-                  className={'circular ui ' + iconClass}
-                />
-                {metric
-                  ? [
-                      queryResCurrent[0].WetBulbTemperature.Metric.Value,
-                      <i
-                        style={{marginLeft: '0.2rem'}}
-                        className="ui wi wi-celsius"
-                      />,
-                    ]
-                  : [
-                      queryResCurrent[0].WetBulbTemperature.Imperial.Value,
-                      <i
-                        className="ui wi wi-celsius"
-                        style={{marginLeft: '0.2rem'}}
-                      />,
-                    ]}
+        <h4>Jetzt</h4>
+        <div>
+          <div>
+            <h4>
+              {`${parseDate({
+                date: new Date(),
+                format: 'GMT',
+              })}`}
+            </h4>
+            <h2>
+              <i className={iconClass} />
+              {metric
+                ? [
+                    queryResCurrent[0].WetBulbTemperature.Metric.Value,
+                    <i
+                      style={{marginLeft: '0.2rem'}}
+                      className="ui wi wi-celsius"
+                    />,
+                  ]
+                : [
+                    queryResCurrent[0].WetBulbTemperature.Imperial.Value,
+                    <i
+                      className="ui wi wi-celsius"
+                      style={{marginLeft: '0.2rem'}}
+                    />,
+                  ]}
+              <br />
+              <p style={{fontSize: '1rem'}}>
+                {`${queryResCurrent[0].WeatherText} `}
                 <br />
-                <p style={{fontSize: '1rem'}}>
-                  {`${queryResCurrent[0].WeatherText} `}
-                  <br />
-                  <small style={{fontSize: '0.8rem', fontWeight: 'normal'}}>
-                    {`gefühlt ${
-                      metric
-                        ? [
-                            queryResCurrent[0].RealFeelTemperature.Metric
-                              .Value + '°C',
-                          ]
-                        : [
-                            queryResCurrent[0].RealFeelTemperature.Imperial
-                              .Value + '°F',
-                          ]
-                    }`}
-                    {` im Schatten ${
-                      metric
-                        ? [
-                            queryResCurrent[0].RealFeelTemperatureShade.Metric
-                              .Value + '°C',
-                          ]
-                        : [
-                            queryResCurrent[0].RealFeelTemperatureShade.Imperial
-                              .Value + '°F',
-                          ]
-                    }`}
-                  </small>
-                </p>
-              </Header.Content>
-            </Header>
-            <List celled style={{textAlign: 'center'}}>
+                <small style={{fontSize: '0.8rem', fontWeight: 'normal'}}>
+                  {`gefühlt ${
+                    metric
+                      ? [
+                          queryResCurrent[0].RealFeelTemperature.Metric.Value +
+                            '°C',
+                        ]
+                      : [
+                          queryResCurrent[0].RealFeelTemperature.Imperial
+                            .Value + '°F',
+                        ]
+                  }`}
+                  {` im Schatten ${
+                    metric
+                      ? [
+                          queryResCurrent[0].RealFeelTemperatureShade.Metric
+                            .Value + '°C',
+                        ]
+                      : [
+                          queryResCurrent[0].RealFeelTemperatureShade.Imperial
+                            .Value + '°F',
+                        ]
+                  }`}
+                </small>
+              </p>
+            </h2>
+            <ul>
               {queryResCurrent[0].Precip1hr.Metric.Value > 0
                 ? listItemInvert({
                     item: metric
@@ -520,7 +461,7 @@ export default function Weather(weatherStates) {
                 icon: 'ui wi wi-barometer',
                 label: 'Luftdruck',
               })}
-            </List>
+            </ul>
           </div>
         </div>
       </React.Fragment>
@@ -531,169 +472,112 @@ export default function Weather(weatherStates) {
    *REQUEST METHOD FOR WEATHER DATA
    */
   const getWeather = locObj => {
-    if (process.env.NEXT_PUBLIC_DEBUG !== 'false') {
-      console.debug('WEATHER REQUEST FAKE', locObj);
-      if (locObj.lastSearch === 'current') {
-        locObj.current = fakeCurrent;
-        weatherStates.updateCitysState(locObj);
-      } else if (locObj.lastSearch === 'tomorrow') {
-        locObj.tomorrow = fakeTomorrow;
-        weatherStates.updateCitysState(locObj);
-      } else if (locObj.lastSearch === 'fiveday') {
-        locObj.fiveday = fakeFiveday;
-        weatherStates.updateCitysState(locObj);
-      } else {
-        locObj.current = fakeCurrent;
-        weatherStates.updateCitysState(locObj);
-      }
-      weatherStates.updateRequestState();
+    let url;
+
+    if (locObj.lastSearch === 'current') {
+      url = `https://dataservice.accuweather.com/currentconditions/v1/${locObj.Key}?apikey=8wLXgmovDvbNRzsyvwoE5VxdoGZZKAil&q=${locObj.city}&language=de&details=true&metric=true`;
+    } else if (locObj.lastSearch === 'tomorrow') {
+      url = `https://dataservice.accuweather.com/forecasts/v1/daily/1day/${locObj.Key}?apikey=8wLXgmovDvbNRzsyvwoE5VxdoGZZKAil&q=${locObj.city}&language=de&details=true&metric=true`;
+    } else if (locObj.lastSearch === 'fiveday') {
+      url = `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${locObj.Key}?apikey=8wLXgmovDvbNRzsyvwoE5VxdoGZZKAil&q=${locObj.city}&language=de&details=true&metric=true`;
     } else {
-      let url;
-
-      if (locObj.lastSearch === 'current') {
-        url = `https://dataservice.accuweather.com/currentconditions/v1/${locObj.Key}?apikey=${process.env.NEXT_PUBLIC_API}&q=${locObj.city}&language=de&details=true&metric=true`;
-      } else if (locObj.lastSearch === 'tomorrow') {
-        url = `https://dataservice.accuweather.com/forecasts/v1/daily/1day/${locObj.Key}?apikey=${process.env.NEXT_PUBLIC_API}&q=${locObj.city}&language=de&details=true&metric=true`;
-      } else if (locObj.lastSearch === 'fiveday') {
-        url = `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${locObj.Key}?apikey=${process.env.NEXT_PUBLIC_API}&q=${locObj.city}&language=de&details=true&metric=true`;
-      } else {
-        url = `https://dataservice.accuweather.com/forecasts/v1/daily/1day/${locObj.Key}?apikey=${process.env.NEXT_PUBLIC_API}&q=${locObj.city}&language=de&details=true&metric=true`;
-      }
-      console.debug('WEATHER REQUEST');
-      fetch(url, {
-        method: 'GET', // or 'PUT'
-        // headers: {
-        //   // 'Content-Type': 'application/json',
-        //   credentials: 'include',
-        // },
-        // body: JSON.stringify(data),
-      })
-        .then(response => response.json())
-        .then(data => {
-          console.debug('Success:', data);
-          if (locObj.lastSearch === 'current') {
-            locObj.current = data;
-            weatherStates.updateCitysState(locObj);
-          } else if (locObj.lastSearch === 'tomorrow') {
-            locObj.tomorrow = data;
-            weatherStates.updateCitysState(locObj);
-          } else if (locObj.lastSearch === 'fiveday') {
-            locObj.fiveday = data;
-            weatherStates.updateCitysState(locObj);
-          } else {
-            locObj.current = data;
-            weatherStates.updateCitysState(locObj);
-          }
-          weatherStates.updateRequestState();
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          router.push('/limit');
-          return;
-        });
+      url = `https://dataservice.accuweather.com/forecasts/v1/daily/1day/${locObj.Key}?apikey=8wLXgmovDvbNRzsyvwoE5VxdoGZZKAil&q=${locObj.city}&language=de&details=true&metric=true`;
     }
+
+    fetch(url, {
+      method: 'GET',
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (locObj.lastSearch === 'current') {
+          locObj.current = data;
+          appStates.updateCitysState(locObj);
+        } else if (locObj.lastSearch === 'tomorrow') {
+          locObj.tomorrow = data;
+          appStates.updateCitysState(locObj);
+        } else if (locObj.lastSearch === 'fiveday') {
+          locObj.fiveday = data;
+          appStates.updateCitysState(locObj);
+        } else {
+          locObj.current = data;
+          appStates.updateCitysState(locObj);
+        }
+        appStates.updateRequestState();
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        router.push('/limit');
+        return;
+      });
   };
-
-  /**
-   * READ THE SELECTED DATA FROM SEARCH MOPDAL
-   */
-  const getDataFromSearch = () => {
-    weatherStates.setWeatherView(
-      weatherStates.modal.modalData[weatherStates.modal.modalActiveItem]
-        .lastSearch,
-    );
-
-    weatherStates.modal.setNewState({
-      modalState: false,
-      modalMode: false,
-      modalData: [],
-      modalHeader: false,
-      modalHeaderDes: false,
-      modalActiveItem: false,
-    });
-
-    weatherStates.updateActiveCity(
-      weatherStates.modal.modalData[weatherStates.modal.modalActiveItem],
-    );
-  };
-
-  weatherStates.modal.modalState && getDataFromSearch();
 
   /**
    * CHECK IF VIEW DATA EXISTS
    */
   useEffect(() => {
-    if (weatherStates.activeCity.lastSearch === 'current') {
-      !weatherStates.activeCity.current
-        ? getWeather(weatherStates.activeCity)
-        : false;
-    } else if (weatherStates.activeCity.lastSearch === 'tomorrow') {
-      !weatherStates.activeCity.tomorrow
-        ? getWeather(weatherStates.activeCity)
-        : false;
-    } else if (weatherStates.activeCity.lastSearch === 'fiveday') {
-      !weatherStates.activeCity.fiveday
-        ? getWeather(weatherStates.activeCity)
-        : false;
+    if (appStates.activeCity.lastSearch === 'current') {
+      !appStates.activeCity.current ? getWeather(appStates.activeCity) : false;
+    } else if (appStates.activeCity.lastSearch === 'tomorrow') {
+      !appStates.activeCity.tomorrow ? getWeather(appStates.activeCity) : false;
+    } else if (appStates.activeCity.lastSearch === 'fiveday') {
+      !appStates.activeCity.fiveday ? getWeather(appStates.activeCity) : false;
     }
 
     return () => {};
-  }, [weatherStates.activeCity]);
+  }, [appStates.citysState.activeCity]);
 
   /**
    * MENU SELECT CITY AND WEATHER VIEW
    */
   function topbar() {
     let menuArray = [];
-    if (weatherStates.citysState.length > 0)
-      menuArray.push(
-        cityNav(weatherStates.citysState, weatherStates.activeCity.city),
-      );
+    if (appStates.citysState.length > 0)
+      menuArray.push(cityNav(appStates.citysState, appStates.activeCity.city));
     return menuArray;
   }
 
   const selectView = () => {
     return (
       <React.Fragment>
-        {weatherStates.activeCity.current ? (
-          <Menu.Item
+        {appStates.activeCity.current ? (
+          <li
             id={'current'}
             key={'current'}
-            active={weatherStates.weatherView === 'current'}
+            active={appStates.weatherView === 'current'}
             onClick={e => {
-              weatherStates.setWeatherView(e.target.id);
+              appStates.citysState.setWeatherView(e.target.id);
             }}
           >
             Jetzt
-          </Menu.Item>
+          </li>
         ) : (
           false
         )}
-        {weatherStates.activeCity.tomorrow ? (
-          <Menu.Item
+        {appStates.activeCity.tomorrow ? (
+          <li
             id={'tomorrow'}
             key={'tomorrow'}
-            active={weatherStates.weatherView === 'tomorrow'}
+            active={appStates.weatherView === 'tomorrow'}
             onClick={e => {
-              weatherStates.setWeatherView(e.target.id);
+              appStates.citysState.setWeatherView(e.target.id);
             }}
           >
             Heute
-          </Menu.Item>
+          </li>
         ) : (
           false
         )}
-        {weatherStates.activeCity.fiveday ? (
-          <Menu.Item
+        {appStates.activeCity.fiveday ? (
+          <li
             id={'fiveday'}
             key={'fiveday'}
-            active={weatherStates.weatherView === 'fiveday'}
+            active={appStates.weatherView === 'fiveday'}
             onClick={e => {
-              weatherStates.setWeatherView(e.target.id);
+              appStates.setWeatherView(e.target.id);
             }}
           >
             5 Tage
-          </Menu.Item>
+          </li>
         ) : (
           false
         )}
@@ -705,23 +589,23 @@ export default function Weather(weatherStates) {
     const handleItemClick = e => {
       let res;
 
-      if (weatherStates.citysState && weatherStates.citysState.length > 0) {
-        res = weatherStates.citysState.filter(city => {
+      if (appStates.citysState && appStates.citysState.length > 0) {
+        res = appStates.citysState.filter(city => {
           return e.id === city.city;
         });
       }
-      weatherStates.setAppState({activeCity: res[0]});
+      appStates.citysState.setAppState({activeCity: res[0]});
     };
 
     return (
-      <Menu vertical>
-        <Menu.Item>
-          <Menu.Header>Locations</Menu.Header>
+      <ul>
+        <li>
+          <h4>Locations</h4>
 
-          <Menu.Menu>
+          <ul>
             {citys.map(city => {
               return (
-                <Menu.Item
+                <li
                   id={city.city}
                   key={city.city}
                   active={activeItem === city.city}
@@ -730,16 +614,16 @@ export default function Weather(weatherStates) {
                   }}
                 >
                   {city.city}
-                </Menu.Item>
+                </li>
               );
             })}
-          </Menu.Menu>
-        </Menu.Item>
-        <Menu.Item>
-          <Menu.Header>View</Menu.Header>
-          <Menu.Menu>{selectView()}</Menu.Menu>
-        </Menu.Item>
-      </Menu>
+          </ul>
+        </li>
+        <li>
+          <h4>View</h4>
+          <ul>{selectView()}</ul>
+        </li>
+      </ul>
     );
   };
 
@@ -748,49 +632,38 @@ export default function Weather(weatherStates) {
    */
   function renderWeather() {
     if (
-      !weatherStates.activeCity &&
-      weatherStates.modal.modalData.length < 1 &&
-      weatherStates.citysState.length < 1 &&
+      !appStates.activeCity &&
+      appStates.citysState.length < 1 &&
       process.browser
     )
       router.push('/');
 
     let weatherArray = [];
 
-    if (
-      weatherStates.activeCity.current &&
-      weatherStates.weatherView === 'current'
-    )
-      weatherArray.push(weatherCurrent(weatherStates.activeCity.current));
-    if (
-      weatherStates.activeCity.tomorrow &&
-      weatherStates.weatherView === 'tomorrow'
-    )
-      weatherArray.push(weatherTomorrow(weatherStates.activeCity.tomorrow));
-    if (
-      weatherStates.activeCity.fiveday &&
-      weatherStates.weatherView === 'fiveday'
-    )
-      weatherArray.push(weatherFiveDay(weatherStates.activeCity.fiveday));
+    if (appStates.activeCity.current && appStates.weatherView === 'current')
+      weatherArray.push(weatherCurrent(appStates.activeCity.current));
+    if (appStates.activeCity.tomorrow && appStates.weatherView === 'tomorrow')
+      weatherArray.push(weatherTomorrow(appStates.activeCity.tomorrow));
+    if (appStates.activeCity.fiveday && appStates.weatherView === 'fiveday')
+      weatherArray.push(weatherFiveDay(appStates.activeCity.fiveday));
 
     if (weatherArray.length < 1) {
-      if (weatherStates.activeCity.current) {
-        weatherStates.setWeatherView('current');
-      } else if (weatherStates.activeCity.tomorrow) {
-        weatherStates.setWeatherView('tomorrow');
-      } else if (weatherStates.activeCity.fiveday) {
-        weatherStates.setWeatherView('fiveday');
+      if (appStates.activeCity.current) {
+        appStates.setWeatherView('current');
+      } else if (appStates.activeCity.tomorrow) {
+        appStates.setWeatherView('tomorrow');
+      } else if (appStates.activeCity.fiveday) {
+        appStates.setWeatherView('fiveday');
       }
     }
 
     return weatherArray;
   }
+
   return (
     <React.Fragment>
-      <MainContainer id={'weather'}>
-        <div className="flex-item-1">{topbar()}</div>
-        <div className="flex-item-3">{renderWeather()}</div>
-      </MainContainer>
+      <div className="flex-item-1">{topbar()}</div>
+      <div className="flex-item-3">{renderWeather()}</div>
     </React.Fragment>
   );
 }
