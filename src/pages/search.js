@@ -75,6 +75,9 @@ export default function SearchView(appState) {
         e.city.toLowerCase() === searchText.toLowerCase() ||
         e.plz === searchText,
     );
+
+    // NOTE FAKE DATA TO SKIP ACCUWEATHER API REQUEST
+
     dup = [
       {
         Version: 1,
@@ -123,7 +126,7 @@ export default function SearchView(appState) {
 
   return (
     <React.Fragment>
-      <section className="main-container">
+      <section className="p-4xl w-100">
         <form>
           <h1 className="main-headline">Get Your Weather Info</h1>
           <h2>Search</h2>

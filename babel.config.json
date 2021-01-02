@@ -3,9 +3,14 @@
     [
       "next/babel", {
         "preset-env": {},
-        "transform-runtime": {}
+        "preset-react": {"runtime": "automatic"},
+        "class-properties": {},
+        "transform-runtime": {},
+        "experimental-modern-preset": {},
+        "styled-jsx": {},
+        "preset-typescript": {}
       }
     ]
   ],
-  "plugins": []
+  "plugins": ["@babel/plugin-transform-runtime"]
 }

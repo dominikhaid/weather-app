@@ -2,7 +2,7 @@
 # .env.development
 # .env.production
 **/access.log
-/.next
+.next
 **/build
 /node_modules
 **/samples

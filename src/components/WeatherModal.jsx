@@ -13,6 +13,7 @@ export default function WeatherModal({
     active: active,
   });
 
+  // TODO CLEAN UP
   return state ? (
     <section className="modal">
       <h3 className="text-left text-lg mb-5 font-semibold">{header}</h3>
@@ -21,11 +22,7 @@ export default function WeatherModal({
           return (
             <li
               key={data.city}
-              className={
-                modal.active === index
-                  ? 'active'
-                  : ''
-              }
+              className={modal.active === index ? 'active' : ''}
               onClick={e => {
                 setModal({
                   active: index,
@@ -50,7 +47,8 @@ export default function WeatherModal({
         >
           Abbrechen
         </button>
-        {modal.active !== false ? (
+
+        {!Number.isNaN(Number(modal.active)) ? (
           <Link href="/weather">
             <button
               onClick={() => {
@@ -62,7 +60,7 @@ export default function WeatherModal({
             </button>
           </Link>
         ) : (
-          <button disabeld="true" className="btn-success">
+          <button disabled="true" className="btn-success">
             Ok
           </button>
         )}

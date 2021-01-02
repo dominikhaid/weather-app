@@ -85,7 +85,7 @@ class AppProvider extends Component {
     {
       return (
         <AppContext.Provider value={this.state}>
-          <main id="main">{this.props.children}</main>
+          {this.props.children}
         </AppContext.Provider>
       );
     }

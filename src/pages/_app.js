@@ -7,6 +7,7 @@ import RequestCount from '../components/RequestCount';
 import FooterContainer from '../components/Footer';
 import {AppProvider, AppContext} from '../context/AppState';
 import Background from '../components/Background';
+import AppIcon from '../components/AppIcon';
 
 export function reportWebVitals(metric) {
   if (metric.label === 'web-vital') {
@@ -24,10 +25,12 @@ class MainApp extends App {
           {appState => {
             return (
               <React.Fragment>
-                <RequestCount {...appState} />
-                <Component {...appState} />
-                <Nav {...appState} />
-                <FooterContainer />
+                <AppIcon>
+                  <Nav {...appState} />
+                  <RequestCount {...appState} />
+                  <Component {...appState} />
+                  <FooterContainer />
+                </AppIcon>
                 {process.browser &&
                 window.location.pathname !== '/app/weather-app/tailwind' ? (
                   <Background />

@@ -4,7 +4,7 @@ import Link from 'next/link';
 export default function Limit() {
   return (
     <React.Fragment>
-      <section className="main-container">
+      <section className="p-4xl w-100">
         <article>
           <h1 className="main-headline">Limit erreicht</h1>
           <p>

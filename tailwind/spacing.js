@@ -1,5 +1,5 @@
 module.exports = {
-  xs: '.75rem',
+  xs: '.5rem',
   sm: '.875rem',
   md: '1rem',
   lg: '1.125rem',

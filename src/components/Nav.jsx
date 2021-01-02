@@ -17,17 +17,19 @@ export default function Nav(appStates) {
       href: '/weather',
       title: 'Weather',
     },
+    {
+      href: '/limit',
+      title: 'Limit',
+    },
   ];
 
+  console.log(appStates.citysState);
   return (
     <React.Fragment>
-      <section className="bg-primary-light p-md container-normal max-w-1/2" id="main-menue">
-        <ul
-          className="spaced-lg justify-center"
-          icon="labeled"
-        >
+      <section className="p-lg w-100" id="main-menue">
+        <ul className="spaced-lg justify-center" icon="labeled">
           {data.map(item => {
-            if (new RegExp(item.href).test(window.location.pathname))
+            if (item.title === 'Weather' && appStates.citysState.length < 1)
               return false;
             return (
               <li className="flex-1 text-center p-none" key={item.title}>
