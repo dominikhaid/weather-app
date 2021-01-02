@@ -1,0 +1,190 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+:root {
+  --color-primary: #14b8a6;
+  --color-secundary: #6b7280;
+  --color-white: #f1f1f1;
+  --color-green: #22c55e;
+  --color-black: #111827;
+  --tw-ring-color: var(--color-primary);
+}
+
+@layer base {
+  body {
+    @apply text-gray-darkest;
+  }
+
+  h1 {
+    @apply text-left text-3xl;
+  }
+
+  h2 {
+    @apply text-left text-2xl;
+  }
+
+  button {
+    @apply py-xs px-xl justify-self-center disabled:opacity-30 rounded font-semibold border-2 leading-7;
+  }
+
+  section.modal:not(.demo) {
+    @apply fixed w-1/2 top-1/4 left-1/4 text-secondary;
+  }
+
+  section.modal {
+    @apply bg-secondary-lightest rounded shadow-2xl p-xl;
+  }
+
+  section.modal li {
+    @apply text-secondary border-b p-xl border-secondary hover:border-b-2 cursor-pointer;
+  }
+
+  section.modal li.active {
+    @apply cursor-pointer border-b p-xl bg-secondary-light;
+  }
+
+  form {
+    @apply text-secondary;
+  }
+
+  fieldset {
+    @apply flex-grow flex space-x-sm flex-row justify-center flex items-center;
+  }
+
+  fieldset > [type='text'],
+  fieldset > [type='email'],
+  fieldset > [type='url'],
+  fieldset > [type='password'],
+  fieldset > [type='number'],
+  fieldset > [type='date'],
+  fieldset > [type='datetime-local'],
+  fieldset > [type='month'],
+  fieldset > [type='search'],
+  fieldset > [type='tel'],
+  fieldset > [type='time'],
+  fieldset > [type='week'],
+  fieldset > [multiple],
+  fieldset > textarea,
+  fieldset > select {
+    @apply rounded flex-auto flex-grow placeholder-secondary placeholder-opacity-40 text-secondary-dark shadow-primary  border-2 border-secondary py-xs px-xl leading-7 disabled:opacity-30 rounded font-semibold hover:shadow-primary shadow-primary hover:ring-inset hover:ring-2 hover:ring-secondary focus:ring-secondary;
+  }
+
+  [type='text'],
+  [type='email'],
+  [type='url'],
+  [type='password'],
+  [type='number'],
+  [type='date'],
+  [type='datetime-local'],
+  [type='month'],
+  [type='search'],
+  [type='tel'],
+  [type='time'],
+  [type='week'],
+  [multiple],
+  textarea,
+  select {
+    @apply rounded bg-transparent flex-auto flex-grow  placeholder-secondary placeholder-opacity-40 text-secondary-dark shadow-primary  border-2 border-gray-lightest p-md;
+  }
+
+  input[type='radio'] {
+    @apply ml-lg text-primary text-secondary bg-secondary-light;
+  }
+
+  fieldset,
+  fieldset.labeled {
+    @apply py-lg;
+  }
+
+  fieldset:first-child,
+  fieldset.labeled:first-child {
+    @apply rounded-t-lg;
+  }
+
+  fieldset:last-child,
+  fieldset.labeled:last-child {
+    @apply rounded-b-lg;
+  }
+
+  fieldset.labeled > label {
+    @apply rounded-l-lg bg-gray-lightest font-bold p-md text-secondary border-2 border-gray-lightest flex-1;
+  }
+
+  label {
+    @apply font-bold p-md text-gray-darkest flex-auto flex-grow;
+  }
+
+  a {
+    @apply text-primary-dark hover:text-primary-dark text-sm font-semibold;
+  }
+
+  ul > li::before {
+    display: none;
+  }
+}
+
+@layer components {
+
+  .main-container {
+    @apply bg-primary-lightest p-7xl pb-xl container-normal max-w-1/4 min-h-1/2 min-w-1/4 shadow-2xl;
+  }
+
+  .main-headline {
+    @apply px-none pt-xl pb-lg border-b-2 border-primary;
+  }
+
+  .btn-primary {
+    @apply border-2 border-secondary bg-transparent shadow-primary hover:ring-inset hover:ring-2 hover:ring-secondary text-secondary;
+  }
+
+  .btn-secondary {
+    @apply border-2 border-gray-darkest bg-transparent shadow-gray hover:ring-inset hover:ring-2 hover:ring-gray-dark text-gray-darkest;
+  }
+
+  .btn-success {
+    @apply border-2 border-green bg-transparent  shadow-green hover:ring-inset hover:ring-2 hover:ring-green text-green;
+  }
+
+  .container-normal {
+    @apply prose lg:prose-lg p-none overflow-hidden container mx-auto appearance-none break-words tracking-wide flex-grow flex flex-col justify-center;
+  }
+
+  .container-full {
+    @apply prose lg:prose-lg overflow-hidden mx-auto appearance-none break-words tracking-wide  flex-grow flex flex-col justify-center;
+  }
+
+  .spaced {
+    @apply flex space-x-lg;
+  }
+
+  .spaced-lg {
+    @apply flex space-x-3xl;
+  }
+}
+
+#__next {
+  display: grid;
+  grid-template-rows: minmax(100vh, auto);
+  position: relative;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+}
+
+#background {
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  opacity: 0.2;
+}
+
+a {
+  text-underline-offset: 0.3rem;
+  text-decoration: underline;
+}

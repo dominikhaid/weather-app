@@ -23,6 +23,7 @@ module.exports = {
   },
   theme: {
     spacing: spacing,
+    ringColor: colors,
     colors: colors,
     screens: screens,
     minWidth: width,

@@ -1,7 +1,7 @@
-module.exports.screens ={
-    sm: '640px',
-    md: '768px',
-    lg: '1024px',
-    xl: '1280px',
-    '2xl': '1536px',
-  },
+module.exports = {
+  '2xl': {min: '2500px', max: '8000px'},
+  xl: {min: '1381px', max: '2499px'},
+  lg: {min: '769px', max: '1380px'},
+  md: {min: '641px', max: '768px'},
+  sm: {min: '300px', max: '640px'},
+};

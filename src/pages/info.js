@@ -3,24 +3,28 @@ import React from 'react';
 export default function Info(weatherStates) {
   return (
     <React.Fragment>
-      <section className="primary">
-        <article class="boxed prose lg:prose-lg">
-          <h1>Weather App created with Next.js</h1>
-        </article>
-        <article className="boxed bg-secondary-light">
+      <section className="main-container">
+        <article>
+          <h1 className="main-headline">Weather App created with Next.js</h1>
           <h2>Credits</h2>
-          <p className="mb-10">
+          <p>
             Der Dank geht an dieser Stelle an den Schöpfer der Weather-Icons
-            Erikflowers, die Macher von Next.js und TailwindCSS.
+            Erikflowers,
+            <br /> die Macher von Next.js und TailwindCSS.
           </p>
-          <p className="spaced justify-start">
-            <a href="https://nextjs.org/" traget="blank">
+          <p className="spaced justify-start py-xl">
+            <a className="flex-1" href="https://nextjs.org/" traget="blank">
               @Next.js
             </a>
-            <a href="https://developer.accuweather.com/" traget="blank">
+            <a
+              className="flex-1"
+              href="https://developer.accuweather.com/"
+              traget="blank"
+            >
               @AccuWeather
             </a>
             <a
+              className="flex-1"
               href="https://erikflowers.github.io/weather-icons/"
               traget="blank"
             >

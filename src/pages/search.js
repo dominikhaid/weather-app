@@ -123,14 +123,10 @@ export default function SearchView(appState) {
 
   return (
     <React.Fragment>
-      <section className="primary">
-      <article class="boxed prose lg:prose-lg">
-        <h1 >
-          Get Your Weather Info
-        </h1>
-        </article>
-        <form className="boxed bg-secondary-light">
-          <h2 >Search</h2>
+      <section className="main-container">
+        <form>
+          <h1 className="main-headline">Get Your Weather Info</h1>
+          <h2>Search</h2>
           <ul>
             {results.map(city => {
               return (
@@ -143,57 +139,13 @@ export default function SearchView(appState) {
               );
             })}
           </ul>
-          <input
-            onChange={e => handleSearchChange(e.target)}
-            value={searchText}
-            placeholder="City / Zip"
-          />
           <fieldset>
-            <div>
-              <label  for="jetzt">
-                Jetzt
-              </label>
-              <input
-                type="radio"
-                id="jetzt"
-                name="radioGroup"
-                value="current"
-                checked={searchRadio === 'current'}
-                onChange={e => {
-                  setSearchRadio('current');
-                }}
-              />
-            </div>
-            <div>
-              <label for="heute">
-                Heute
-              </label>
-              <input
-                type="radio"
-                id="heute"
-                value="tomorrow"
-                checked={searchRadio === 'tomorrow'}
-                onChange={e => {
-                  setSearchRadio('tomorrow');
-                }}
-              />
-            </div>
-            <div>
-              <label  for="fiveday">
-                Fünf Tage
-              </label>
-              <input
-                type="radio"
-                id="fiveday"
-                value="fiveday"
-                checked={searchRadio === 'fiveday'}
-                onChange={e => {
-                  setSearchRadio('fiveday');
-                }}
-              />
-            </div>
-          </fieldset>
-          <div className="mb-10 grid w-full justify-items-stretch">
+            <input
+              type="text"
+              onChange={e => handleSearchChange(e.target)}
+              value={searchText}
+              placeholder="City / Zip"
+            />
             <button
               className="btn-primary"
               onClick={e => {
@@ -203,7 +155,40 @@ export default function SearchView(appState) {
             >
               Suchen
             </button>
-          </div>
+          </fieldset>
+          <fieldset style={{maxWidth: '380px'}}>
+            <label for="jetzt">Jetzt</label>
+            <input
+              type="radio"
+              id="jetzt"
+              name="radioGroup"
+              value="current"
+              checked={searchRadio === 'current'}
+              onChange={e => {
+                setSearchRadio('current');
+              }}
+            />
+            <label for="heute">Heute</label>
+            <input
+              type="radio"
+              id="heute"
+              value="tomorrow"
+              checked={searchRadio === 'tomorrow'}
+              onChange={e => {
+                setSearchRadio('tomorrow');
+              }}
+            />
+            <label for="fiveday">Fünf Tage</label>
+            <input
+              type="radio"
+              id="fiveday"
+              value="fiveday"
+              checked={searchRadio === 'fiveday'}
+              onChange={e => {
+                setSearchRadio('fiveday');
+              }}
+            />
+          </fieldset>
         </form>
       </section>
 

@@ -16,15 +16,15 @@ export default function WeatherModal({
   return state ? (
     <section className="modal">
       <h3 className="text-left text-lg mb-5 font-semibold">{header}</h3>
-      <ul>
+      <ul className="py-2xl">
         {data.map((city, index) => {
           return (
             <li
               key={data.city}
               className={
                 modal.active === index
-                  ? 'bg-green-100 cursor-pointer border-b w-full p-2 border-gray-900 hover:bg-green-100'
-                  : 'border-b bg-white w-full p-2 border-gray-900 hover:bg-green-100 cursor-pointer'
+                  ? 'active'
+                  : ''
               }
               onClick={e => {
                 setModal({

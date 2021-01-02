@@ -1,6 +1,6 @@
 import React from 'react';
 import App from 'next/app';
-import '../../public/css/main.css';
+import '../../public/css/global.css';
 import '../../public/css/weather-icons-core.css';
 import Nav from '../components/Nav';
 import RequestCount from '../components/RequestCount';
@@ -15,7 +15,6 @@ export function reportWebVitals(metric) {
 }
 
 class MainApp extends App {
-
   render() {
     const {Component, pageProps} = this.props;
 
@@ -29,7 +28,12 @@ class MainApp extends App {
                 <Component {...appState} />
                 <Nav {...appState} />
                 <FooterContainer />
-                <Background />
+                {process.browser &&
+                window.location.pathname !== '/app/weather-app/tailwind' ? (
+                  <Background />
+                ) : (
+                  ''
+                )}
               </React.Fragment>
             );
           }}

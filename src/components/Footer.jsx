@@ -3,10 +3,10 @@ import React from 'react';
 export default function FooterContainer() {
   return (
     <React.Fragment>
-      <footer className="container-full bg-secondary pb-5">
-        <p className="text-center text-primary-600 text-md">
-          <small>
-            © Dominik Haid{' '}
+      <footer className="bg-primary p-2xl container-normal max-w-1/2">
+        <p className="text-white text-center text-primary text-md">
+          <small className="text-white">
+            © Dominik Haid &nbsp;
             <a
               href="https://www.dominikhaid.de"
               rel={'noreferrer'}

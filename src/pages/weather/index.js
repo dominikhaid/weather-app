@@ -63,7 +63,7 @@ export default function Weather(appStates) {
       : (temperatureReelShade = obj.RealFeelTemperatureShade.Maximum);
 
     return (
-      <div className={'weatherBoxDay'}>
+      <div className={'weatherBoxDay main-container'}>
         <div className="general">
           <h4>
             {style === 'night' ? 'Nacht' : 'Tag'}

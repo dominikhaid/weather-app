@@ -21,19 +21,19 @@ export default function Nav(appStates) {
 
   return (
     <React.Fragment>
-      <section className="boxed-sm bg-secondary" id="main-menue">
+      <section className="bg-primary-light p-md container-normal max-w-1/2" id="main-menue">
         <ul
-          className="spaced-lg"
+          className="spaced-lg justify-center"
           icon="labeled"
         >
           {data.map(item => {
             if (new RegExp(item.href).test(window.location.pathname))
               return false;
             return (
-              <li  key={item.title}>
+              <li className="flex-1 text-center p-none" key={item.title}>
                 <Link href={item.href}>
                   <a
-                    className="text-md text-base font-semibold"
+                    className="flex-1 max-w-25 text-center font-semibold"
                     href={item.href}
                   >
                     <i id={item.title.toLowerCase()} />
