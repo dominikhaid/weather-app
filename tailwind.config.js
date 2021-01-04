@@ -10,7 +10,7 @@ const shadow = require('./tailwind/shadow');
 
 module.exports = {
   purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
-  darkMode: false,
+  darkMode: 'class',
   corePlugins: core,
   variants: {
     extend: {
@@ -18,9 +18,10 @@ module.exports = {
       ringWidth: ['hover'],
       borderColor: ['active', 'hover', 'disabled'],
       borderWidth: ['active', 'hover'],
-      opacity: ['disabled'],
+      opacity: ['disabled', 'dark'],
       backgroundColor: ['disabled'],
       cursor: ['hover', 'focus', 'disabled'],
+      boxShadow: ['dark', 'hover'],
     },
   },
   theme: {
@@ -34,6 +35,7 @@ module.exports = {
     height: height,
     minHeight: height,
     maxHeight: height,
+    inset: width,
     fontFamily: {
       icon: ['fontawesome'],
       body: ['Roboto', 'sans-serif'],
@@ -44,17 +46,29 @@ module.exports = {
     extend: {
       keyframes: {
         wiggle: {
-          '0%, 100%': {transform: 'rotate(-0.3deg)'},
-          '50%': {transform: 'rotate(0.3deg)'},
+          '0%, 100%': {transform: 'rotateZ(-0.3deg)'},
+          '50%': {transform: 'rotateZ(0.3deg)'},
         },
         bounce: {
           '0%, 100%': {transform: 'translateY(4px) translateX(4px)'},
           '50%': {transform: 'translateY(0px) translateX(4px)'},
         },
+        rotate: {
+          '0%': {transform: 'rotateZ(1deg)'},
+          '50%': {transform: 'rotateZ(90deg)'},
+          '100%': {transform: 'rotateZ(180deg)'},
+        },
+        up: {
+          '0%': {transform: 'rotateZ(10deg) rotateX(90deg)'},
+          '100%': {transform: 'rotateZ(0deg) rotateX(0deg)'},
+        },
       },
       animation: {
         wiggle: 'wiggle 1s ease-in-out infinite',
         bounce: 'bounce 3s ease-out infinite',
+        rotateSlow: 'rotate 8s infinite',
+        rotateFast: 'rotate 4s infinite',
+        up: 'up 0.3s ease-out',
       },
     },
   },

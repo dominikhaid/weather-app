@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import React, {useState} from 'react';
+import Check from '../../public/images/svg/check.svg';
 
 export default function WeatherModal({
   state,
@@ -15,9 +16,9 @@ export default function WeatherModal({
 
   // TODO CLEAN UP
   return state ? (
-    <section className="modal">
-      <h3 className="text-left text-lg mb-5 font-semibold">{header}</h3>
-      <ul className="py-2xl">
+    <section id="citySelector">
+      <h3 className="flex-none">{header}</h3>
+      <ul className="py-2xl w-100">
         {data.map((city, index) => {
           return (
             <li
@@ -38,7 +39,7 @@ export default function WeatherModal({
         })}
       </ul>
 
-      <div className="spaced mt-10">
+      <div className="spaced mt-xs">
         <button
           className="btn-secondary"
           onClick={() => {
@@ -52,6 +53,9 @@ export default function WeatherModal({
           <Link href="/weather">
             <button
               onClick={() => {
+                console.log(data[modal.active]);
+                if (data[modal.active].lastSearch === 'home')
+                  localStorage.home = data[modal.active].city;
                 onClose();
               }}
               className="btn-success"
@@ -65,6 +69,18 @@ export default function WeatherModal({
           </button>
         )}
       </div>
+
+      <Check
+        className="animate-up"
+        style={{
+          fill: 'white',
+          fillOpacity: '0.05',
+          position: 'absolute',
+          bottom: '-25px',
+          left: '180px',
+          width: '350px',
+        }}
+      />
     </section>
   ) : (
     <></>

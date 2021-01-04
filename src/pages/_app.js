@@ -23,12 +23,15 @@ class MainApp extends App {
       <AppProvider>
         <AppContext.Consumer>
           {appState => {
+            if (process.browser) {
+              document.querySelector('html').classList.add(appState.theme);
+            }
             return (
               <React.Fragment>
                 <AppIcon>
-                  <Nav {...appState} />
                   <RequestCount {...appState} />
                   <Component {...appState} />
+                  <Nav {...appState} />
                   <FooterContainer />
                 </AppIcon>
                 {process.browser &&

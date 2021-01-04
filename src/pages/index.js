@@ -1,10 +1,9 @@
 import React from 'react';
-import Info from './info';
+import {useRouter} from 'next/router';
 
 export default function Index(weatherStates) {
-  return (
-    <React.Fragment>
-      <Info {...weatherStates} />
-    </React.Fragment>
-  );
+  const router = useRouter();
+  if (process.browser) router.push('/home');
+
+  return <React.Fragment></React.Fragment>;
 }

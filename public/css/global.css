@@ -19,11 +19,14 @@
   }
 
   h1 {
-    @apply text-left text-3xl;
+    @apply text-left text-3xl dark:border-secondary border-secondary-darkest;
   }
 
   h2 {
     @apply text-left text-2xl;
+  }
+  h3 {
+    @apply text-left text-lg mb-xs font-semibold border-b-2 dark:border-secondary border-secondary-darkest text-secondary-dark w-100;
   }
 
   button {
@@ -87,7 +90,7 @@
   [multiple],
   textarea,
   select {
-    @apply rounded bg-transparent flex-auto flex-grow  placeholder-secondary-dark placeholder-opacity-40 text-secondary-dark shadow-secondary  border-2 border-secondary p-md disabled:opacity-30 rounded font-semibold hover:shadow-secondary shadow-secondary hover:ring-inset hover:ring-2 hover:ring-secondary focus:ring-secondary;
+    @apply rounded bg-transparent flex-auto flex-grow  placeholder-secondary-dark dark:placeholder-secondary placeholder-opacity-40 text-secondary-dark dark:text-gray-darkest shadow-secondary  border-2 border-secondary p-md disabled:opacity-30 rounded font-semibold hover:shadow-secondary shadow-secondary hover:ring-inset hover:ring-2 hover:ring-secondary focus:ring-secondary;
   }
 
   input[type='radio'] {
@@ -117,8 +120,28 @@
     @apply font-bold p-md text-gray-darkest flex-auto flex-grow;
   }
 
-  a {
-    @apply text-secondary hover:text-primary-dark text-sm font-semibold;
+  #__next #main a {
+    @apply text-secondary-darkest dark:text-secondary dark:hover:text-primary hover:text-secondary-dark text-sm font-semibold;
+  }
+
+  #__next #main {
+    @apply text-gray-darkest overflow-visible;
+  }
+
+  #__next #main ul > li {
+    padding: unset;
+  }
+
+  #citySelector {
+    @apply absolute top-none left-none w-100 h-100 p-2xl flex flex-wrap content-center main-bg z-50;
+  }
+
+  #main #citySelector li {
+    @apply text-gray-dark border-b py-xl px-none dark:border-secondary border-secondary-darkest hover:border-b-2 cursor-pointer;
+  }
+
+  #main #citySelector li.active {
+    @apply cursor-pointer border-b-2 py-xl px-none border-secondary dark:text-primary dark:border-primary;
   }
 
   ul > li::before {
@@ -127,16 +150,20 @@
 }
 
 @layer components {
+  .main-bg {
+    @apply shadow-2xl dark:shadow-xl  dark:from-secondary-dark dark:via-secondary-dark dark:to-secondary-darkest bg-gradient-to-t from-secondary-light via-primary to-primary;
+  }
+
   #main {
-    @apply shadow-2xl;
+    @apply main-container main-bg;
   }
 
   .main-container {
-    @apply bg-primary container-normal max-w-1/4 min-h-3/4 min-w-1/4 content-start flex-row;
+    @apply container-normal max-w-1/4 min-h-3/4 min-w-1/4 content-start flex-row;
   }
 
   .main-headline {
-    @apply px-none pt-none pb-lg border-b-2 border-secondary text-secondary-dark border-b-2;
+    @apply px-none pt-none pb-lg dark:border-secondary border-secondary-darkest text-secondary-dark border-b-2;
   }
 
   .btn-secondary {
@@ -168,7 +195,11 @@
   }
 
   #background {
-    @apply bg-secondary;
+    @apply bg-secondary-dark dark:bg-gray-darkest absolute  h-full w-full dark:opacity-95 opacity-30;
+  }
+
+  #background img {
+    @apply opacity-50 dark:opacity-5;
   }
 }
 
@@ -183,18 +214,13 @@
 
 #background {
   z-index: -1;
-  position: absolute;
   top: 0;
   left: 0;
-  height: 100vh;
-  width: 100vw;
-  opacity: 0.4;
 }
 
 #background img {
   filter: saturate(0);
   z-index: -2s;
-  opacity: 0.1;
 }
 
 a {
@@ -209,5 +235,5 @@ main {
 main > div {
   margin-top: -0.8rem;
   margin-bottom: -0.8rem;
-  overflow: hidden;
+  /* overflow: hidden; */
 }

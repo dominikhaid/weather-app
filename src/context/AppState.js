@@ -4,6 +4,7 @@ const AppContext = React.createContext();
 
 class AppProvider extends Component {
   state = {
+    theme: 'light',
     setAppState: e => {
       this.setState(e);
     },
@@ -81,7 +82,31 @@ class AppProvider extends Component {
     },
   };
 
+  // TODO Localstroge fertig machen dark mode
+  // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+
+  // Whenever the user explicitly chooses light mode
+  //localStorage.theme = 'light'
+
+  // Whenever the user explicitly chooses dark mode
+  //localStorage.theme = 'dark'
+
+  // Whenever the user explicitly chooses to respect the OS preference
+  //localStorage.removeItem('theme')
+
   render() {
+    if (process.browser) {
+      if (
+        localStorage.theme === 'dark' ||
+        (!('theme' in localStorage) &&
+          window.matchMedia('(prefers-color-scheme: dark)').matches)
+      ) {
+        this.state.theme = 'dark';
+      } else {
+        this.state.theme = 'light';
+      }
+    }
+
     {
       return (
         <AppContext.Provider value={this.state}>
