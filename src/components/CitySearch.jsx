@@ -126,7 +126,13 @@ export default function CitySearch({searchRadio, appState}) {
         <input
           type="text"
           onChange={e => handleSearchChange(e.target)}
-          value={searchText}
+          value={
+            process.browser &&
+            localStorage.home &&
+            window.location.pathname === '/app/weather-app/settings'
+              ? localStorage.home
+              : searchText
+          }
           placeholder="City / Zip"
         />
         <button

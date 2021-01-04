@@ -94,8 +94,8 @@ function HomeIcon() {
           fill: 'white',
           fillOpacity: '0.05',
           position: 'absolute',
-          bottom: '-60px',
-          left: '34px',
+          bottom: '105px',
+          left: '100px',
           width: '200px',
         }}
       />

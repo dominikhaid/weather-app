@@ -14,27 +14,27 @@ export default function Nav(appStates) {
     {
       href: '/home',
       title: 'Home',
-      icon: <Home className="flex-1 text-primary" />,
+      icon: <Home className="flex-1 text-white" />,
     },
     {
       href: '/search',
       title: 'Search',
-      icon: <Search className="flex-1 text-primary" />,
+      icon: <Search className="flex-1 text-white" />,
     },
     {
       href: '/weather',
       title: 'Weather',
-      icon: <Cloud className="flex-1 text-primary" />,
+      icon: <Cloud className="flex-1 text-white" />,
     },
     {
       href: '/settings',
       title: 'Settings',
-      icon: <Settings className="flex-1 text-primary" />,
+      icon: <Settings className="flex-1 text-white" />,
     },
     {
       href: '/credits',
       title: 'Credits',
-      icon: <Globe className="text-primary" />,
+      icon: <Globe className="text-white" />,
     },
   ];
 
@@ -62,7 +62,7 @@ export default function Nav(appStates) {
               <>
                 <p className="mb-none text-gray">{item.title}</p>
                 <li
-                  className="border-2 border-secondary-dark flex flex-row justify-center bg-secondary-dark rounded-full p-sm text-center cursor-pointer opacity-70 hover:opacity-100 transition-opacity duration-500 ease-in-out"
+                  className="border-2 border-secondary flex flex-row justify-center bg-secondary rounded-full p-sm text-center cursor-pointer opacity-70 hover:opacity-100 transition-opacity duration-500 ease-in-out"
                   key={item.title}
                 >
                   <Link href={item.href}>{item.icon}</Link>

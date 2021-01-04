@@ -82,18 +82,6 @@ class AppProvider extends Component {
     },
   };
 
-  // TODO Localstroge fertig machen dark mode
-  // On page load or when changing themes, best to add inline in `head` to avoid FOUC
-
-  // Whenever the user explicitly chooses light mode
-  //localStorage.theme = 'light'
-
-  // Whenever the user explicitly chooses dark mode
-  //localStorage.theme = 'dark'
-
-  // Whenever the user explicitly chooses to respect the OS preference
-  //localStorage.removeItem('theme')
-
   render() {
     if (process.browser) {
       if (
@@ -105,15 +93,14 @@ class AppProvider extends Component {
       } else {
         this.state.theme = 'light';
       }
+      document.querySelector('html').classList.add(this.state.theme);
     }
 
-    {
-      return (
-        <AppContext.Provider value={this.state}>
-          {this.props.children}
-        </AppContext.Provider>
-      );
-    }
+    return (
+      <AppContext.Provider value={this.state}>
+        {this.props.children}
+      </AppContext.Provider>
+    );
   }
 }
 

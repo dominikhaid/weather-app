@@ -8,10 +8,11 @@ export default function Settings(appState) {
     <React.Fragment>
       <section className="p-4xl pb-none pt-6xl w-100">
         <article>
-          <h1 className="main-headline">Weather App created with Next.js</h1>
-          <h2>Setup</h2>
+          <h1 className="main-headline">Settings</h1>
           <form>
+            <h4>Hometown</h4>
             <CitySearch appState={appState} />
+            <h4>Theme</h4>
             <fieldset style={{maxWidth: '200px', padding: '0'}}>
               <label for="light">Light</label>
               <input

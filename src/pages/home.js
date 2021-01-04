@@ -1,11 +1,13 @@
 import React from 'react';
-import CitySearch from '../components/CitySearch';
 import {useRouter} from 'next/router';
 
 export default function Info(appState) {
   const router = useRouter();
 
-  if (!localStorage.home || !localStorage.theme) router.push('/settings');
+  if (process.browser && !localStorage.home) router.push('/settings');
+  if (!process.browser) return <></>;
+
+  
 
   return (
     <React.Fragment>
