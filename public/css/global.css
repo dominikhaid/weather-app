@@ -26,7 +26,7 @@
     @apply text-left text-2xl;
   }
   h3 {
-    @apply text-left text-lg mb-xs font-semibold border-b-2 dark:border-secondary border-secondary-darkest text-secondary-dark w-100;
+    @apply text-left text-lg mb-xs font-semibold border-b-2 dark:border-secondary border-secondary-darkest text-white w-100;
   }
 
   button {
@@ -42,11 +42,11 @@
   }
 
   section.modal li {
-    @apply text-secondary border-b p-xl border-secondary hover:border-b-2 cursor-pointer;
+    @apply text-secondary border-b p-xl border-secondary-light hover:border-b-2 cursor-pointer;
   }
 
   section.modal li.active {
-    @apply cursor-pointer border-b p-xl bg-secondary-light;
+    @apply cursor-pointer border-b p-xl border-secondary-darkest bg-secondary-light;
   }
 
   form {
@@ -90,11 +90,11 @@
   [multiple],
   textarea,
   select {
-    @apply rounded bg-transparent flex-auto flex-grow  placeholder-secondary-dark dark:placeholder-secondary placeholder-opacity-40 text-secondary-dark dark:text-gray-darkest shadow-secondary  border-2 border-secondary p-md disabled:opacity-30 rounded font-semibold hover:shadow-secondary shadow-secondary hover:ring-inset hover:ring-2 hover:ring-secondary focus:ring-secondary;
+    @apply rounded bg-transparent flex-auto flex-grow  placeholder-secondary-dark dark:placeholder-secondary placeholder-opacity-40 text-secondary-dark dark:text-gray-darkest shadow-secondary  border-2 border-secondary-dark dark:border-secondary p-md disabled:opacity-30 rounded font-semibold hover:shadow-secondary  hover:ring-inset hover:ring-2 hover:ring-secondary-dark focus:ring-secondary-dark;
   }
 
   input[type='radio'] {
-    @apply ml-lg text-primary text-secondary bg-secondary-light;
+    @apply ml-lg text-primary text-secondary-darkest bg-secondary-light;
   }
 
   fieldset,
@@ -133,7 +133,7 @@
   }
 
   #citySelector {
-    @apply absolute top-none left-none w-100 h-100 p-2xl flex flex-wrap content-center main-bg z-50;
+    @apply absolute w-100 h-100 p-2xl flex flex-wrap content-center main-bg z-50;
   }
 
   #main #citySelector li {
@@ -141,17 +141,39 @@
   }
 
   #main #citySelector li.active {
-    @apply cursor-pointer border-b-2 py-xl px-none border-secondary dark:text-primary dark:border-primary;
+    @apply cursor-pointer border-b-2 py-xl px-none border-green dark:text-primary dark:border-primary;
+  }
+
+  .weather-list li {
+    @apply leading-10 font-semibold flex justify-start relative;
+  }
+  .weather-list li i {
+    @apply flex items-center z-10 justify-center  rounded-full bg-gray-dark  text-white  border-gray-dark dark:border-gray-dark cursor-pointer;
+  }
+
+  .weather-list li i:hover + label,
+  .weather-list li i:focus + label {
+    @apply absolute h-100  rounded-r-md  pl-xl pr-xl bg-primary  p-none inline-block;
   }
 
   ul > li::before {
     display: none;
   }
+
+  footer {
+    @apply px-4xl w-100 absolute;
+  }
+  footer p {
+    @apply text-primary text-center text-md;
+  }
+  footer small {
+    @apply text-secondary-dark;
+  }
 }
 
 @layer components {
   .main-bg {
-    @apply shadow-2xl dark:shadow-xl  dark:from-secondary-dark dark:via-secondary-dark dark:to-secondary-darkest bg-gradient-to-t from-secondary-light via-primary to-primary;
+    @apply shadow-2xl dark:shadow-xl  dark:from-secondary-dark dark:via-secondary-dark dark:to-secondary-darkest bg-gradient-to-t from-secondary-light via-secondary to-secondary;
   }
 
   #main {
@@ -159,11 +181,11 @@
   }
 
   .main-container {
-    @apply container-normal max-w-1/4 min-h-3/4 min-w-1/4 content-start flex-row;
+    @apply container-normal max-w-full min-h-3/4 min-w-1/4 content-start flex-row;
   }
 
   .main-headline {
-    @apply px-none pt-none pb-lg dark:border-secondary border-secondary-darkest text-secondary-dark border-b-2;
+    @apply px-none pt-none pb-lg dark:border-primary border-secondary-darkest text-secondary-dark border-b-2;
   }
 
   .btn-secondary {
@@ -171,7 +193,7 @@
   }
 
   .btn-primary {
-    @apply border-2 border-secondary bg-secondary text-white hover:shadow-secondary;
+    @apply border-2 border-secondary-dark dark:border-secondary dark:bg-secondary bg-secondary-dark text-white hover:shadow-secondary;
   }
 
   .btn-success {
@@ -195,11 +217,40 @@
   }
 
   #background {
-    @apply bg-secondary-dark dark:bg-gray-darkest absolute  h-full w-full dark:opacity-95 opacity-30;
+    @apply absolute top-none left-none bg-secondary-lightest dark:bg-gray-darkest  w-full dark:opacity-95;
   }
 
-  #background img {
-    @apply opacity-50 dark:opacity-5;
+  #weatherContainer {
+    @apply flex justify-center flex-row flex-wrap content-start;
+  }
+
+  #weatherContainer .general:nth-child(odd) {
+    @apply mb-6xl pr-lg border-r-2 border-opacity-30 border-gray-dark;
+  }
+  #weatherContainer .general:nth-child(even) {
+    @apply mb-6xl pl-lg border-l-2 border-opacity-10 border-gray-dark;
+  }
+
+  #main #main-menu ul li {
+    @apply text-center flex flex-wrap justify-center text-center;
+  }
+
+  #main #main-menu ul p {
+    @apply text-center flex flex-wrap justify-center text-center;
+  }
+
+  #main #main-menu ul li svg {
+    @apply border-2 border-secondary text-center flex flex-row justify-center bg-gray-dark rounded-full p-xs text-center cursor-pointer opacity-70 hover:opacity-100 transition-opacity duration-500 ease-in-out;
+  }
+
+  #main #main-menu {
+    @apply bg-gray-dark p-sm;
+  }
+  #main #main-menu ul {
+    @aplly mt-7xl flex flex-wrap flex-column justify-center;
+  }
+  #main #main-menu li.active svg {
+    @apply bg-secondary;
   }
 }
 
@@ -212,28 +263,34 @@
   align-items: center;
 }
 
-#background {
-  z-index: -1;
-  top: 0;
-  left: 0;
-}
-
-#background img {
-  filter: saturate(0);
-  z-index: -2s;
-}
-
 a {
   text-underline-offset: 0.3rem;
   text-decoration: underline;
 }
 
-main {
-  overflow: hidden;
+#__next #main {
+  max-width: calc(100vw - 80px);
+  left: 40px;
+  position: relative;
+}
+
+@media screen and (min-width: 1300px) {
+  #__next #main {
+    max-width: calc(70vw);
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    max-height: calc(100vh - 6rem);
+  }
 }
 
 main > div {
   margin-top: -0.8rem;
   margin-bottom: -0.8rem;
   /* overflow: hidden; */
+}
+
+#weatherContainer .general,
+main .general {
+  flex: 1 1 50%;
+  max-width: 450px;
 }

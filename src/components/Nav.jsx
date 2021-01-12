@@ -1,13 +1,20 @@
-import React from 'react';
+import React, {useState} from 'react';
+import PropTypes from 'prop-types';
 import Link from 'next/link';
+import RequestCount from '@/components/RequestCount';
+import Cloud from '@/public/images/svg/cloud.svg';
+import Home from '@/public/images/svg/home.svg';
+import Settings from '@/public/images/svg/cog.svg';
+import Search from '@/public/images/svg/location-marker.svg';
+import Heart from '@/public/images/svg/heart.svg';
 
-import Cloud from '../../public/images/svg/cloud.svg';
-import Home from '../../public/images/svg/home.svg';
-import Settings from '../../public/images/svg/cog.svg';
-import Search from '../../public/images/svg/location-marker.svg';
-import Globe from '../../public/images/svg/globe.svg';
+export default function Nav({limit, citys}) {
+  Nav.propTypes = {
+    limit: PropTypes.number,
+    citys: PropTypes.object,
+  };
 
-export default function Nav(appStates) {
+  const [active, setActive] = useState('/home');
   if (!process.browser) return <></>;
 
   let data = [
@@ -34,43 +41,41 @@ export default function Nav(appStates) {
     {
       href: '/credits',
       title: 'Credits',
-      icon: <Globe className="text-white" />,
+      icon: <Heart className="text-white" />,
     },
   ];
 
   return (
     <React.Fragment>
       <section
-        className="bg-gray-dark"
         style={{
           position: 'absolute',
           top: '9px',
           left: '-80px',
           width: '80px',
-          height: '98%',
+          height: 'calc(100% - 1rem)',
         }}
-        id="main-menue"
+        id="main-menu"
       >
-        <ul
-          className="mt-7xl ml-sm mr-sm flex flex-wrap flex-column justify-center"
-          icon="labeled"
-        >
+        <ul icon="labeled">
           {data.map(item => {
-            if (item.title === 'Weather' && appStates.citysState.length < 1)
-              return false;
+            if (item.title === 'Weather' && !citys) return false;
             return (
-              <>
+              <li
+                className={active === item.href ? 'active' : ''}
+                key={item.title}
+              >
                 <p className="mb-none text-gray">{item.title}</p>
-                <li
-                  className="border-2 border-secondary flex flex-row justify-center bg-secondary rounded-full p-sm text-center cursor-pointer opacity-70 hover:opacity-100 transition-opacity duration-500 ease-in-out"
-                  key={item.title}
-                >
-                  <Link href={item.href}>{item.icon}</Link>
-                </li>
-              </>
+                <Link href={item.href}>
+                  <button onClick={() => setActive(item.href)}>
+                    {item.icon}
+                  </button>
+                </Link>
+              </li>
             );
           })}
         </ul>
+        <RequestCount {...limit} />
       </section>
     </React.Fragment>
   );

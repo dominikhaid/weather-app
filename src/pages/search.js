@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import CitySearch from '../components/CitySearch';
+import CitySearch from '@/components/CitySearch';
 
-export default function SearchView(appState) {
+export default function SearchView(appStates) {
   const [searchRadio, setSearchRadio] = useState('current');
   return (
     <React.Fragment>
@@ -9,9 +9,9 @@ export default function SearchView(appState) {
         <form>
           <h1 className="main-headline">Get Your Weather Info</h1>
           <h2>Search</h2>
-          <CitySearch searchRadio={searchRadio} appState={appState} />
+          <CitySearch searchRadio={searchRadio} appStates={appStates} />
           <fieldset style={{maxWidth: '380px'}}>
-            <label for="jetzt">Jetzt</label>
+            <label htmlFor="jetzt">Jetzt</label>
             <input
               type="radio"
               id="jetzt"
@@ -23,7 +23,7 @@ export default function SearchView(appState) {
                 setSearchRadio('current');
               }}
             />
-            <label for="heute">Heute</label>
+            <label htmlFor="heute">Heute</label>
             <input
               type="radio"
               id="heute"
@@ -34,7 +34,7 @@ export default function SearchView(appState) {
                 setSearchRadio('tomorrow');
               }}
             />
-            <label for="fiveday">Fünf Tage</label>
+            <label htmlFor="fiveday">Fünf Tage</label>
             <input
               type="radio"
               id="fiveday"

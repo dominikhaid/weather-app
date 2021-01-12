@@ -1,10 +1,10 @@
 import React from 'react';
-import Image from 'next/image';
+import FooterContainer from './Footer';
 
 function Background() {
   return (
-    <div id="background">
-      <Image src={`/app/weather-app/images/bg2.jpg`} layout={'fill'} />
+    <div style={{height: '100%', zIndex: '-1'}} id="background">
+      <FooterContainer />
     </div>
   );
 }

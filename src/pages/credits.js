@@ -1,8 +1,8 @@
 import React from 'react';
 
-export default function Credits(weatherStates) {
+export default function Credits() {
   return (
-    <React.Fragment>
+    <>
       <section className="p-4xl pb-none pt-6xl w-100">
         <article>
           <h1 className="main-headline">Credits</h1>
@@ -32,6 +32,6 @@ export default function Credits(weatherStates) {
           </p>
         </article>
       </section>
-    </React.Fragment>
+    </>
   );
 }

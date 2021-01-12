@@ -1,14 +1,13 @@
 import React from 'react';
 import App from 'next/app';
-import '../../public/css/global.css';
-import '../../public/css/weather-icons-core.css';
-import Nav from '../components/Nav';
-import RequestCount from '../components/RequestCount';
-import FooterContainer from '../components/Footer';
-import {AppProvider, AppContext} from '../context/AppState';
-import Background from '../components/Background';
-import AppIcon from '../components/AppIcon';
-import RequestData from '../lib/requests';
+import '@/public/css/global.css';
+import '@/public/css/weather-icons-core.css';
+import Nav from '@/components/Nav';
+import RequestData from '@/lib/requests';
+import {AppProvider, AppContext} from '@/context/AppState';
+import Background from '@/components/Background';
+import AppIcon from '@/components/AppIcon';
+import WeatherNav from '@/components/WeatherNav';
 
 export function reportWebVitals(metric) {
   if (metric.label === 'web-vital') {
@@ -16,9 +15,28 @@ export function reportWebVitals(metric) {
   }
 }
 
+/**
+ *
+ * TODO WEATHER NAV DISPLAY AS SECOND BARD
+ */
+
+//TODO RESPONSIVE CHECK
+//TODO TEST API
+
+/**
+ * TODO FOUR THE 5 DAY VIEW MAK A DAY SELCTOR ?
+ * SIDE SCROLL ONCLICK  LIKE A SLIDER
+ */
+
 class MainApp extends App {
   render() {
-    const {Component, pageProps} = this.props;
+    const {Component} = this.props;
+
+    if (
+      process.browser &&
+      window.location.pathname === '/app/weather-app/tailwind'
+    )
+      return <Component />;
 
     return (
       <AppProvider>
@@ -26,19 +44,13 @@ class MainApp extends App {
           {appState => {
             return (
               <React.Fragment>
+                <WeatherNav {...appState} />
                 <AppIcon>
-                  <RequestCount {...appState} />
                   <Component {...appState} />
                   <Nav {...appState} />
-                  <FooterContainer />
                   <RequestData {...appState} />
                 </AppIcon>
-                {process.browser &&
-                window.location.pathname !== '/app/weather-app/tailwind' ? (
-                  <Background />
-                ) : (
-                  ''
-                )}
+                <Background />)
               </React.Fragment>
             );
           }}

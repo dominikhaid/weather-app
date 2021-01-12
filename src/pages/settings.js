@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
-import CitySearch from '../components/CitySearch';
+import CitySearch from '@/components/CitySearch';
 
-export default function Settings(appState) {
+export default function Settings(appStates) {
+  const [theme, setTheme] = useState();
+
   if (!process.browser) return <></>;
-  const [theme, setTheme] = useState(localStorage.theme);
+
   return (
     <React.Fragment>
       <section className="p-4xl pb-none pt-6xl w-100">
@@ -11,16 +13,16 @@ export default function Settings(appState) {
           <h1 className="main-headline">Settings</h1>
           <form>
             <h4>Hometown</h4>
-            <CitySearch appState={appState} />
+            <CitySearch appStates={appStates} />
             <h4>Theme</h4>
             <fieldset style={{maxWidth: '200px', padding: '0'}}>
-              <label for="light">Light</label>
+              <label htmlFor="light">Light</label>
               <input
                 type="radio"
-                id="dark"
+                id="light"
                 name="radioGroup"
                 value="light"
-                checked={theme === 'light'}
+                checked={localStorage.theme === 'light'}
                 onChange={e => {
                   localStorage.theme = 'light';
                   e.target.checked = true;
@@ -29,13 +31,13 @@ export default function Settings(appState) {
                   setTheme('light');
                 }}
               />
-              <label for="dark">Dark</label>
+              <label htmlFor="dark">Dark</label>
               <input
                 type="radio"
-                id="hdark"
+                id="dark"
                 name="radioGroup"
                 value="dark"
-                checked={theme === 'dark'}
+                checked={localStorage.theme === 'dark'}
                 onChange={e => {
                   localStorage.theme = 'dark';
                   e.target.checked = true;

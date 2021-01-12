@@ -7,5 +7,5 @@ module.exports = {
   '1/2': '50vw',
   '3/4': '75vw',
   full: '100vw',
-  none: '0 !important',
+  none: 'unset !important',
 };

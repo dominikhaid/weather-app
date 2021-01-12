@@ -1,7 +1,9 @@
-import weatherIcons from '../../public/fonts/weather/icon';
+import weatherIcons from '@/public/fonts/weather/icon';
+import React from 'react';
 
 /**
- *CONVERT ACCU WEATHER ICON TO FONT
+ *@desc NOTE CONVERT ACCU WEATHER ICON TO FONT
+ *@parma {String} AccuWeather Icon
  */
 export function findIcon(a) {
   let res;
@@ -16,7 +18,9 @@ export function findIcon(a) {
 }
 
 /**
- *CONVERT ACCU WEATHER DATE
+ *@desc NOTE CONVERT ACCU WEATHER DATE
+ *@param {String} date String
+ *@param {String} format String (GMT,TIME)
  */
 export function parseDate({date = false, format = false}) {
   date = new Date(date);
@@ -32,27 +36,59 @@ export function parseDate({date = false, format = false}) {
 }
 
 /**
- *CREATE LISTITEM ICON RIGHT
+ *@desc NOTE CREATE LISTITEM ICON RIGHT
+ *@param {Array} item Text
+ *@param {Object} icon - Display Icon
+ *@param {String} label Text
  */
 export function listItem({item = false, icon = false, label = false}) {
   return (
-    <li>
-      {icon ? <i className={icon} /> : ''}
-      {item && Array.isArray(item) ? [...item] : item ? item : ''}
-      {label ? <label>{label}</label> : ''}
+    <li style={{flex: '1 1 50%'}}>
+      <i
+        style={{
+          height: '40px',
+          width: '40px',
+          textAlign: 'center',
+          verticalAlign: 'middle',
+        }}
+        className={'text-xl mr-lg ' + icon}
+      />
+      {item && Array.isArray(item) ? item.join(' ') : item ? item : ''}
+      {label ? (
+        <label style={{left: '25px', width: '86%'}} className="hidden">
+          {label}
+        </label>
+      ) : (
+        ''
+      )}
     </li>
   );
 }
 
 /**
- *CREATE LISTITEM ICON LEFT
+ *@desc NOTE CREATE LISTITEM ICON RIGHT
+ *@param {Array} item Text
+ *@param {Object} icon - Display Icon
+ *@param {String} label Text
  */
 export function listItemInvert({item = false, icon = false, label = false}) {
   return (
     <li>
       {item && Array.isArray(item) ? [...item] : item ? item : ''}
-      {icon ? <i className={icon} /> : ''}
-      {label ? <label>{label}</label> : ''}
+      {icon ? (
+        <i
+          style={{
+            height: '40px',
+            width: '40px',
+            textAlign: 'center',
+            verticalAlign: 'middle',
+          }}
+          className={'mr-lg ' + icon}
+        />
+      ) : (
+        ''
+      )}
+      {label ? <label className="hidden">{label}</label> : ''}
     </li>
   );
 }

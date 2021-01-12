@@ -1,6 +1,6 @@
-import Link from 'next/link';
+import {useRouter} from 'next/router';
 import React, {useState} from 'react';
-import Check from '../../public/images/svg/check.svg';
+import Check from '@/public/images/svg/check.svg';
 
 export default function WeatherModal({
   state,
@@ -9,15 +9,18 @@ export default function WeatherModal({
   des,
   active,
   onClose,
+  appStates,
 }) {
   const [modal, setModal] = useState({
     active: active,
   });
 
-  // TODO CLEAN UP
+  const router = useRouter();
+
   return state ? (
-    <section id="citySelector">
+    <section style={{top: '0', left: '0'}} id="citySelector">
       <h3 className="flex-none">{header}</h3>
+
       <ul className="py-2xl w-100">
         {data.map((city, index) => {
           return (
@@ -39,7 +42,7 @@ export default function WeatherModal({
         })}
       </ul>
 
-      <div className="spaced mt-xs">
+      <div className="spaced mt-xs relative z-50">
         <button
           className="btn-secondary"
           onClick={() => {
@@ -50,19 +53,30 @@ export default function WeatherModal({
         </button>
 
         {!Number.isNaN(Number(modal.active)) ? (
-          <Link href="/weather">
-            <button
-              onClick={() => {
-                console.log(data[modal.active]);
-                if (data[modal.active].lastSearch === 'home')
-                  localStorage.home = data[modal.active].city;
-                onClose();
-              }}
-              className="btn-success"
-            >
-              Ok
-            </button>
-          </Link>
+          <button
+            onClick={e => {
+              e.preventDefault();
+              if (
+                data[modal.active].weatherView === 'home' &&
+                data[modal.active].city &&
+                data[modal.active].Key
+              ) {
+                localStorage.home = JSON.stringify({
+                  city: data[modal.active].city,
+                  Key: data[modal.active].Key,
+                  hometown: true,
+                });
+                router.push('/');
+              } else {
+                appStates.updateCitys({...data[0], activeCity: true});
+                router.push('/weather');
+              }
+              onClose();
+            }}
+            className="btn-success"
+          >
+            Ok
+          </button>
         ) : (
           <button disabled="true" className="btn-success">
             Ok

@@ -24,6 +24,13 @@
     "node": true,
     "jest": true
   },
+  "settings": {
+    "import/resolver": {
+      "alias": [
+        ["src"]
+       ]
+     }
+  },
   "rules": {
     "no-console": 1,
     "linebreak-style": ["error", "unix"],

@@ -37,7 +37,7 @@ module.exports = {
     maxHeight: height,
     inset: width,
     fontFamily: {
-      icon: ['fontawesome'],
+      icon: ['weathericons'],
       body: ['Roboto', 'sans-serif'],
     },
     boxShadow: shadow,

@@ -1,100 +1,102 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 const AppContext = React.createContext();
 
+/**
+ * @desc HOC MAIN APP CONTEXT
+ */
 class AppProvider extends Component {
+  static propTypes = {
+    getActivecity: PropTypes.func,
+    booleanProp: PropTypes.bool,
+    numberProp: PropTypes.number,
+    stringProp: PropTypes.string,
+    functionProp: PropTypes.func,
+  };
+
   state = {
-    theme: 'light',
+    debug: true,
+    theme: false,
+    activeCity: false,
     setAppState: e => {
       this.setState(e);
     },
     limit: 10,
-    updateRequestState: e => {
+    updateRequestState: () => {
       this.setState({limit: Number(this.state.limit) - 1});
     },
-    activeCity: false,
-    updateActiveCity: e => {
-      let res;
-      //CHECK IF CITY ALREADY EXISTS AND DATA FOR CURRENT SEARCH IS ALREADY THERE
-      //JUST USE THIS TO UPDATE THE CITY FROM SEARCH IF YOU OVERWRITE HERE WE GOT UNNECESSARY REQUESTS
-      if (this.state.citysState && this.state.citysState.length > 0) {
-        res = this.state.citysState.filter(city => {
-          if (e.lastSearch === 'current') {
-            return e.city === city.city && city.current;
-          } else if (e.lastSearch === 'tomorrow') {
-            return e.city === city.city && city.tomorrow;
-          } else if (e.lastSearch === 'fiveday') {
-            return e.city === city.city && city.fiveday;
-          }
-        });
-      }
-      //IF CITY NOT EXISTS OR DATA IS NOT THERE UPDATE THE ACTIVECITYSTATE
-      if (!res || res.length < 1 || res === undefined)
-        this.setState({activeCity: e});
+    getActivecity: () => {
+      if (!this.state.citys) return false;
+      let activeCity = Object.entries(this.state.citys).find(
+        e => e[1].activeCity === true,
+      );
+
+      if (activeCity) return activeCity[1];
+      return false;
     },
-    citysState: [],
-    updateCitysState: e => {
-      let res;
-      let resInd;
+    getHometown: () => {
+      if (!this.state.citys) return false;
 
-      //ChECK IF CITY ALREADY EXIST
-      if (this.state.citysState && this.state.citysState.length > 0) {
-        res = this.state.citysState.filter((city, index) => {
-          resInd = index;
-          return e.city === city.city;
-        });
-      }
+      let hometown = Object.entries(this.state.citys).find(
+        e => e[1].hometown === true,
+      );
 
-      //IF CITY EXISTS GET THE CITY OBJECT AND UPDATE IT WITHOUT JUST OVERWRITE IT
-      let newStateArray;
-      if (res && res.length > 0) {
-        if (e.lastSearch === 'current') {
-          newStateArray = [...this.state.citysState];
+      if (hometown) return hometown[1];
+      return false;
+    },
+    citys: false,
+    updateCitys: (city = false) => {
+      let oldHometown,
+        oldActiveCity,
+        updatedCitys = {};
 
-          e.tomorrow = newStateArray[resInd].tomorrow;
-          e.fiveday = newStateArray[resInd].fiveday;
-        } else if (e.lastSearch === 'tomorrow') {
-          newStateArray = [...this.state.citysState];
+      if (!city) return false;
 
-          e.current = newStateArray[resInd].current;
-          e.fiveday = newStateArray[resInd].fiveday;
-        } else if (e.lastSearch === 'fiveday') {
-          newStateArray = [...this.state.citysState];
-
-          e.current = newStateArray[resInd].current;
-          e.tomorrow = newStateArray[resInd].tomorrow;
-        }
-        newStateArray[resInd] = e;
-
-        this.setState({citysState: [...newStateArray]});
-        return true;
-      }
-
-      //IF CITY NOT EXISTS ADD IT
-      this.setState({
-        citysState: [...this.state.citysState, e],
+      Object.defineProperty(updatedCitys, city.city, {
+        enumerable: true,
+        configurable: true,
+        writable: true,
+        value: city,
       });
-      return true;
-    },
-    weatherView: 'current',
-    setWeatherView: e => {
-      this.setState({weatherView: e});
+
+      if (city.activeCity === true) this.state.getActivecity();
+      if (oldActiveCity) oldActiveCity.activeCity = false;
+
+      if (city.hometown === true) this.state.getHometown();
+      if (oldHometown) oldHometown.hometown = false;
+
+      if (oldActiveCity) updatedCitys = {...updatedCitys, oldActiveCity};
+      if (oldHometown) updatedCitys = {...updatedCitys, oldHometown};
+
+      this.setState({
+        activeCity: {
+          city: city.city,
+          weatherView: city.weatherView ? city.weatherView : 'home',
+        },
+        citys: updatedCitys,
+      });
     },
   };
 
   render() {
-    if (process.browser) {
-      if (
-        localStorage.theme === 'dark' ||
-        (!('theme' in localStorage) &&
-          window.matchMedia('(prefers-color-scheme: dark)').matches)
-      ) {
-        this.state.theme = 'dark';
-      } else {
-        this.state.theme = 'light';
-      }
+    if (
+      process.browser &&
+      !this.state.theme &&
+      !('theme' in localStorage) &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches
+    )
+      this.setState({theme: 'dark'});
+
+    if (
+      process.browser &&
+      !this.state.theme &&
+      !('theme' in localStorage) &&
+      window.matchMedia('(prefers-color-scheme: light)').matches
+    )
+      this.setState({theme: 'light'});
+    if (process.browser)
       document.querySelector('html').classList.add(this.state.theme);
-    }
 
     return (
       <AppContext.Provider value={this.state}>
