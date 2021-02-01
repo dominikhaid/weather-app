@@ -1,9 +1,19 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import WeatherModal from '@/components/WeatherModal';
+import WeatherModal from 'components/WeatherModal';
+import ResultBox from './ResultBox';
+import Searchfield from './SearchField';
 import {useRouter} from 'next/router';
-import fake_city_data from '@/data/city';
+import fake_city_data from 'data/city';
 
+/**
+ * @desc NOTE RENDER SEARCHFIELD WITH A MODAL DISPLAYING THE RESULT
+ * @param {String} ok confrim button text
+ * @param {String} cancel cancel button text
+ * @param {Function} onConfirm confiorm function
+ * @param {Function} onCancel cancel function
+ * @param {Boolen} disabled disabled state
+ */
 export default function CitySearch({
   searchRadio,
   citys,
@@ -23,6 +33,12 @@ export default function CitySearch({
   const [searchText, setSearchText] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [results, setResult] = useState([]);
+  const [modal, setModal] = useState({
+    state: false,
+    data: [],
+    header: 'Matches',
+  });
+  const [active, setActive] = useState();
 
   //NOTE WE NEED TO GET OUR HOMETOWN AS DEFAULT INPUT TEXT
   if (
@@ -32,13 +48,6 @@ export default function CitySearch({
     window.location.pathname === '/app/weather-app/settings'
   )
     setSearchText(JSON.parse(localStorage.home).city);
-
-  const [modal, setModal] = useState({
-    state: false,
-    data: [],
-    header: 'Matches',
-    des: 'Auswahl:',
-  });
 
   const handleSearchChange = e => {
     setIsLoading(true);
@@ -55,24 +64,6 @@ export default function CitySearch({
       );
     }, 300);
   };
-
-  const handleResultSelect = e => {
-    setIsLoading(true);
-    setSearchText(e.value);
-    setTimeout(() => {
-      setIsLoading(false);
-
-      setResult(
-        Object.values(citys).map(city => {
-          if (new RegExp(e.value, 'i').test(city.city))
-            return {title: city.city};
-          return false;
-        }),
-      );
-    }, 300);
-  };
-
-  searchRadio = !searchRadio ? 'home' : searchRadio;
 
   /**
    * REQUEST FROM SEARCHBOX
@@ -99,7 +90,6 @@ export default function CitySearch({
         state: true,
         data: cityList,
         header: 'Matches',
-        des: 'Auswahl:',
       });
       return true;
     };
@@ -124,8 +114,8 @@ export default function CitySearch({
         e.plz === searchText,
     );
 
-    if (debug) dup = fake_city_data;
-
+    if (debug && dup.length < 1)
+      dup = JSON.parse(JSON.stringify(fake_city_data));
     if (dup && dup.length > 0) openCityModal(dup);
     if (dup && dup.length > 0) return;
 
@@ -146,37 +136,45 @@ export default function CitySearch({
 
   return (
     <React.Fragment>
-      <fieldset>
-        <input
-          type="text"
-          onChange={e => handleSearchChange(e.target)}
-          value={searchText ? searchText : ''}
-          placeholder="City / Zip"
-        />
-        <button
-          className="btn-primary"
-          onClick={e => {
-            e.preventDefault();
-            findLocation();
-          }}
-        >
-          Suchen
-        </button>
-      </fieldset>
-      <ul>
-        {results.map(city => {
-          return (
-            <li key={city.title}>
-              <a href="/" onClick={e => handleResultSelect(e.target)}>
-                {city.title}
-              </a>
-            </li>
-          );
-        })}
-      </ul>
+      <Searchfield
+        value={searchText ? searchText : ''}
+        onChange={handleSearchChange}
+        placeholder="City / Zip"
+        title="Suchen"
+        onClick={findLocation}
+      />
+      <ResultBox
+        data={results}
+        isLoading={isLoading}
+        onSelect={setSearchText}
+      />
       <WeatherModal
         {...modal}
-        {...updateCitys}
+        active={active}
+        onConfirm={e => {
+          e.preventDefault(e);
+
+          if (
+            modal.data[active].weatherView === 'home' &&
+            modal.data[active].city &&
+            modal.data[active].Key
+          ) {
+            localStorage.home = JSON.stringify({
+              city: modal.data[active].city,
+              Key: modal.data[active].Key,
+              hometown: true,
+            });
+            router.push('/');
+          } else {
+            updateCitys({...modal.data[active], activeCity: true});
+            router.push('/weather');
+          }
+          setModal({
+            state: false,
+          });
+        }}
+        onChange={setActive}
+        updateCitys={updateCitys}
         onClose={() =>
           setModal({
             state: false,

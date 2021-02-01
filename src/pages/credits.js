@@ -1,5 +1,8 @@
 import React from 'react';
 
+/**
+ * @desc NOTE RENDER CERDITS PAGE
+ */
 export default function Credits() {
   return (
     <>

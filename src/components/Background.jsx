@@ -1,10 +1,10 @@
 import React from 'react';
-import FooterContainer from './Footer';
+import Footer from './Footer';
 
 function Background() {
   return (
     <div style={{height: '100%', zIndex: '-1'}} id="background">
-      <FooterContainer />
+      <Footer />
     </div>
   );
 }

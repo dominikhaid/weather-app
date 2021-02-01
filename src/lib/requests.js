@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import {useRouter} from 'next/router';
-import data_current from '@/data/current';
-import data_tomorrow from '@/data/tomorrow';
-import data_fiveday from '@/data/fiveday';
+import data_current from 'data/current';
+import data_tomorrow from 'data/tomorrow';
+import data_fiveday from 'data/fiveday';
 
 export default function RequestData(appStates) {
   const router = useRouter();
@@ -18,7 +18,6 @@ export default function RequestData(appStates) {
       localStorage.home
     ) {
       getWeather(appStates.getHometown());
-      return;
     }
 
     if (
@@ -27,7 +26,6 @@ export default function RequestData(appStates) {
       !appStates.getActivecity().current
     ) {
       getWeather(appStates.getActivecity());
-      return;
     }
 
     if (
@@ -36,7 +34,6 @@ export default function RequestData(appStates) {
       !appStates.getActivecity().tomorrow
     ) {
       getWeather(appStates.getActivecity());
-      return;
     }
 
     if (
@@ -45,7 +42,6 @@ export default function RequestData(appStates) {
       !appStates.getActivecity().fiveday
     ) {
       getWeather(appStates.getActivecity());
-      return;
     }
 
     return () => {};
@@ -55,109 +51,86 @@ export default function RequestData(appStates) {
 
   /**
    *@desc NOTE WEATHER REQUESTS
-   *@param {Object} locObj Object (name,key)
+   *@param {Object} request_city Object (name,key)
    */
-  const getWeather = locObj => {
+  const getWeather = request_city => {
     let url;
-    let data;
 
-    const debug_data = () => {
-      data =
-        !locObj.weatherView || locObj.weatherView === 'current'
-          ? data_current
-          : locObj.weatherView === 'tomorrow'
-          ? data_tomorrow
-          : data_fiveday;
-
-      if (!locObj.weatherView) {
+    const update_data = (appStates, request_city, request_result) => {
+      if (appStates.activeCity.weatherView === 'home') {
         appStates.updateCitys({
-          ...locObj,
-          current: data[0],
+          ...JSON.parse(JSON.stringify(request_city)),
+          current: request_result[0],
           activeCity: true,
           hometown: true,
+          weatherView: 'current',
         });
-      } else if (locObj.weatherView === 'current') {
+        appStates.updateRequestState();
+      } else if (appStates.activeCity.weatherView === 'current') {
         appStates.updateCitys({
-          ...locObj,
-          current: data[0],
+          ...JSON.parse(JSON.stringify(request_city)),
+          current: request_result[0],
           activeCity: true,
+          weatherView: 'current',
         });
-      } else if (locObj.weatherView === 'tomorrow') {
+        appStates.updateRequestState();
+      } else if (appStates.activeCity.weatherView === 'tomorrow') {
         appStates.updateCitys({
-          ...locObj,
-          tomorrow: data,
+          ...JSON.parse(JSON.stringify(request_city)),
+          tomorrow: request_result,
           activeCity: true,
+          weatherView: 'tomorrow',
         });
-      } else if (locObj.weatherView === 'fiveday') {
+        appStates.updateRequestState();
+      } else if (appStates.activeCity.weatherView === 'fiveday') {
         appStates.updateCitys({
-          ...locObj,
-          fiveday: data,
+          ...JSON.parse(JSON.stringify(request_city)),
+          fiveday: request_result,
           activeCity: true,
+          weatherView: 'fiveday',
         });
-      } else {
-        appStates.updateCitys({
-          ...locObj,
-          current: data[0],
-          activeCity: true,
-        });
+        appStates.updateRequestState();
       }
-      appStates.updateRequestState();
+    };
+
+    const set_req_url = () => {
+      let url;
+      if (
+        appStates.activeCity.weatherView === 'current' ||
+        appStates.activeCity.weatherView === 'home'
+      ) {
+        url = `https://dataservice.accuweather.com/currentconditions/v1/${request_city.Key}?apikey=8wLXgmovDvbNRzsyvwoE5VxdoGZZKAil&q=${request_city.city}&language=de&details=true&metric=true`;
+        if (appStates.debug) url = JSON.parse(JSON.stringify(data_current));
+      } else if (appStates.activeCity.weatherView === 'tomorrow') {
+        url = `https://dataservice.accuweather.com/forecasts/v1/daily/1day/${request_city.Key}?apikey=8wLXgmovDvbNRzsyvwoE5VxdoGZZKAil&q=${request_city.city}&language=de&details=true&metric=true`;
+        if (appStates.debug) url = JSON.parse(JSON.stringify(data_tomorrow));
+      } else if (appStates.activeCity.weatherView === 'fiveday') {
+        url = `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${request_city.Key}?apikey=8wLXgmovDvbNRzsyvwoE5VxdoGZZKAil&q=${request_city.city}&language=de&details=true&metric=true`;
+        if (appStates.debug) url = JSON.parse(JSON.stringify(data_fiveday));
+      }
+      return url;
+    };
+
+    const debug_data = () => {
+      let data = set_req_url();
+
+      if (!data || typeof data !== 'object') return;
+      update_data(appStates, request_city, data);
     };
 
     if (appStates.debug) debug_data();
     if (appStates.debug) return;
 
-    if (locObj.weatherView === 'current' || !locObj.weatherView) {
-      url = `https://dataservice.accuweather.com/currentconditions/v1/${locObj.Key}?apikey=8wLXgmovDvbNRzsyvwoE5VxdoGZZKAil&q=${locObj.city}&language=de&details=true&metric=true`;
-    } else if (locObj.weatherView === 'tomorrow') {
-      url = `https://dataservice.accuweather.com/forecasts/v1/daily/1day/${locObj.Key}?apikey=8wLXgmovDvbNRzsyvwoE5VxdoGZZKAil&q=${locObj.city}&language=de&details=true&metric=true`;
-    } else if (locObj.weatherView === 'fiveday') {
-      url = `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${locObj.Key}?apikey=8wLXgmovDvbNRzsyvwoE5VxdoGZZKAil&q=${locObj.city}&language=de&details=true&metric=true`;
-    } else {
-      url = `https://dataservice.accuweather.com/forecasts/v1/daily/1day/${locObj.Key}?apikey=8wLXgmovDvbNRzsyvwoE5VxdoGZZKAil&q=${locObj.city}&language=de&details=true&metric=true`;
-    }
+    url = set_req_url();
 
     fetch(url, {
       method: 'GET',
     })
       .then(response => response.json())
       .then(data => {
-        if (!locObj.weatherView) {
-          appStates.updateCitys({
-            ...locObj,
-            current: data[0],
-            activeCity: true,
-            hometown: true,
-          });
-        } else if (locObj.weatherView === 'current') {
-          appStates.updateCitys({
-            ...locObj,
-            current: data[0],
-            activeCity: true,
-          });
-        } else if (locObj.weatherView === 'tomorrow') {
-          appStates.updateCitys({
-            ...locObj,
-            tomorrow: data,
-            activeCity: true,
-          });
-        } else if (locObj.weatherView === 'fiveday') {
-          appStates.updateCitys({
-            ...locObj,
-            fiveday: data,
-            activeCity: true,
-          });
-        } else {
-          appStates.updateCitys({
-            ...locObj,
-            current: data[0],
-            activeCity: true,
-          });
-        }
-        appStates.updateRequestState();
+        update_data(appStates, request_city, data);
       })
       .catch(error => {
-        console.error('Error:', error);
         router.push('/limit');
         return;
       });

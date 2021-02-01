@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function FooterContainer() {
+export default function Footer() {
   return (
     <React.Fragment>
       <footer style={{bottom: '3rem'}}>

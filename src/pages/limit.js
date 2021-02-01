@@ -1,5 +1,12 @@
 import React from 'react';
 
+/**
+ * @desc NOTE SETTINGS PAGE
+ *@param {Boolen} debug use fake data and skip api calls if true
+ *@param {Function} updateRequestState update the request limit
+ *@param {Function} updateCitys Seached citys (hometown)
+ *@param {Object} citys searched citys
+ */
 export default function Limit() {
   return (
     <React.Fragment>

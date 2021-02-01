@@ -1,17 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Cloud from '@/public/images/svg/cloud.svg';
-import Settings from '@/public/images/svg/cog.svg';
-import Search from '@/public/images/svg/location-marker.svg';
-import Info from '@/public/images/svg/information-circle.svg';
-import Map from '@/public/images/svg/map.svg';
-import Home from '@/public/images/svg/home.svg';
-import Heart from '@/public/images/svg/heart.svg';
+import Cloud from 'public/images/svg/cloud.svg';
+import Settings from 'public/images/svg/cog.svg';
+import Search from 'public/images/svg/location-marker.svg';
+import Info from 'public/images/svg/information-circle.svg';
+import Map from 'public/images/svg/map.svg';
+import Home from 'public/images/svg/home.svg';
+import Heart from 'public/images/svg/heart.svg';
 
-function WeatherIcon() {
+function WeatherIcon({icon}) {
+  WeatherIcon.propTypes = {
+    icon: PropTypes.string,
+  };
+
   if (
     process.browser &&
-    window.location.pathname !== '/app/weather-app/weather'
+    window.location.pathname !== '/app/weather-app/weather' &&
+    icon !== null &&
+    icon !== 'weather'
   )
     return <></>;
 
@@ -53,8 +59,17 @@ function WeatherIcon() {
   );
 }
 
-function LimitIcon() {
-  if (process.browser && window.location.pathname !== '/app/weather-app/limit')
+function LimitIcon({icon}) {
+  LimitIcon.propTypes = {
+    icon: PropTypes.string,
+  };
+
+  if (
+    process.browser &&
+    window.location.pathname !== '/app/weather-app/limit' &&
+    icon !== null &&
+    icon !== 'limit'
+  )
     return <></>;
 
   return (
@@ -73,8 +88,17 @@ function LimitIcon() {
   );
 }
 
-function HomeIcon() {
-  if (process.browser && window.location.pathname !== '/app/weather-app/home')
+function HomeIcon({icon}) {
+  HomeIcon.propTypes = {
+    icon: PropTypes.string,
+  };
+
+  if (
+    process.browser &&
+    window.location.pathname !== '/app/weather-app/home' &&
+    icon !== null &&
+    icon !== 'home'
+  )
     return <></>;
 
   return (
@@ -104,10 +128,16 @@ function HomeIcon() {
   );
 }
 
-function SettingsIcon() {
+function SettingsIcon({icon}) {
+  SettingsIcon.propTypes = {
+    icon: PropTypes.string,
+  };
+
   if (
     process.browser &&
-    window.location.pathname !== '/app/weather-app/settings'
+    window.location.pathname !== '/app/weather-app/settings' &&
+    icon !== null &&
+    icon !== 'settings'
   )
     return <></>;
 
@@ -138,8 +168,17 @@ function SettingsIcon() {
   );
 }
 
-function SearchIcon() {
-  if (process.browser && window.location.pathname !== '/app/weather-app/search')
+function SearchIcon({icon}) {
+  SearchIcon.propTypes = {
+    icon: PropTypes.string,
+  };
+
+  if (
+    process.browser &&
+    window.location.pathname !== '/app/weather-app/search' &&
+    icon !== null &&
+    icon !== 'search'
+  )
     return <></>;
 
   return (
@@ -169,10 +208,16 @@ function SearchIcon() {
   );
 }
 
-function CreditsIcon() {
+function CreditsIcon({icon}) {
+  CreditsIcon.propTypes = {
+    icon: PropTypes.string,
+  };
+
   if (
     process.browser &&
-    window.location.pathname !== '/app/weather-app/credits'
+    window.location.pathname !== '/app/weather-app/credits' &&
+    icon !== null &&
+    icon !== 'credits'
   )
     return <></>;
 
@@ -203,9 +248,10 @@ function CreditsIcon() {
   );
 }
 
-function AppIcon({children}) {
+function AppIcon({icon, children}) {
   AppIcon.propTypes = {
     children: PropTypes.object,
+    icon: PropTypes.string,
   };
 
   return (
@@ -214,12 +260,12 @@ function AppIcon({children}) {
         style={{bottom: '13px'}}
         className="absolute left-none overflow-hidden w-100 h-75"
       >
-        <SettingsIcon />
-        <HomeIcon />
-        <SearchIcon />
-        <LimitIcon />
-        <WeatherIcon />
-        <CreditsIcon />
+        <SettingsIcon icon={icon} />
+        <HomeIcon icon={icon} />
+        <SearchIcon icon={icon} />
+        <LimitIcon icon={icon} />
+        <WeatherIcon icon={icon} />
+        <CreditsIcon icon={icon} />
       </div>
       <div className="transform -skew-y-1 w-100">{children}</div>
     </main>

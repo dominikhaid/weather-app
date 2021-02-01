@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {useRouter} from 'next/router';
-import Bolt from '@/public/images/svg/lightning-bolt.svg';
-import Fire from '@/public/images/svg/fire.svg';
+import Bolt from 'public/images/svg/lightning-bolt.svg';
+import Fire from 'public/images/svg/fire.svg';
 
 /**
  * @desc NOTE RENDER THE REQUEST LIMIT STATUS
@@ -12,11 +12,12 @@ export default function RequestCount({limit}) {
   RequestCount.propTypes = {
     limit: PropTypes.number,
   };
+
   const router = useRouter();
   if (!process.browser) return <></>;
   const DATE_TEST = new Date().toGMTString().replace(/(\d\d:\d\d:\d\d.*)/, '');
 
-  //SET COOKIE IF REUQEST LIMIT REACHED
+  //NOTE SET COOKIE IF REUQEST LIMIT REACHED
   if (limit <= -1) {
     window.localStorage.setItem('limit', DATE_TEST);
   }

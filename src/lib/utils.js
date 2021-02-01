@@ -1,4 +1,4 @@
-import weatherIcons from '@/public/fonts/weather/icon';
+import weatherIcons from 'public/fonts/weather/icon';
 import React from 'react';
 
 /**

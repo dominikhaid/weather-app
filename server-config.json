@@ -1,8 +1,0 @@
-{
-  "server": "next",
-  "cors": false,
-  "helment": false,
-  "http": true,
-  "https": false,
-  "static": true
-}

@@ -1,16 +1,17 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
-      "@/components/*": ["/src/components/*"],
-      "@/lib/*": ["/src/lib/*"],
-      "@/public/*": ["/public/*"],
-      "@/data/*": ["/src/data/*"],
-      "@/context/*": ["/src/context/*"],
-      "@/hooks/*": ["/src/hooks/*"],
-      "@/routers/*": ["/src/routers/*"],
-      "@/reducers/*": ["/src/reducers/*"],
-      "@/includes/*": ["/src/includes/*"]
+      "components/*": ["/src/components/*"],
+      "lib/*": ["/src/lib/*"],
+      "src/*": ["/src/*"],
+      "public/*": ["/public/*"],
+      "data/*": ["/src/data/*"],
+      "context/*": ["/src/context/*"],
+      "hooks/*": ["/src/hooks/*"],
+      "routers/*": ["/src/routers/*"],
+      "reducers/*": ["/src/reducers/*"],
+      "includes/*": ["/src/includes/*"]
     },
     "module": "commonjs",
     "target": "es6"

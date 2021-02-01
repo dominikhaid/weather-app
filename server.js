@@ -1,10 +1,11 @@
 const server = require('./src/bin/main').server;
+const fs = require('fs');
 const serverOptions = require('./src/bin/main').serverOptions;
+let privateKey, certificate, credentials, httpsServer, http, https, httpServer;
 
 /**
  *  STARTUP SERVER
  */
-let http, https, httpServer, httpsServer;
 
 if (serverOptions.http) {
   http = require('http');

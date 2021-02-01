@@ -1,7 +1,8 @@
 {
   "presets": [
     [
-      "next/babel", {
+      "next/babel",
+      {
         "preset-env": {},
         "preset-react": {"runtime": "automatic"},
         "class-properties": {},

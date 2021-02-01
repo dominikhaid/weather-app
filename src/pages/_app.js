@@ -1,13 +1,12 @@
 import React from 'react';
 import App from 'next/app';
-import '@/public/css/global.css';
-import '@/public/css/weather-icons-core.css';
-import Nav from '@/components/Nav';
-import RequestData from '@/lib/requests';
-import {AppProvider, AppContext} from '@/context/AppState';
-import Background from '@/components/Background';
-import AppIcon from '@/components/AppIcon';
-import WeatherNav from '@/components/WeatherNav';
+import 'public/css/global.css';
+import 'public/css/weather-icons-core.css';
+import Nav from 'components/Nav';
+import RequestData from 'lib/requests';
+import {AppProvider, AppContext} from 'context/AppState';
+import Background from 'components/Background';
+import AppIcon from 'components/AppIcon';
 
 export function reportWebVitals(metric) {
   if (metric.label === 'web-vital') {
@@ -15,18 +14,12 @@ export function reportWebVitals(metric) {
   }
 }
 
-/**
- *
- * TODO WEATHER NAV DISPLAY AS SECOND BARD
- */
-
-//TODO RESPONSIVE CHECK
-//TODO TEST API
-
-/**
- * TODO FOUR THE 5 DAY VIEW MAK A DAY SELCTOR ?
- * SIDE SCROLL ONCLICK  LIKE A SLIDER
- */
+// TODO WEATHER VIEW TOP MENU DROPDOWN OTIONS VIEW TOGGLER EXPAND
+// TODO STYLE RESULT BOX
+// TODO CHECK MAIN NAV STATES
+// TODO SCROLLER FOR FIVEDAY
+// TODO RESPONSIVE CHECK
+// TODO API CHECK
 
 class MainApp extends App {
   render() {
@@ -44,12 +37,13 @@ class MainApp extends App {
           {appState => {
             return (
               <React.Fragment>
-                <WeatherNav {...appState} />
-                <AppIcon>
-                  <Component {...appState} />
-                  <Nav {...appState} />
-                  <RequestData {...appState} />
-                </AppIcon>
+                <main id="main" className="transform skew-y-1 pt-lg">
+                  <Nav {...appState} weather={appState.citys} />
+                  <AppIcon>
+                    <Component {...appState} />
+                    <RequestData {...appState} />
+                  </AppIcon>
+                </main>
                 <Background />)
               </React.Fragment>
             );
