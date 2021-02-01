@@ -120,40 +120,19 @@
     @apply font-bold p-md text-gray-darkest flex-auto flex-grow;
   }
 
-  #__next #main a {
+  #__next #main a,
+  #root #main a {
     @apply text-secondary-darkest dark:text-secondary dark:hover:text-primary hover:text-secondary-dark text-sm font-semibold;
   }
 
-  #__next #main {
+  #__next #main,
+  #root #main {
     @apply text-gray-darkest overflow-visible;
   }
 
-  #__next #main ul > li {
+  #__next #main ul > li,
+  #root #main ul > li {
     padding: unset;
-  }
-
-  #citySelector {
-    @apply absolute w-100 h-100 p-2xl flex flex-wrap content-center main-bg z-50;
-  }
-
-  #main #citySelector li {
-    @apply text-gray-dark border-b py-xl px-none dark:border-secondary border-secondary-darkest hover:border-b-2 cursor-pointer;
-  }
-
-  #main #citySelector li.active {
-    @apply cursor-pointer border-b-2 py-xl px-none border-green dark:text-primary dark:border-primary;
-  }
-
-  .weather-list li {
-    @apply leading-10 font-semibold flex justify-start relative;
-  }
-  .weather-list li i {
-    @apply flex items-center z-10 justify-center  rounded-full bg-gray-dark  text-white  border-gray-dark dark:border-gray-dark cursor-pointer;
-  }
-
-  .weather-list li i:hover + label,
-  .weather-list li i:focus + label {
-    @apply absolute h-100  rounded-r-md  pl-xl pr-xl bg-primary  p-none inline-block;
   }
 
   ul > li::before {
@@ -181,7 +160,7 @@
   }
 
   .main-container {
-    @apply container-normal max-w-full min-h-3/4 min-w-1/4 content-start flex-row;
+    @apply container-normal max-w-full h-3/4 min-w-1/4 content-start flex-row;
   }
 
   .main-headline {
@@ -198,6 +177,10 @@
 
   .btn-success {
     @apply border-2 border-green bg-green text-white hover:shadow-green;
+  }
+
+  .btn-ghost {
+    @apply border-none m-none flex content-center justify-center p-none text-white;
   }
 
   .container-normal {
@@ -221,7 +204,7 @@
   }
 
   #weatherContainer {
-    @apply flex justify-center flex-row flex-wrap content-start;
+    @apply relative flex justify-center flex-row flex-wrap content-start;
   }
 
   #weatherContainer .general:nth-child(odd) {
@@ -231,12 +214,71 @@
     @apply mb-6xl pl-lg border-l-2 border-opacity-10 border-gray-dark;
   }
 
+  .dayTimeSwitcher {
+    @apply dark:text-primary dark:hover:text-primary-light text-secondary hover:text-secondary-light text-center;
+  }
+  .dayTimeSwitcher i {
+    @apply text-6xl mt-xs;
+  }
+
+  .daySwitcher {
+    @apply absolute text-xl dark:text-primary text-secondary flex flex-wrap flex-col justify-center z-20;
+  }
+
+  .daySwitcher {
+    @apply absolute text-xl dark:text-primary text-secondary flex flex-wrap flex-col justify-center z-20;
+  }
+
+  .daySwitcher.normal {
+    @apply right-0 top-0;
+  }
+
+  #__next #main .daySwitcher p,
+  #root #main .daySwitcher p {
+    @apply m-none  text-center;
+  }
+
+  #__next #main .daySwitcher a,
+  #root #main .daySwitcher a {
+    @apply flex-1  dark:text-primary text-secondary dark:hover:text-primary-light hover:text-secondary-light  text-center;
+  }
+
+  #citySelector {
+    @apply absolute w-100 h-100 p-2xl flex flex-wrap content-center main-bg z-50;
+  }
+
+  #citySelector h4 {
+    @apply text-white;
+  }
+
+  #main #citySelector li,
+  #weatherNav li {
+    @apply text-gray-dark border-b py-xl px-none dark:border-secondary border-secondary-darkest;
+  }
+
+  #main #citySelector li.active,
+  #weatherNav li.active {
+    @apply cursor-pointer border-b-2 py-xl px-none border-green dark:text-primary dark:border-primary;
+  }
+
+  .weather-list li {
+    @apply leading-10 font-semibold flex justify-start relative;
+  }
+  .weather-list li i {
+    @apply flex items-center z-10 justify-center  rounded-full bg-gray-dark  text-white  border-gray-dark dark:border-gray-dark cursor-pointer;
+  }
+
+  .weather-list li i:hover + label,
+  .weather-list li i:focus + label {
+    @apply absolute h-100  rounded-r-md  pl-xl pr-xl bg-primary  p-none inline-block;
+  }
+
   #main #main-menu ul li {
-    @apply text-center flex flex-wrap justify-center text-center;
+    @apply text-center flex flex-wrap justify-center;
   }
 
   #main #main-menu ul p {
-    @apply text-center flex flex-wrap justify-center text-center;
+    @apply text-center flex flex-wrap justify-center;
   }
 
   #main #main-menu ul li svg {
@@ -283,6 +325,27 @@ a {
   }
 }
 
+main.mobile {
+  max-width: calc(70vw);
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  max-height: calc(100vh - 6rem);
+}
+
+main.normal {
+  max-width: calc(70vw);
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  max-height: calc(100vh - 6rem);
+}
+
+main.expand {
+  max-width: calc(70vw);
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  max-height: calc(100vh - 6rem);
+}
+
 main > div {
   margin-top: -0.8rem;
   margin-bottom: -0.8rem;
@@ -293,4 +356,12 @@ main > div {
 main .general {
   flex: 1 1 50%;
   max-width: 450px;
+}
+
+.daySwitcher {
+  max-width: 5rem;
+}
+
+#main {
+  max-height: 900px !important;
 }
