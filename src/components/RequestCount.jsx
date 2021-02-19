@@ -33,14 +33,14 @@ export default function RequestCount({limit}) {
 
   return (
     <React.Fragment>
-      <div className="p-xl">
+      <aside id="main-menu-request-count" className="p-sm">
         {limit > 5 ? (
           <Bolt className="text-green" />
         ) : (
           <Fire className="text-red" />
         )}
         <p className="text-white text-center font-semibold m-none">{limit}</p>
-      </div>
+      </aside>
     </React.Fragment>
   );
 }

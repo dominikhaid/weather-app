@@ -30,7 +30,7 @@ export default function ConfirmButtons({
         {cancel}
       </button>
       {disabled && (
-        <button disabled="true" className="btn-success">
+        <button disabled={true} className="btn-success">
           {ok}
         </button>
       )}

@@ -7,7 +7,9 @@ import Home from 'public/images/svg/home.svg';
 import Settings from 'public/images/svg/cog.svg';
 import Search from 'public/images/svg/location-marker.svg';
 import Heart from 'public/images/svg/heart.svg';
-import WeatherNav from 'components/WeatherNav';
+import Menu from 'public/images/svg/menu.svg';
+import MenuAppOverlay from 'components/MenuAppOverlay';
+import uuid from 'react-uuid';
 
 /**
  *@desc NOTE RENDER MAIN NAVIGATION
@@ -26,30 +28,61 @@ export default function Nav({
   updateCitys,
   setAppState,
   activeCity,
+  getCityByName,
 }) {
   Nav.propTypes = {
     limit: PropTypes.number,
-    weather: PropTypes.bool,
+    weather: PropTypes.object,
     getActivecity: PropTypes.func,
     citys: PropTypes.object,
     updateCitys: PropTypes.func,
     setAppState: PropTypes.func,
+    getCityByName: PropTypes.func,
     activeCity: PropTypes.object,
   };
 
-  const [active, setActive] = useState('/home');
+  const [active, setActive] = useState(
+    process.browser
+      ? window.location.pathname.replace('/app/weather-app', '')
+      : '',
+  );
   const [subMenu, setSubMenu] = useState({
     menu: false,
     active: false,
   });
 
-  if (!process.browser) return <></>;
+  const Icons = ({icons}) => {
+    Icons.propTypes = {
+      icons: PropTypes.array,
+    };
 
-  let data = [
+    return (
+      <ul id="main-menu-icons" icon="labeled">
+        {icons.map(icon => {
+          return (
+            <li className={active === icon.href ? 'active' : ''} key={uuid()}>
+              <p className="m-none text-gray">{icon.title}</p>
+              <Link shallow={true} href={icon.href}>
+                <button
+                  className="btn-ghost"
+                  onClick={() => icon.onClick(icon.href)}
+                >
+                  {icon.icon}
+                </button>
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+    );
+  };
+
+  let icons = [
     {
       href: '/home',
       title: 'Home',
       onClick: e => {
+        document.getElementById('__next').classList.remove('menu');
         setSubMenu({active: false, menu: ''});
         setActive(e);
       },
@@ -59,6 +92,7 @@ export default function Nav({
       href: '/search',
       title: 'Search',
       onClick: e => {
+        document.getElementById('__next').classList.remove('menu');
         setSubMenu({active: false, menu: ''});
         setActive(e);
       },
@@ -68,6 +102,7 @@ export default function Nav({
       href: '/weather',
       title: 'Weather',
       onClick: e => {
+        document.getElementById('__next').classList.remove('menu');
         setSubMenu({active: true, menu: 'weather'});
         setActive(e);
       },
@@ -77,6 +112,7 @@ export default function Nav({
       href: '/settings',
       title: 'Settings',
       onClick: e => {
+        document.getElementById('__next').classList.remove('menu');
         setSubMenu({active: false, menu: ''});
         setActive(e);
       },
@@ -86,6 +122,7 @@ export default function Nav({
       href: '/credits',
       title: 'Credits',
       onClick: e => {
+        document.getElementById('__next').classList.remove('menu');
         setSubMenu({active: false, menu: ''});
         setActive(e);
       },
@@ -93,49 +130,48 @@ export default function Nav({
     },
   ];
 
-  return (
-    <>
-      <section
-        style={{
-          position: 'absolute',
-          top: '9px',
-          left: '-80px',
-          width: '80px',
-          height: 'calc(100% - 1rem)',
+  const MobileToggle = () => {
+    const [open, setOpen] = useState(false);
+
+    return (
+      <button
+        onClick={e => {
+          const menu = document.getElementById('__next');
+          menu && menu.classList.toggle('menu');
+          const anim = document.querySelector('.menu_svg__burger-menu');
+          anim && anim.classList.add('animate');
+
+          setTimeout(() => {
+            anim && anim.classList.remove('animate');
+          }, 1000);
+
+          setOpen(!open);
         }}
-        id="main-menu"
+        className="btn-ghost"
+        id="mobile-menu"
       >
-        <ul icon="labeled">
-          {data.map(item => {
-            return (
-              <li
-                className={active === item.href ? 'active' : ''}
-                key={item.title}
-              >
-                <p className="m-none text-gray">{item.title}</p>
-                <Link href={item.href}>
-                  <button
-                    className="btn-ghost"
-                    onClick={() => item.onClick(item.href)}
-                  >
-                    {item.icon}
-                  </button>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+        <Menu />
+      </button>
+    );
+  };
+
+  return (
+    <nav id="main-menu">
+      <article>
+        <MobileToggle />
+        <Icons icons={icons} />
         <RequestCount limit={limit} />
-      </section>
-      <WeatherNav
-        setSubMenu={setSubMenu}
-        state={subMenu}
-        getActivecity={getActivecity}
-        citys={citys}
-        updateCitys={updateCitys}
-        activeCity={activeCity}
-        setAppState={setAppState}
-      />
-    </>
+        <MenuAppOverlay
+          getCityByName={getCityByName}
+          setSubMenu={setSubMenu}
+          state={subMenu}
+          getActivecity={getActivecity}
+          citys={citys}
+          updateCitys={updateCitys}
+          activeCity={activeCity}
+          setAppState={setAppState}
+        />
+      </article>
+    </nav>
   );
 }

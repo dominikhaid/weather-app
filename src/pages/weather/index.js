@@ -18,7 +18,12 @@ export default function Weather({citys, getActivecity, activeCity}) {
   const router = useRouter();
 
   function renderWeather() {
-    if (process.browser && !getActivecity() && !citys) router.push('/search');
+    if (
+      process.browser &&
+      !getActivecity().city &&
+      Object.keys(citys).length < 1
+    )
+      router.push('/search');
 
     if (activeCity.weatherView === 'home' && getActivecity().current)
       return weatherCurrent(getActivecity());
@@ -35,7 +40,5 @@ export default function Weather({citys, getActivecity, activeCity}) {
     return <></>;
   }
 
-  return (
-    <section className="p-4xl pb-none pt-6xl w-100">{renderWeather()}</section>
-  );
+  return renderWeather();
 }

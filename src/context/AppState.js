@@ -13,12 +13,12 @@ class AppProvider extends Component {
     numberProp: PropTypes.number,
     stringProp: PropTypes.string,
     functionProp: PropTypes.func,
+    children: PropTypes.object,
   };
 
   state = {
-    debug: true,
-    theme: false,
-    activeCity: false,
+    debug: false,
+    activeCity: {},
     setAppState: e => {
       this.setState(e);
     },
@@ -31,24 +31,34 @@ class AppProvider extends Component {
       let activeCity = Object.entries(this.state.citys).find(e => {
         if (e.length > 0 && e[1] !== undefined)
           return e[1].city === this.state.activeCity.city;
-        return false;
+        return {};
       });
 
       if (activeCity) return activeCity[1];
-      return false;
+      return {};
+    },
+    getCityByName: (citySearch = false) => {
+      if (!citySearch) return false;
+      let cityFound = Object.entries(this.state.citys).find(e => {
+        if (e.length > 0 && e[1] !== undefined) return e[1].city === citySearch;
+        return {};
+      });
+
+      if (cityFound) return cityFound[1];
+      return {};
     },
     getHometown: () => {
       if (!this.state.citys) return false;
 
       let hometown = Object.entries(this.state.citys).find(e => {
         if (e.length > 0 && e[1] !== undefined) return e[1].hometown === true;
-        return false;
+        return {};
       });
 
       if (hometown) return hometown[1];
-      return false;
+      return {};
     },
-    citys: false,
+    citys: {},
     updateCitys: (city = false) => {
       let data_exists = true,
         updatedCitys = {};
@@ -153,32 +163,9 @@ class AppProvider extends Component {
   };
 
   render() {
-    if (
-      process.browser &&
-      !this.state.theme &&
-      !('theme' in localStorage) &&
-      window.matchMedia('(prefers-color-scheme: dark)').matches
-    )
-      this.setState({theme: 'dark'});
-
-    if (
-      process.browser &&
-      !this.state.theme &&
-      !('theme' in localStorage) &&
-      window.matchMedia('(prefers-color-scheme: light)').matches
-    )
-      this.setState({theme: 'light'});
-
-    if (process.browser && !this.state.theme && 'theme' in localStorage)
-      this.setState({theme: localStorage.theme});
-
-    if (process.browser)
-      document.querySelector('html').classList.add(this.state.theme);
-
+    const {children} = this.props;
     return (
-      <AppContext.Provider value={this.state}>
-        {this.props.children}
-      </AppContext.Provider>
+      <AppContext.Provider value={this.state}>{children}</AppContext.Provider>
     );
   }
 }

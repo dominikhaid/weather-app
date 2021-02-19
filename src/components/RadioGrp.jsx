@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import uuid from 'react-uuid';
 
 /**
  * @desc NOTE RENDER RADIOBUTTON GROUP
@@ -11,10 +12,10 @@ export default function RadioGrp({fields}) {
   };
 
   return (
-    <fieldset style={{maxWidth: '200px', padding: '0'}}>
+    <fieldset>
       {fields.map(item => {
         return (
-          <>
+          <div key={uuid()}>
             <label htmlFor={item.id}>{item.label}</label>
             <input
               type="radio"
@@ -24,7 +25,7 @@ export default function RadioGrp({fields}) {
               checked={item.checked}
               onChange={e => item.onChange(e)}
             />
-          </>
+          </div>
         );
       })}
     </fieldset>

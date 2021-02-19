@@ -37,8 +37,7 @@ module.exports = {
     maxHeight: height,
     inset: width,
     fontFamily: {
-      icon: ['weathericons'],
-      body: ['Roboto', 'sans-serif'],
+      sans: ['Roboto', 'sans-serif'],
     },
     boxShadow: shadow,
     fontSize: fontSize,
@@ -62,6 +61,10 @@ module.exports = {
           '0%': {transform: 'rotateZ(10deg) rotateX(90deg)'},
           '100%': {transform: 'rotateZ(0deg) rotateX(0deg)'},
         },
+        down: {
+          '0%': {transform: 'translateY(0px)'},
+          '100%': {transform: 'translateY(500px)'},
+        },
       },
       animation: {
         wiggle: 'wiggle 1s ease-in-out infinite',
@@ -69,6 +72,7 @@ module.exports = {
         rotateSlow: 'rotate 8s infinite',
         rotateFast: 'rotate 4s infinite',
         up: 'up 0.3s ease-out',
+        down: 'down 0.3s ease-out',
       },
     },
   },

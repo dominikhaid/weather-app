@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {findIcon, parseDate, listItem} from './utils';
-//NOTE MAKE THIS TOGGLE F/C
-const metric = true;
-
+import uuid from 'react-uuid';
 import PrevDate from 'public/images/svg/chevron-up.svg';
 import NextDate from 'public/images/svg/chevron-down.svg';
+import {weatherSwitcherControls} from 'src/lib/utils';
+
+//TODO MAKE THIS TOGGLE F/C
+const metric = true;
 
 /**
  *@desc NOTE RENDER THE HEADLINE
@@ -22,10 +24,18 @@ const DateWeatherBox = ({city, date}) => {
     day: 'numeric',
   };
 
-  if (!city) return <h1 className="main-headline">&nbsp;</h1>;
+  if (!city)
+    return (
+      <h1 className="main-headline">
+        &nbsp;
+        <br />
+        &nbsp;
+      </h1>
+    );
   return (
     <h1 className="main-headline">
       {city + ' '}
+      <br />
       {date
         ? new Date(date).toLocaleDateString('de-DE', dateOptions)
         : new Date().toLocaleDateString('de-DE', dateOptions)}
@@ -37,9 +47,7 @@ const DateWeatherBox = ({city, date}) => {
  *@desc NOTE RENDER THE ICON CIRCLE
  */
 const MainWeatherBox = ({
-  city,
   time,
-  date,
   daytime,
   WeatherText,
   WeatherIcon,
@@ -53,7 +61,7 @@ const MainWeatherBox = ({
     date: PropTypes.string,
     daytime: PropTypes.object,
     WeatherText: PropTypes.string,
-    WeatherIcon: PropTypes.object,
+    WeatherIcon: PropTypes.number,
     IsDayTime: PropTypes.bool,
     Temperature: PropTypes.object,
     RealFeelTemperature: PropTypes.object,
@@ -99,19 +107,18 @@ const MainWeatherBox = ({
 
   return (
     <>
-      <div
-        style={{width: '150px', height: '150px'}}
-        className="text-gray-dark relative  dark:text-primary text-center p-lg m-auto flex flex-wrap content-center justify-center border-4 border-gray-dark dark:border-primary rounded-full"
-      >
-        <i className={'wi text-6xl flex-auto ' + iconClass} />
-        <p className={'text-2xl flex-auto m-none'}>
-          {temperature} {unitIcon}
-        </p>
-        <p style={{right: '-35px', bottom: '-25px'}} className="absolute">
-          <em>{!time ? '' : time === 'night' ? '| Nacht' : '| Tag'}</em>
+      <div className="weather-main-icon">
+        <i className={'wi icon-big ' + iconClass} />
+        <p className="temprature">
+          <em className="text-xl font-semibold">
+            {temperature ? temperature : ''} {unitIcon ? unitIcon : ''}
+          </em>
         </p>
       </div>
-      <div>
+      <div
+        style={{width: 'calc(100% - var(--weather-paddig-x))'}}
+        className="app-weather-phrase-long"
+      >
         <p className="text-center w-100">
           {WeatherText ? WeatherText : daytime ? daytime.IconPhrase : ''}
           {realFeel
@@ -134,6 +141,7 @@ const MainWeatherBox = ({
  */
 const DetailWeatherBox = ({
   Precip1hr,
+  HoursOfSun,
   RelativeHumidity,
   WindGust,
   UVIndex,
@@ -145,9 +153,10 @@ const DetailWeatherBox = ({
 }) => {
   DetailWeatherBox.propTypes = {
     Precip1hr: PropTypes.object,
-    RelativeHumidity: PropTypes.string,
+    HoursOfSun: PropTypes.number,
+    RelativeHumidity: PropTypes.number,
     WindGust: PropTypes.object,
-    UVIndex: PropTypes.object,
+    UVIndex: PropTypes.number,
     UVIndexText: PropTypes.string,
     Pressure: PropTypes.object,
     daytime: PropTypes.object,
@@ -214,7 +223,7 @@ const DetailWeatherBox = ({
           {listItem({
             item: daytime.RainProbability + '%',
             icon: 'wi wi-rain',
-            label: 'Regenwahrsch.',
+            label: 'Regenwahr.',
           })}
           {listItem({
             item: daytime.Rain.Value + daytime.Rain.Unit,
@@ -250,31 +259,31 @@ const DetailWeatherBox = ({
     };
 
     const hoursOfSun = listItem({
-      item: [daytime.HoursOfSun + ' Std'],
+      item: [HoursOfSun ? HoursOfSun + ' Std' : '-'],
       icon: 'wi wi-day-sunny',
-      label: 'Sonnenstunden',
+      label: 'Sonnenstd.',
     });
 
     const hoursOfRain = listItem({
-      item: [daytime.HoursOfRain + ' Std'],
+      item: [daytime.HoursOfRain ? daytime.HoursOfRain + ' Std' : '-'],
       icon: 'wi wi-day-rain',
       label: 'Regen',
     });
 
     const hoursOfSnow = listItem({
-      item: [daytime.HoursOfSnow + ' Std'],
+      item: [daytime.HoursOfSnow ? daytime.HoursOfSnow + ' Std' : '-'],
       icon: 'wi wi-day-snow',
       label: 'Schnee',
     });
 
     const hoursOfIce = listItem({
-      item: [daytime.HoursOfIce + ' Std'],
+      item: [daytime.HoursOfIce ? daytime.HoursOfIce + ' Std' : '-'],
       icon: 'wi wi-sleet',
       label: 'Eisregen',
     });
 
     const cloudCover = listItem({
-      item: daytime.CloudCover + '%',
+      item: daytime.CloudCover ? daytime.CloudCover + '%' : '-',
       icon: 'wi wi-cloudy',
       label: 'Wolkendichte',
     });
@@ -308,7 +317,7 @@ const DetailWeatherBox = ({
         format: 'TIME',
       }),
       icon: 'wi wi-sunrise',
-      label: 'Sonnenaufgang',
+      label: 'Sonnenauf.',
     });
     const moonRise = listItem({
       item: parseDate({
@@ -321,17 +330,17 @@ const DetailWeatherBox = ({
 
     return (
       <>
-        {hoursOfSun}
-        {hoursOfRain}
-        {hoursOfSnow}
-        {hoursOfIce}
-        {cloudCover}
-        {wind}
-        {windGust}
+        {HoursOfSun ? hoursOfSun : ''}
+        {daytime.HoursOfRain ? hoursOfRain : ''}
+        {daytime.HoursOfSnow ? hoursOfSnow : ''}
+        {daytime.HoursOfIce ? hoursOfIce : ''}
+        {daytime.CloudCover ? cloudCover : ''}
+        {daytime.Wind ? wind : ''}
+        {daytime.WindGust ? windGust : ''}
         <RainProbability />
         <SnowProbability />
-        {sunRise}
-        {moonRise}
+        {Sun.Rise ? sunRise : ''}
+        {Moon.Rise ? moonRise : ''}
       </>
     );
   };
@@ -351,56 +360,232 @@ const DetailWeatherBox = ({
 /**
  *@desc NOTE RENDER DAY / NIGHT SWICHTER WEATHERVIEW
  */
-const DayTimeSwitcher = () => {
-  const daytimes = ['day', 'night'];
-  const [activeTime, setActiveTime] = useState(daytimes[0]);
-  if (!daytimes) return <></>;
+const DayTimeSwitcher = ({
+  dates,
+  activeDate,
+  setActiveDate,
+  activeTime,
+  setActiveTime,
+}) => {
+  DayTimeSwitcher.propTypes = {
+    dates: PropTypes.array,
+    activeDate: PropTypes.string,
+    visible: PropTypes.bool,
+    setShowDates: PropTypes.func,
+    setActiveDate: PropTypes.func,
+    activeTime: PropTypes.string,
+    setActiveTime: PropTypes.func,
+  };
+
+  const dateFindOptions = {
+    weekday: 'long',
+    month: 'long',
+  };
+
+  if (!activeTime) return <></>;
   return (
-    <section className="dayTimeSwitcher normal">
-      {activeTime === 'night' ? (
-        <p>
-          Tag
-          <a
-            href="/"
-            onClick={e => {
-              e.preventDefault();
-              setActiveTime(activeTime === 'day' ? 'night' : 'day');
-            }}
-          >
-            <i className="wi wi-day-sunny"></i>
-          </a>
-        </p>
+    <div className="app-view-time-selector normal">
+      {activeTime === 'day' ? (
+        <a
+          href="/"
+          onClick={e => {
+            e.preventDefault();
+            let aktDateInd = dates.findIndex(e => e === activeDate);
+            aktDateInd = dates[aktDateInd];
+
+            const aktDateObj = document.getElementById(
+              `day-${new Date(aktDateInd)
+                .toLocaleDateString('de-DE', dateFindOptions)
+                .replace(/\s/g, '-')
+                .toLowerCase()}`,
+            );
+
+            if (!aktDateObj) return;
+            aktDateObj.classList.add('hidden');
+            aktDateObj.nextElementSibling.classList.remove('hidden');
+            weatherSwitcherControls();
+            setActiveDate(aktDateInd);
+            setActiveTime(activeTime === 'day' ? 'night' : 'day');
+          }}
+        >
+          <i className="wi wi-day-sunny"></i>
+          {window.innerWidth > 767
+            ? activeTime === 'day'
+              ? 'Day'
+              : 'Night'
+            : ''}
+        </a>
       ) : (
-        <p>
-          Nacht
-          <a
-            href="/"
-            onClick={e => {
-              e.preventDefault();
-              setActiveTime(activeTime === 'day' ? 'night' : 'day');
-            }}
-          >
-            <i className="wi wi-night-clear"></i>
-          </a>
-        </p>
+        <a
+          href="/"
+          onClick={e => {
+            e.preventDefault();
+            let aktDateInd = dates.findIndex(e => e === activeDate);
+            aktDateInd = dates[aktDateInd];
+
+            const aktDateObj = document.getElementById(
+              `day-${new Date(aktDateInd)
+                .toLocaleDateString('de-DE', dateFindOptions)
+                .replace(/\s/g, '-')
+                .toLowerCase()}`,
+            );
+
+            if (!aktDateObj) return;
+            aktDateObj.nextElementSibling.classList.add('hidden');
+            aktDateObj.classList.remove('hidden');
+
+            weatherSwitcherControls();
+
+            setActiveDate(aktDateInd);
+            setActiveTime(activeTime === 'day' ? 'night' : 'day');
+          }}
+        >
+          <i className="wi wi-night-clear"></i>
+          {window.innerWidth > 767
+            ? activeTime === 'day'
+              ? 'Day'
+              : 'Night'
+            : ''}
+        </a>
       )}
-    </section>
+    </div>
   );
 };
 
 /**
-
-
-/**
- *@desc NOTE RENDER DAY SWITCHER FOR 5 DAY VIEW
+ *@desc NOTE RenderPrevDay
  */
-const DateSwitcherNormal = ({dates}) => {
-  DateSwitcherNormal.propTypes = {
+const RenderPrevDay = ({dates, activeDate, setActiveDate, setActiveTime}) => {
+  RenderPrevDay.propTypes = {
     dates: PropTypes.array,
+    activeDate: PropTypes.string,
+    setActiveDate: PropTypes.func,
+    setShowDates: PropTypes.func,
+    setActiveTime: PropTypes.func,
   };
 
-  const [activeDate, setActiveDate] = useState(dates[0]);
-  const [showDates, setShowDates] = useState(false);
+  const dateFindOptions = {
+    weekday: 'long',
+    month: 'long',
+  };
+
+  return (
+    <a
+      id="prev-day"
+      href="/"
+      onClick={e => {
+        e.preventDefault();
+        let prevDateInd = dates.findIndex(e => e === activeDate);
+        let newDateInd = dates[prevDateInd - 1];
+        prevDateInd = dates[prevDateInd];
+
+        const newDateObj = document.getElementById(
+          `day-${new Date(newDateInd)
+            .toLocaleDateString('de-DE', dateFindOptions)
+            .replace(/\s/g, '-')
+            .toLowerCase()}`,
+        );
+
+        const prevDateObj = document.getElementById(
+          `day-${new Date(prevDateInd)
+            .toLocaleDateString('de-DE', dateFindOptions)
+            .replace(/\s/g, '-')
+            .toLowerCase()}`,
+        );
+
+        if (!newDateObj || !prevDateObj) return;
+        newDateObj.classList.remove('hidden');
+        prevDateObj.classList.add('hidden');
+        prevDateObj.nextElementSibling.classList.add('hidden');
+
+        weatherSwitcherControls();
+
+        setActiveTime('day');
+        setActiveDate(newDateInd);
+      }}
+      key="prevDate"
+    >
+      <PrevDate className="color-white" />
+    </a>
+  );
+};
+
+/**
+ *@desc NOTE RenderPrevDay
+ */
+const RenderNextDay = ({dates, activeDate, setActiveDate, setActiveTime}) => {
+  RenderNextDay.propTypes = {
+    dates: PropTypes.array,
+    activeDate: PropTypes.string,
+    setActiveDate: PropTypes.func,
+    setActiveTime: PropTypes.func,
+  };
+
+  const dateFindOptions = {
+    weekday: 'long',
+    month: 'long',
+  };
+
+  return (
+    <a
+      id="next-day"
+      href="/"
+      onClick={e => {
+        e.preventDefault();
+        let prevDateInd = dates.findIndex(e => e === activeDate);
+        let newDateInd = dates[prevDateInd + 1];
+        prevDateInd = dates[prevDateInd];
+
+        const newDateObj = document.getElementById(
+          `day-${new Date(newDateInd)
+            .toLocaleDateString('de-DE', dateFindOptions)
+            .replace(/\s/g, '-')
+            .toLowerCase()}`,
+        );
+
+        const prevDateObj = document.getElementById(
+          `day-${new Date(prevDateInd)
+            .toLocaleDateString('de-DE', dateFindOptions)
+            .replace(/\s/g, '-')
+            .toLowerCase()}`,
+        );
+
+        if (!newDateObj || !prevDateObj) return;
+        newDateObj.classList.remove('hidden');
+        prevDateObj.classList.add('hidden');
+        prevDateObj.nextElementSibling.classList.add('hidden');
+
+        weatherSwitcherControls();
+
+        setActiveTime('day');
+        setActiveDate(newDateInd);
+      }}
+      key="nextDate"
+    >
+      <NextDate className="color-white" />
+    </a>
+  );
+};
+
+/**
+ *@desc NOTE ShowAllDates
+ */
+const ShowAllDates = ({
+  visible,
+  setActiveDate,
+  activeDate,
+  setShowDates,
+  dates,
+  setActiveTime,
+}) => {
+  ShowAllDates.propTypes = {
+    dates: PropTypes.array,
+    activeDate: PropTypes.string,
+    visible: PropTypes.bool,
+    setShowDates: PropTypes.func,
+    setActiveDate: PropTypes.func,
+    setActiveTime: PropTypes.func,
+  };
 
   const dateOptions = {
     month: '2-digit',
@@ -412,15 +597,47 @@ const DateSwitcherNormal = ({dates}) => {
     month: 'long',
   };
 
-  const ShowAllDates = ({visible, onClick, dates}) => {
-    if (!visible || !dates) return <></>;
+  const createDates = () => {
     return dates.map((date, index) => {
       return (
         <a
           id={`d-${index}`}
           href="/"
-          onClick={e => onClick(e)}
-          key={date}
+          onClick={e => {
+            e.preventDefault();
+            let prevDateInd = dates.findIndex(e => e === activeDate);
+            prevDateInd = dates[prevDateInd];
+            let newDateInd = dates.findIndex(
+              a => a === dates[Number(e.target.id.replace('d-', ''))],
+            );
+            newDateInd = dates[newDateInd];
+
+            const newDateObj = document.getElementById(
+              `day-${new Date(newDateInd)
+                .toLocaleDateString('de-DE', dateFindOptions)
+                .replace(/\s/g, '-')
+                .toLowerCase()}`,
+            );
+
+            const prevDateObj = document.getElementById(
+              `day-${new Date(prevDateInd)
+                .toLocaleDateString('de-DE', dateFindOptions)
+                .replace(/\s/g, '-')
+                .toLowerCase()}`,
+            );
+
+            if (!newDateObj || !prevDateObj) return <></>;
+            newDateObj.classList.remove('hidden');
+            prevDateObj.classList.add('hidden');
+            prevDateObj.nextElementSibling.classList.add('hidden');
+
+            weatherSwitcherControls();
+
+            setShowDates(false);
+            setActiveTime('day');
+            setActiveDate(dates[Number(e.target.id.replace('d-', ''))]);
+          }}
+          key={uuid()}
           className="circle"
         >
           {new Date(date).toLocaleDateString('de-DE', dateOptions)}
@@ -429,36 +646,27 @@ const DateSwitcherNormal = ({dates}) => {
     });
   };
 
-  if (!dates) return <></>;
+  if (window.innerWidth < 768) return <></>;
+
+  if (!visible || !dates)
+    return (
+      <>
+        <a
+          href="/"
+          onClick={e => {
+            e.preventDefault();
+            setShowDates(true);
+          }}
+          key="curDate"
+          className="circle"
+        >
+          {new Date(activeDate).toLocaleDateString('de-DE', dateOptions)}
+        </a>
+      </>
+    );
+
   return (
-    <section className="daySwitcher normal">
-      <DayTimeSwitcher />
-      <a
-        href="/"
-        onClick={e => {
-          e.preventDefault();
-          let prevDateInd = dates.findIndex(e => e === activeDate);
-          prevDateInd = dates[prevDateInd === 0 ? 0 : prevDateInd - 1];
-
-          const prevDateObj = document.getElementById(
-            `day-${new Date(prevDateInd)
-              .toLocaleDateString('de-DE', dateFindOptions)
-              .replace(/\s/g, '-')
-              .toLowerCase()}`,
-          );
-          prevDateObj.scrollIntoView({
-            left: 0,
-            block: 'start',
-            behavior: 'smooth',
-          });
-
-          setActiveDate(prevDateInd);
-        }}
-        key="prevDate"
-      >
-        <PrevDate className="color-white" />
-      </a>
-      <p>Datum</p>
+    <>
       <a
         href="/"
         onClick={e => {
@@ -470,41 +678,81 @@ const DateSwitcherNormal = ({dates}) => {
       >
         {new Date(activeDate).toLocaleDateString('de-DE', dateOptions)}
       </a>
-      <ShowAllDates
-        visible={showDates}
-        onClick={e => {
-          e.preventDefault();
-          setShowDates(false);
-          setActiveDate(dates[Number(e.target.id.replace('d-', ''))]);
-        }}
-        dates={dates}
-      />
-      <a
-        href="/"
-        onClick={e => {
-          e.preventDefault();
-          let nextDateInd = dates.findIndex(e => e === activeDate);
-          nextDateInd =
-            nextDateInd === dates.length - 1
-              ? dates[dates.length - 1]
-              : dates[nextDateInd + 1];
-          const nextDateObj = document.getElementById(
-            `day-${new Date(nextDateInd)
-              .toLocaleDateString('de-DE', dateFindOptions)
-              .replace(/\s/g, '-')
-              .toLowerCase()}`,
-          );
-          nextDateObj.scrollIntoView({
-            left: 0,
-            block: 'start',
-            behavior: 'smooth',
-          });
-          setActiveDate(nextDateInd);
-        }}
-        key="nextDate"
-      >
-        <NextDate className="color-white" />
-      </a>
+      {createDates()}
+    </>
+  );
+};
+
+/**
+ *@desc NOTE RENDER DAY SWITCHER FOR 5 DAY VIEW
+ */
+const DateSwitcherNormal = ({dates}) => {
+  DateSwitcherNormal.propTypes = {
+    dates: PropTypes.array,
+  };
+
+  const [activeDate, setActiveDate] = useState(dates[0]);
+  const [showDates, setShowDates] = useState(false);
+  const daytimes = ['day', 'night'];
+  const [activeTime, setActiveTime] = useState(daytimes[0]);
+
+  if (!dates) return <></>;
+  return dates.length > 1 ? (
+    <>
+      <div className="app-weather-dates font-semibold">
+        <DayTimeSwitcher
+          dates={dates}
+          activeDate={activeDate}
+          setActiveDate={setActiveDate}
+          activeTime={activeTime}
+          setActiveTime={setActiveTime}
+        />
+        <RenderPrevDay
+          dates={dates}
+          setActiveTime={setActiveTime}
+          activeDate={activeDate}
+          setActiveDate={setActiveDate}
+        />
+        <ShowAllDates
+          setActiveDate={setActiveDate}
+          activeDate={activeDate}
+          setShowDates={setShowDates}
+          dates={dates}
+          visible={showDates}
+          setActiveTime={setActiveTime}
+        />
+        <RenderNextDay
+          dates={dates}
+          setActiveTime={setActiveTime}
+          activeDate={activeDate}
+          setActiveDate={setActiveDate}
+          setShowDates={setShowDates}
+        />
+      </div>
+    </>
+  ) : (
+    <DayTimeSwitcher
+      dates={dates}
+      activeDate={activeDate}
+      setActiveDate={setActiveDate}
+      activeTime={activeTime}
+      setActiveTime={setActiveTime}
+    />
+  );
+};
+
+/**
+ *@desc NOTE RENDER DAY AND TIME SWITCHER
+ */
+const WeatherViewNavigation = ({dates}) => {
+  WeatherViewNavigation.propTypes = {
+    dates: PropTypes.array,
+  };
+
+  if (!dates) return <></>;
+  return (
+    <section key={uuid()} id="app-view-day-selector" className="normal">
+      <DateSwitcherNormal dates={dates} />
     </section>
   );
 };
@@ -513,7 +761,13 @@ const DateSwitcherNormal = ({dates}) => {
  *@desc NOTE RENDER WEATHER DAY BOX
  *@parma (accuWeather obj)
  */
-function createDay({obj = false, city = false, daytime = false, time = 'day'}) {
+function createDay({
+  index = false,
+  obj = false,
+  city = false,
+  daytime = false,
+  time = 'day',
+}) {
   if (!obj || !daytime) return;
   const dateOptions = {
     weekday: 'long',
@@ -522,11 +776,14 @@ function createDay({obj = false, city = false, daytime = false, time = 'day'}) {
 
   return (
     <section
+      key={uuid()}
       id={`${time}-${new Date(obj.Date)
         .toLocaleDateString('de-DE', dateOptions)
         .replace(/\s/g, '-')
         .toLowerCase()}`}
-      className={`general`}
+      className={`general ${
+        (index && index > 0) || time !== 'day' ? 'hidden' : ''
+      }`}
     >
       <DateWeatherBox city={city} date={obj.Date} />
       <MainWeatherBox {...obj} time={time} daytime={daytime} city={city} />
@@ -542,7 +799,7 @@ function createDay({obj = false, city = false, daytime = false, time = 'day'}) {
 export const weatherTomorrow = queryResTomorrow => {
   if (!queryResTomorrow.tomorrow.DailyForecasts) return <></>;
   return (
-    <div id="weatherContainer">
+    <article className="w-100 tomorrow" id="app-weather-view">
       {createDay({
         obj: queryResTomorrow.tomorrow.DailyForecasts[0],
         daytime: queryResTomorrow.tomorrow.DailyForecasts[0].Day,
@@ -553,8 +810,12 @@ export const weatherTomorrow = queryResTomorrow => {
         obj: queryResTomorrow.tomorrow.DailyForecasts[0],
         daytime: queryResTomorrow.tomorrow.DailyForecasts[0].Night,
         time: 'night',
+        city: queryResTomorrow.city,
       })}
-    </div>
+      <WeatherViewNavigation
+        dates={[queryResTomorrow.tomorrow.DailyForecasts[0].Date]}
+      />
+    </article>
   );
 };
 
@@ -569,6 +830,7 @@ export const weatherFiveDay = queryResFiveDay => {
   queryResFiveDay.fiveday.DailyForecasts.map((element, index) => {
     days.push(
       createDay({
+        index: index,
         obj: element,
         daytime: element.Day,
         time: 'day',
@@ -577,19 +839,21 @@ export const weatherFiveDay = queryResFiveDay => {
     );
     days.push(
       createDay({
+        index: index,
         obj: element,
         daytime: element.Night,
         time: 'night',
+        city: queryResFiveDay.city,
       }),
     );
     dates.push(element.Date);
   });
 
   return (
-    <div id="weatherContainer">
+    <article className="w-100 five-day" id="app-weather-view">
       {[...days]}
-      <DateSwitcherNormal dates={dates} />
-    </div>
+      <WeatherViewNavigation dates={dates} />
+    </article>
   );
 };
 
@@ -600,8 +864,8 @@ export const weatherFiveDay = queryResFiveDay => {
 export const weatherCurrent = queryResCurrent => {
   if (!queryResCurrent.current.LocalObservationDateTime) return <></>;
   return (
-    <div id="weatherContainer">
-      <section className="general">
+    <article className="w-100 current" id="app-weather-view">
+      <section key={uuid()} className="general">
         <DateWeatherBox
           city={queryResCurrent.city}
           date={queryResCurrent.current.LocalObservationDateTime}
@@ -609,6 +873,6 @@ export const weatherCurrent = queryResCurrent => {
         <MainWeatherBox {...queryResCurrent.current} />
         <DetailWeatherBox {...queryResCurrent.current} />
       </section>
-    </div>
+    </article>
   );
 };

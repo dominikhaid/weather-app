@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import WeatherModal from 'components/WeatherModal';
+import AppOverlay from 'components/AppOverlay';
 import ResultBox from './ResultBox';
 import Searchfield from './SearchField';
 import {useRouter} from 'next/router';
@@ -32,7 +32,7 @@ export default function CitySearch({
   const router = useRouter();
   const [searchText, setSearchText] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [results, setResult] = useState([]);
+  const [results, setResult] = useState(false);
   const [modal, setModal] = useState({
     state: false,
     data: [],
@@ -55,11 +55,21 @@ export default function CitySearch({
     setTimeout(() => {
       setIsLoading(false);
 
+      let filter_results = Object.values(citys).filter(city =>
+        new RegExp(e.value, 'i').test(city.city),
+      );
+
+      if (
+        e.value.replace(/\s/, '') === '' ||
+        Object.keys(citys).length < 1 ||
+        !filter_results ||
+        filter_results.length < 1
+      )
+        return setResult(false);
+
       setResult(
-        Object.values(citys).map(city => {
-          if (new RegExp(e.value, 'i').test(city.city))
-            return {title: city.city};
-          return false;
+        filter_results.map(city => {
+          return {title: city.city};
         }),
       );
     }, 300);
@@ -95,7 +105,8 @@ export default function CitySearch({
     };
 
     let url;
-    if (!searchText && !searchRadio) return;
+
+    if (!searchText || !searchRadio) return;
     if (
       !new RegExp(
         /^([a-zA-Z\u0080-\u024F]+(?:. |-| |))*[a-zA-Z\u0080-\u024F]|\d{5}(?:-?\d{4})*$/,
@@ -144,15 +155,17 @@ export default function CitySearch({
         onClick={findLocation}
       />
       <ResultBox
-        data={results}
+        data={results ? results : []}
         isLoading={isLoading}
         onSelect={setSearchText}
       />
-      <WeatherModal
+      <AppOverlay
         {...modal}
         active={active}
         onConfirm={e => {
           e.preventDefault(e);
+          const menu = document.getElementById('__next');
+          menu && menu.classList.remove('menu');
 
           if (
             modal.data[active].weatherView === 'home' &&

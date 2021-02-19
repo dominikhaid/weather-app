@@ -21,10 +21,8 @@ export default function Info({getHometown, activeCity, updateCitys}) {
 
   //NOTE LOAD OR UPDATE THE WEATHER DATA FOR THE HOMEVIEW
   useEffect(() => {
-    const home = getHometown();
-
     if (
-      (!getHometown() && localStorage.home) ||
+      (!getHometown().city && localStorage.home) ||
       (localStorage.home &&
         getHometown() &&
         JSON.parse(localStorage.home).city !== getHometown().city)
@@ -43,11 +41,5 @@ export default function Info({getHometown, activeCity, updateCitys}) {
   //NOTE HOMETOWN SET IN LOCALSTORAGE BU NO DATA LOADED OR NEED TOBE REFRESHED
   if (!getHometown().city || !getHometown().current) return <></>;
 
-  return (
-    <React.Fragment>
-      <section className="p-4xl pb-none pt-6xl w-100">
-        {weatherCurrent(getHometown())}
-      </section>
-    </React.Fragment>
-  );
+  return <React.Fragment>{weatherCurrent(getHometown())}</React.Fragment>;
 }

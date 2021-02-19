@@ -19,7 +19,6 @@ module.exports.startHelmet = function (app) {
     app.use(helmet.noSniff());
     app.use(helmet.permittedCrossDomainPolicies({permittedPolicies: 'none'}));
     app.use(helmet.referrerPolicy({policy: 'same-origin'}));
-    app.use(helmet.xssFilter());
     app.use(
       helmet.hsts({
         maxAge: 5184000,
@@ -44,7 +43,6 @@ module.exports.startHelmet = function (app) {
     app.use(helmet.noSniff());
     app.use(helmet.permittedCrossDomainPolicies({permittedPolicies: 'none'}));
     app.use(helmet.referrerPolicy({policy: 'same-origin'}));
-    app.use(helmet.xssFilter());
     app.use(
       helmet.hsts({
         maxAge: 5184000,

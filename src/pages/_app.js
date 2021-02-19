@@ -7,6 +7,7 @@ import RequestData from 'lib/requests';
 import {AppProvider, AppContext} from 'context/AppState';
 import Background from 'components/Background';
 import AppIcon from 'components/AppIcon';
+import {weatherSwitcherControls} from 'src/lib/utils';
 
 export function reportWebVitals(metric) {
   if (metric.label === 'web-vital') {
@@ -14,14 +15,70 @@ export function reportWebVitals(metric) {
   }
 }
 
-// TODO WEATHER VIEW TOP MENU DROPDOWN OTIONS VIEW TOGGLER EXPAND
-// TODO STYLE RESULT BOX
-// TODO CHECK MAIN NAV STATES
-// TODO SCROLLER FOR FIVEDAY
-// TODO RESPONSIVE CHECK
-// TODO API CHECK
-
+/*NOTE TAKE AWAYS
+NEXT SETUP
+DEBUG SETTINGS
+,
+TAILWINDS CONFIG
+STORIEBOOK SETUP
+*/
 class MainApp extends App {
+  constructor(props) {
+    super(props);
+    this.state = {theme: 'light'};
+  }
+
+  componentDidMount() {
+    // NOTE THEME CONTROLL /LIGHT DARK
+    let newTheme = false;
+    if (process.browser) {
+      if ('theme' in localStorage && this.state.theme !== localStorage.theme) {
+        newTheme = localStorage.theme;
+      } else if (
+        !this.state.theme &&
+        !('theme' in localStorage) &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches
+      ) {
+        newTheme = 'dark';
+      } else if (
+        !this.state.theme &&
+        !('theme' in localStorage) &&
+        window.matchMedia('(prefers-color-scheme: light)').matches
+      ) {
+        newTheme = 'light';
+      }
+
+      if (this.state.theme !== 'light') {
+        document.querySelector('html').classList.remove('light');
+        this.setState({theme: 'light'});
+      }
+      if (this.state.theme !== 'dark') {
+        document.querySelector('html').classList.remove('dark');
+        this.setState({theme: 'dark'});
+      }
+      document.querySelector('html').classList.add(newTheme);
+    }
+
+    // NOTE WeatherView Control Element
+    const container = document.getElementById('app-main-container');
+    const control_top_weather_switch = container => {
+      window.addEventListener('scroll', function (e) {
+        weatherSwitcherControls();
+      });
+    };
+
+    //NOTE MOBILE
+    if (container && window.innerWidth < 767) {
+      control_top_weather_switch(container);
+    }
+
+    return () => {
+      if (container && window.innerWidth < 767) {
+        window.removeEventListener('scroll', control_top_weather_switch);
+      }
+    };
+  }
+
   render() {
     const {Component} = this.props;
 
@@ -37,14 +94,14 @@ class MainApp extends App {
           {appState => {
             return (
               <React.Fragment>
+                <Nav {...appState} weather={appState.citys} />
                 <main id="main" className="transform skew-y-1 pt-lg">
-                  <Nav {...appState} weather={appState.citys} />
                   <AppIcon>
                     <Component {...appState} />
                     <RequestData {...appState} />
                   </AppIcon>
                 </main>
-                <Background />)
+                <Background />
               </React.Fragment>
             );
           }}

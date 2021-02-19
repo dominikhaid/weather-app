@@ -3,9 +3,9 @@ import Footer from './Footer';
 
 function Background() {
   return (
-    <div style={{height: '100%', zIndex: '-1'}} id="background">
+    <footer style={{height: '100%', zIndex: '-1'}} id="background">
       <Footer />
-    </div>
+    </footer>
   );
 }
 

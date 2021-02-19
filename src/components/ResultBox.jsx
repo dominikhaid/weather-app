@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import PropTypes, {bool} from 'prop-types';
+import uuid from 'react-uuid';
 
 /**
  * @desc NOTE RENDER RESULT
@@ -18,13 +19,14 @@ export default function ResultBox({data, isLoading, visible, onSelect}) {
   };
   const [hidden, setHidden] = useState(visible !== undefined ? visible : false);
 
-  if (hidden || data.length > 1) return <></>;
+  if (hidden || !data || data.length < 1) return <></>;
   if (isLoading) return <p>...</p>;
   return (
-    <ul>
+    <ul id="app-search-results">
+      <li>Results:</li>
       {data.map(item => {
         return (
-          <li key={item.title}>
+          <li key={uuid()}>
             <a
               href="/"
               onClick={e => {

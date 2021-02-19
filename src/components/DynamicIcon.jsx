@@ -13,7 +13,7 @@ export default function DynamicIcon({active, animation, Icon, style}) {
     active: PropTypes.bool,
     animation: PropTypes.string,
     style: PropTypes.object,
-    Icon: PropTypes.object,
+    Icon: PropTypes.func,
   };
 
   if (!Icon || typeof Icon !== 'function') return <></>;

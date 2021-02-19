@@ -16,5 +16,5 @@
     "module": "commonjs",
     "target": "es6"
   },
-  "exclude": ["node_modules", "build", "coverage", "dist", "lib"]
+  "exclude": ["node_modules","__screenshots__","log","uploads",".next",".git","out","static","stroybook-static", "build", "coverage", "dist", "lib"]
 }

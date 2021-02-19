@@ -10,16 +10,14 @@ import React from 'react';
 export default function Limit() {
   return (
     <React.Fragment>
-      <section className="p-4xl pb-none pt-6xl w-100">
-        <article>
-          <h1 className="main-headline">Limit erreicht</h1>
-          <p>
-            Leider müsssen wir bei diesser Demo ein Limit für Requests auf die
-            Accuweather API setzten. Das heutige Limit für Suchanfragen wurde
-            erreicht.
-          </p>
-        </article>
-      </section>
+      <article className="w-100">
+        <h1 className="main-headline">Limit erreicht</h1>
+        <p>
+          Leider müsssen wir bei diesser Demo ein Limit für Requests auf die
+          Accuweather API setzten. Das heutige Limit für Suchanfragen wurde
+          erreicht.
+        </p>
+      </article>
     </React.Fragment>
   );
 }

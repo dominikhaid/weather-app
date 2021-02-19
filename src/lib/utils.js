@@ -2,6 +2,20 @@ import weatherIcons from 'public/fonts/weather/icon';
 import React from 'react';
 
 /**
+ *@desc NOTE CONTROL THE WEATHER SWITCHER
+ */
+export function weatherSwitcherControls() {
+  const weather_switcher = document.getElementById('app-view-day-selector');
+  if (!weather_switcher || (weather_switcher && window.innerWidth > 767))
+    return <></>;
+  setTimeout(() => {
+    if (weather_switcher && window.innerWidth < 767) {
+      weather_switcher.style.top = `calc(${window.scrollY}px + ${window.innerHeight}px - ${weather_switcher.offsetHeight}px + 5px)`;
+    }
+  }, 20);
+}
+
+/**
  *@desc NOTE CONVERT ACCU WEATHER ICON TO FONT
  *@parma {String} AccuWeather Icon
  */
@@ -43,7 +57,15 @@ export function parseDate({date = false, format = false}) {
  */
 export function listItem({item = false, icon = false, label = false}) {
   return (
-    <li style={{flex: '1 1 50%'}}>
+    <li
+      key={
+        Array.isArray(item)
+          ? item.join(' ') + label
+          : item
+          ? item + label
+          : '' + label
+      }
+    >
       <i
         style={{
           height: '40px',
@@ -55,7 +77,10 @@ export function listItem({item = false, icon = false, label = false}) {
       />
       {item && Array.isArray(item) ? item.join(' ') : item ? item : ''}
       {label ? (
-        <label style={{left: '25px', width: '86%'}} className="hidden">
+        <label
+          style={{left: '25px', width: '86%', height: '40px'}}
+          className="hidden"
+        >
           {label}
         </label>
       ) : (

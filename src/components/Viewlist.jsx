@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import uuid from 'react-uuid';
 
 /**
  *@desc NOTE LIST ALL AVAILBALE VIEWS FOR ACTIVE CITY
@@ -7,33 +8,41 @@ import PropTypes from 'prop-types';
  *@param {Function} setAppState - update app context by given property
  *@param {Object} activeCity - actual city and view to render (string)
  */
-export default function Viewlist({getActivecity, setAppState, activeCity}) {
+export default function Viewlist({
+  getActivecity,
+  switcher,
+  setSwitcher,
+  activeCity,
+  getCityByName,
+}) {
   Viewlist.propTypes = {
     getActivecity: PropTypes.func,
     activeCity: PropTypes.object,
     setAppState: PropTypes.func,
+    switcher: PropTypes.object,
+    setSwitcher: PropTypes.func,
+    getCityByName: PropTypes.func,
   };
 
-  const handleActiveView = (obj = false) => {
+  const handleActiveView = (obj = false, city = false) => {
     obj.preventDefault();
-
-    setAppState({
-      activeCity: {city: activeCity.city, weatherView: obj.target.id},
+    setSwitcher({
+      ...switcher,
+      active: obj.target.id,
     });
   };
 
   return (
     <ul>
-      <h3 className="font-semibold underline text-white">Ansicht</h3>
-      {getActivecity().current && (
+      <h3 className="flex-none">Ansicht</h3>
+      {switcher.current && (
         <li
           className={
-            activeCity.weatherView === 'current'
-              ? 'active cursor-pointer py-xs'
-              : 'cursor-pointer py-xs'
+            switcher.active === 'current'
+              ? 'active cursor-pointer'
+              : 'cursor-pointer'
           }
-          key={'current'}
-          active={activeCity.weatherView === 'current'}
+          key={uuid()}
         >
           <button
             className="btn-ghost"
@@ -44,15 +53,14 @@ export default function Viewlist({getActivecity, setAppState, activeCity}) {
           </button>
         </li>
       )}
-      {getActivecity().tomorrow && (
+      {switcher.tomorrow && (
         <li
           className={
-            activeCity.weatherView === 'tomorrow'
-              ? 'active cursor-pointer py-xs'
-              : 'cursor-pointer py-xs'
+            switcher.active === 'tomorrow'
+              ? 'active cursor-pointer'
+              : 'cursor-pointer'
           }
-          key={'tomorrow'}
-          active={activeCity.weatherView === 'tomorrow'}
+          key={uuid()}
         >
           <button
             className="btn-ghost"
@@ -63,15 +71,14 @@ export default function Viewlist({getActivecity, setAppState, activeCity}) {
           </button>
         </li>
       )}
-      {getActivecity().fiveday && (
+      {switcher.fiveday && (
         <li
           className={
-            activeCity.weatherView === 'fiveday'
-              ? 'active cursor-pointer py-xs'
-              : 'cursor-pointer py-xs'
+            switcher.active === 'fiveday'
+              ? 'active cursor-pointer'
+              : 'cursor-pointer'
           }
-          key={'fiveday'}
-          active={activeCity.weatherView === 'fiveday'}
+          key={uuid()}
         >
           <button
             className="btn-ghost"

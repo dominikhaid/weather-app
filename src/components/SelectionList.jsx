@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
+import uuid from 'react-uuid';
 
 /**
  * @desc NOTE RENDER ANIMATED ICON
@@ -9,7 +10,7 @@ import PropTypes from 'prop-types';
  */
 export default function SelectionList({data, index, onSelect}) {
   SelectionList.propTypes = {
-    data: PropTypes.object,
+    data: PropTypes.array,
     index: PropTypes.number,
     onSelect: PropTypes.func,
   };
@@ -18,16 +19,16 @@ export default function SelectionList({data, index, onSelect}) {
 
   return (
     <>
-      <ul className="py-2xl w-100">
-        {data.map((city, index) => {
+      <ul className="w-100">
+        {data.map((city, ind) => {
           return (
-            <li key={data.city} className={active === index ? 'active' : ''}>
+            <li key={ind} className={active === ind ? 'active' : ''}>
               <button
                 className="btn-ghost"
                 onClick={e => {
                   e.preventDefault();
-                  setActive(index);
-                  onSelect(index);
+                  setActive(ind);
+                  onSelect(ind);
                 }}
               >
                 {city.city}&nbsp;

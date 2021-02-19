@@ -35,7 +35,7 @@ function startServer(server, serverOptions, protocol) {
         return handle(req, res, parsedUrl);
       });
 
-      port = process.env.PORT || 5000;
+      let port = process.env.PORT || 5000;
       if (protocol.httpServer) protocol.httpServer.listen(port);
       if (protocol.httpsServer) protocol.listen(port);
       if (!protocol.httpServer && !protocol.httpsServer) server.listen(port);

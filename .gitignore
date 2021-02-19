@@ -1,7 +1,5 @@
-**/gitignore
 # .env.development
 # .env.production
-**/access.log
 .next
 **/build
 /node_modules
@@ -13,3 +11,8 @@
 **/debug.log
 package-lock.json
 out
+**/storybook-static
+**/log/.*log
+.editorconfig
+.*\.log
+log/access.log

@@ -36,7 +36,7 @@ module.exports = {
   secondary: {
     darkest: colors.indigo['900'],
     dark: colors.indigo['800'],
-    DEFAULT: '#009ce5',
+    DEFAULT: '#19B6FF',
     light: colors.indigo['300'],
     lightest: colors.indigo['50'],
   },

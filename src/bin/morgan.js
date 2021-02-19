@@ -1,4 +1,4 @@
-morgan = require('morgan');
+const morgan = require('morgan');
 module.exports.startMorgan = function (app, accessLogStream) {
   // log only 4xx and 5xx responses to console
   app.use(

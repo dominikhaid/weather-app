@@ -60,23 +60,21 @@ export default function Settings({
 
   return (
     <React.Fragment>
-      <section className="p-4xl pb-none pt-6xl w-100">
-        <article>
-          <h1 className="main-headline">Settings</h1>
-          <form>
-            <h4>Hometown</h4>
-            <CitySearch
-              searchRadio={'home'}
-              citys={citys}
-              updateCitys={updateCitys}
-              debug={debug}
-              updateRequestState={updateRequestState}
-            />
-            <h4>Theme</h4>
-            <RadioGrp fields={radioFields} />
-          </form>
-        </article>
-      </section>
+      <article className="w-100">
+        <h1 className="main-headline">Settings</h1>
+        <form>
+          <h4>Theme</h4>
+          <RadioGrp fields={radioFields} />
+          <h4>Hometown</h4>
+          <CitySearch
+            searchRadio={'home'}
+            citys={citys}
+            updateCitys={updateCitys}
+            debug={debug}
+            updateRequestState={updateRequestState}
+          />
+        </form>
+      </article>
     </React.Fragment>
   );
 }

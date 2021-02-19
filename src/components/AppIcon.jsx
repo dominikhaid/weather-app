@@ -250,25 +250,22 @@ function CreditsIcon({icon}) {
 
 function AppIcon({icon, children}) {
   AppIcon.propTypes = {
-    children: PropTypes.object,
+    children: PropTypes.array,
     icon: PropTypes.string,
   };
 
   return (
-    <main id="main" className="transform skew-y-1 pt-lg">
-      <div
-        style={{bottom: '13px'}}
-        className="absolute left-none overflow-hidden w-100 h-75"
-      >
+    <div id="app-main-container" className="transform -skew-y-1 pt-lg">
+      <aside className="app-icons absolute left-none overflow-hidden w-100 h-75">
         <SettingsIcon icon={icon} />
         <HomeIcon icon={icon} />
         <SearchIcon icon={icon} />
         <LimitIcon icon={icon} />
         <WeatherIcon icon={icon} />
         <CreditsIcon icon={icon} />
-      </div>
-      <div className="transform -skew-y-1 w-100">{children}</div>
-    </main>
+      </aside>
+      <div id="app-container">{children}</div>
+    </div>
   );
 }
 
