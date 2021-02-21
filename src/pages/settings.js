@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import CitySearch from 'components/CitySearch';
 import PropTypes from 'prop-types';
 import RadioGrp from 'components/RadioGrp';
+import Head from 'next/head';
 
 /**
  * @desc NOTE SETTINGS PAGE
@@ -60,6 +61,10 @@ export default function Settings({
 
   return (
     <React.Fragment>
+      <Head>
+        <title>Weather App | Setup</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
       <article className="w-100">
         <h1 className="main-headline">Settings</h1>
         <form>

@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {useEffect} from 'react';
 import {useRouter} from 'next/router';
-import {weatherCurrent} from 'lib/render';
+import {weatherFiveDay} from 'lib/render';
+import Head from 'next/head';
 
 /**
  * @desc NOTE RENDER OUR HOME SCREEN
@@ -39,7 +40,15 @@ export default function Info({getHometown, activeCity, updateCitys}) {
   if (process.browser && !localStorage.home) router.push('/settings');
 
   //NOTE HOMETOWN SET IN LOCALSTORAGE BU NO DATA LOADED OR NEED TOBE REFRESHED
-  if (!getHometown().city || !getHometown().current) return <></>;
+  if (!getHometown().city || !getHometown().fiveday) return <></>;
 
-  return <React.Fragment>{weatherCurrent(getHometown())}</React.Fragment>;
+  return (
+    <React.Fragment>
+      <Head>
+        <title>Weather App | Home</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
+      {weatherFiveDay(getHometown())}
+    </React.Fragment>
+  );
 }

@@ -4,40 +4,29 @@ import {storiesOf} from '@storybook/react';
 import withPropsCombinations from 'react-storybook-addon-props-combinations';
 import appState from 'src/stories/data-mockup';
 
-const mainStyle = {
-  display: 'block',
-  float: 'left',
-  width: '100%',
-  overflow: 'hidden',
-  position: 'relative',
-};
-
 const innerStyle = {
-  width: '100%',
-  height: 'calc(100% - 80px)',
-  position: 'relative',
+  padding: 'var(--weather-paddig-y) var(--weather-paddig-x)',
 };
 
-const lastStyle = {
-  height: '100%',
-  position: 'relative',
-  top: '0',
-  left: 'calc(50vw + 80px)',
-};
+const lastStyle = {};
 
 function WarppedNav(props) {
   return (
-    <div style={{...innerStyle}} className={`${props.class}`}>
-      <div style={{...lastStyle}}>
-        <Nav
-          {...props}
-          weather={true}
-          citys={appState.citys}
-          updateCitys={appState.updateCitys}
-          getActivecity={appState.getActivecity}
-          setAppState={appState.setAppState}
-          activeCity={appState.activeCity}
-        />
+    <div className={`${props.class}`}>
+      <div className="bg-secondary-lightest dark:bg-gray-darkest">
+        <div id="__next" className={`menu ${props.class}`}>
+          <Nav
+            {...props}
+            weather={true}
+            citys={appState.citys}
+            getCityByName={appState.getCityByName}
+            updateCitys={appState.updateCitys}
+            getActivecity={appState.getActivecity}
+            setAppState={appState.setAppState}
+            activeCity={appState.activeCity}
+          />
+          <main id="main"></main>
+        </div>{' '}
       </div>
     </div>
   );
@@ -58,7 +47,6 @@ storiesOf('Elements', module).add(
     },
     {
       showSource: true,
-      style: mainStyle,
     },
   ),
 );

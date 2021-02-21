@@ -6,13 +6,25 @@ import React from 'react';
  */
 export function weatherSwitcherControls() {
   const weather_switcher = document.getElementById('app-view-day-selector');
-  if (!weather_switcher || (weather_switcher && window.innerWidth > 767))
+  const weather_container = document.getElementById('app-weather-view');
+  if (
+    !weather_switcher ||
+    !weather_container ||
+    (weather_switcher && window.innerWidth > 767)
+  )
     return <></>;
+
+  weather_switcher.classList.add('hidden');
   setTimeout(() => {
     if (weather_switcher && window.innerWidth < 767) {
-      weather_switcher.style.top = `calc(${window.scrollY}px + ${window.innerHeight}px - ${weather_switcher.offsetHeight}px + 5px)`;
+      weather_switcher.style.top = `calc(${window.scrollY}px + ${
+        window.innerHeight
+      }px - ${
+        weather_switcher.offsetHeight > 0 ? weather_switcher.offsetHeight : 60
+      }px + 5px)`;
+      weather_switcher.classList.remove('hidden');
     }
-  }, 20);
+  }, 100);
 }
 
 /**

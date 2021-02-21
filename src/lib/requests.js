@@ -14,7 +14,7 @@ export default function RequestData(appStates) {
     if (
       appStates.getHometown() &&
       appStates.activeCity.weatherView === 'home' &&
-      !appStates.getHometown().current &&
+      !appStates.getHometown().fiveday &&
       localStorage.home
     ) {
       getWeather(appStates.getHometown());
@@ -60,10 +60,10 @@ export default function RequestData(appStates) {
       if (appStates.activeCity.weatherView === 'home') {
         appStates.updateCitys({
           ...JSON.parse(JSON.stringify(request_city)),
-          current: request_result[0],
+          fiveday: request_result,
           activeCity: true,
           hometown: true,
-          weatherView: 'current',
+          weatherView: 'home',
         });
         appStates.updateRequestState();
       } else if (appStates.activeCity.weatherView === 'current') {
@@ -95,16 +95,16 @@ export default function RequestData(appStates) {
 
     const set_req_url = () => {
       let url;
-      if (
-        appStates.activeCity.weatherView === 'current' ||
-        appStates.activeCity.weatherView === 'home'
-      ) {
+      if (appStates.activeCity.weatherView === 'current') {
         url = `https://dataservice.accuweather.com/currentconditions/v1/${request_city.Key}?apikey=8wLXgmovDvbNRzsyvwoE5VxdoGZZKAil&q=${request_city.city}&language=de&details=true&metric=true`;
         if (appStates.debug) url = JSON.parse(JSON.stringify(data_current));
       } else if (appStates.activeCity.weatherView === 'tomorrow') {
         url = `https://dataservice.accuweather.com/forecasts/v1/daily/1day/${request_city.Key}?apikey=8wLXgmovDvbNRzsyvwoE5VxdoGZZKAil&q=${request_city.city}&language=de&details=true&metric=true`;
         if (appStates.debug) url = JSON.parse(JSON.stringify(data_tomorrow));
-      } else if (appStates.activeCity.weatherView === 'fiveday') {
+      } else if (
+        appStates.activeCity.weatherView === 'fiveday' ||
+        appStates.activeCity.weatherView === 'home'
+      ) {
         url = `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${request_city.Key}?apikey=8wLXgmovDvbNRzsyvwoE5VxdoGZZKAil&q=${request_city.city}&language=de&details=true&metric=true`;
         if (appStates.debug) url = JSON.parse(JSON.stringify(data_fiveday));
       }

@@ -2,6 +2,7 @@ import React from 'react';
 import App from 'next/app';
 import 'public/css/global.css';
 import 'public/css/weather-icons-core.css';
+import ResetCss from 'public/css/weather-icons-core.css';
 import Nav from 'components/Nav';
 import RequestData from 'lib/requests';
 import {AppProvider, AppContext} from 'context/AppState';
@@ -85,9 +86,13 @@ class MainApp extends App {
     if (
       process.browser &&
       window.location.pathname === '/app/weather-app/tailwind'
-    )
-      return <Component />;
-
+    ) {
+      return (
+        <>
+          <Component />
+        </>
+      );
+    }
     return (
       <AppProvider>
         <AppContext.Consumer>

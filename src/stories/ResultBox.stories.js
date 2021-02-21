@@ -3,23 +3,12 @@ import ResultBox from 'src/components/ResultBox';
 import {storiesOf} from '@storybook/react';
 import withPropsCombinations from 'react-storybook-addon-props-combinations';
 
-const mainStyle = {
-  display: 'block',
-  float: 'left',
-  width: '100%',
-  overflow: 'hidden',
-  position: 'relative',
-};
-
 const innerStyle = {
-  width: '100%',
-  position: 'relative',
-  overflow: 'hidden',
+  padding: 'var(--weather-paddig-y) var(--weather-paddig-x)',
 };
 
 const lastStyle = {
-  height: '100%',
-  padding: '2rem',
+  maxHeight: '100px',
 };
 
 const data = [
@@ -33,9 +22,19 @@ const data = [
 
 function WarrpedResultBox(props) {
   return (
-    <div style={{...innerStyle}} className={`${props.class}`}>
-      <div style={{...lastStyle}} className={`main-bg`}>
-        <ResultBox {...props} data={data} visible={true} />
+    <div className="bg-secondary-lightest dark:bg-gray-darkest">
+      <div id="__next" className={`${props.class}`}>
+        <nav id="main-menu"></nav>
+        <main style={{...innerStyle}} id="main">
+          <div style={{...lastStyle}}>
+            <ResultBox
+              {...props}
+              style={{minWidth: '500px'}}
+              data={data}
+              visible={!true}
+            />
+          </div>
+        </main>
       </div>
     </div>
   );
@@ -47,7 +46,7 @@ export default {
 };
 
 storiesOf('Elements', module).add(
-  'ResultBox',
+  'Result Box',
   withPropsCombinations(
     WarrpedResultBox,
     {
@@ -56,7 +55,6 @@ storiesOf('Elements', module).add(
     },
     {
       showSource: true,
-      style: mainStyle,
     },
   ),
 );

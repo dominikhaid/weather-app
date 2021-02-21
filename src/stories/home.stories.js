@@ -7,29 +7,22 @@ import AppIcon from 'components/AppIcon';
 
 appState.activeCity.weatherView = 'home';
 
-const mainStyle = {
-  display: 'block',
-  float: 'left',
-  width: '100%',
-  overflow: 'hidden',
-  position: 'relative',
-};
-
 const innerStyle = {
-  width: '100%',
-  position: 'relative',
-  overflow: 'hidden',
+  padding: 'var(--weather-paddig-y) var(--weather-paddig-x)',
 };
 
 const lastStyle = {};
 
 function WarppedHome(props) {
   return (
-    <div style={{...innerStyle}} className={`${props.class}`}>
-      <div style={{...lastStyle}} className={`main-bg`}>
-        <AppIcon icon="home">
-          <Home {...props} {...appState} />
-        </AppIcon>
+    <div className="bg-secondary-lightest dark:bg-gray-darkest">
+      <div id="__next" className={`${props.class}`}>
+        <nav id="main-menu"></nav>
+        <main id="main" className="transform skew-y-1 pt-lg">
+          <AppIcon icon="home">
+            <Home {...props} {...appState} />
+          </AppIcon>
+        </main>
       </div>
     </div>
   );
@@ -49,7 +42,6 @@ storiesOf('Pages', module).add(
     },
     {
       showSource: true,
-      style: mainStyle,
     },
   ),
 );

@@ -41,8 +41,8 @@ export default function AppOverlay({
 
   return (
     <section id="app-city-select-overlay">
-      <h3 className="flex-none">{header}</h3>
-      <h4 className="flex-none">{des}</h4>
+      <h3 className="flex-none w-100">{header}</h3>
+      <p className="text-gray-darkest w-75 ">{des}</p>
       <SelectionList data={data} onSelect={onChange} />
       <ConfirmButtons
         ok="Ok"

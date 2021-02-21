@@ -4,37 +4,24 @@ import {storiesOf} from '@storybook/react';
 import withPropsCombinations from 'react-storybook-addon-props-combinations';
 import appState from 'src/stories/data-mockup';
 
-const mainStyle = {
-  display: 'block',
-  float: 'left',
-  width: '100%',
-  overflow: 'hidden',
-  position: 'relative',
-};
 const innerStyle = {
-  width: '100%',
-  position: 'relative',
-  overflow: 'hidden',
-};
-
-const lastStyle = {
-  height: '100%',
-  padding: '2rem',
-  overflow: 'hidden',
-  position: 'relative',
+  padding: 'var(--weather-paddig-y) var(--weather-paddig-x)',
 };
 
 function WarppedAppOverlay(props) {
   return (
-    <div style={{...innerStyle}} className={`${props.class}`}>
-      <div style={{...lastStyle}} className={`main-bg`}>
-        <AppOverlay
-          {...props}
-          data={Object.values(appState.citys)}
-          header={'Auswahl'}
-          active={0}
-          state={true}
-        />
+    <div className="bg-secondary-lightest dark:bg-gray-darkest">
+      <div id="__next" className={`${props.class}`}>
+        <nav id="main-menu"></nav>
+        <main style={innerStyle} id="main">
+          <AppOverlay
+            {...props}
+            data={Object.values(appState.citys)}
+            header={'Auswahl'}
+            active={0}
+            state={true}
+          />
+        </main>
       </div>
     </div>
   );
@@ -46,7 +33,7 @@ export default {
 };
 
 storiesOf('Elements', module).add(
-  'AppOverlay',
+  'City Selector',
   withPropsCombinations(
     WarppedAppOverlay,
     {
@@ -54,7 +41,6 @@ storiesOf('Elements', module).add(
     },
     {
       showSource: true,
-      style: mainStyle,
     },
   ),
 );

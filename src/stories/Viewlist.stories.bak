@@ -1,0 +1,51 @@
+import React from 'react';
+import Viewlist from 'src/components/Viewlist';
+import {storiesOf} from '@storybook/react';
+import withPropsCombinations from 'react-storybook-addon-props-combinations';
+import appState from 'src/stories/data-mockup';
+
+const innerStyle = {
+  padding: 'var(--weather-paddig-y) var(--weather-paddig-x)',
+};
+
+const lastStyle = {
+  maxHeight: '100px',
+};
+
+console.log(appState);
+
+function WarppedViewlist(props) {
+  return (
+    <div className="bg-secondary-lightest dark:bg-gray-darkest">
+      <div id="__next" className={`${props.class}`}>
+        <main style={{...innerStyle}} id="main">
+          <Viewlist
+            {...props}
+            switcher={appState.switcher}
+            setAppState={appState.setAppState}
+            activeCity={appState.activeCity}
+            getActivecity={appState.getActivecity}
+          />
+        </main>
+      </div>
+    </div>
+  );
+}
+
+export default {
+  title: 'Elements',
+  component: WarppedViewlist,
+};
+
+storiesOf('Elements', module).add(
+  'Viewlist',
+  withPropsCombinations(
+    WarppedViewlist,
+    {
+      class: ['light', 'dark'],
+    },
+    {
+      showSource: true,
+    },
+  ),
+);

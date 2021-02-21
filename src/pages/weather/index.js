@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {weatherTomorrow, weatherCurrent, weatherFiveDay} from 'lib/render';
 import {useRouter} from 'next/router';
+import Head from 'next/head';
 
 /**
  * @desc NOTE RENDER WEATHER SEARCH RESULTS
@@ -25,8 +26,8 @@ export default function Weather({citys, getActivecity, activeCity}) {
     )
       router.push('/search');
 
-    if (activeCity.weatherView === 'home' && getActivecity().current)
-      return weatherCurrent(getActivecity());
+    if (activeCity.weatherView === 'home' && getActivecity().tomorrow)
+      return weatherFiveDay(getActivecity());
 
     if (activeCity.weatherView === 'current' && getActivecity().current)
       return weatherCurrent(getActivecity());
@@ -40,5 +41,13 @@ export default function Weather({citys, getActivecity, activeCity}) {
     return <></>;
   }
 
-  return renderWeather();
+  return (
+    <>
+      <Head>
+        <title>Weather App | Search</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
+      {renderWeather()}
+    </>
+  );
 }

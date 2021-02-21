@@ -17,7 +17,7 @@ class AppProvider extends Component {
   };
 
   state = {
-    debug: false,
+    debug: true,
     activeCity: {},
     setAppState: e => {
       this.setState(e);
@@ -70,6 +70,8 @@ class AppProvider extends Component {
       } else if (city.tomorrow && city.weatherView === 'tomorrow') {
         data_exists = true;
       } else if (city.fiveday && city.weatherView === 'fiveday') {
+        data_exists = true;
+      } else if (city.fiveday && city.weatherView === 'home') {
         data_exists = true;
       } else {
         data_exists = false;

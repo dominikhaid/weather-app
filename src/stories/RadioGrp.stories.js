@@ -3,29 +3,22 @@ import RadioGrp from 'src/components/RadioGrp';
 import {storiesOf} from '@storybook/react';
 import withPropsCombinations from 'react-storybook-addon-props-combinations';
 
-const mainStyle = {
-  display: 'block',
-  float: 'left',
-  width: '100%',
-  overflow: 'hidden',
-  position: 'relative',
+const innerStyle = {
+  padding: 'var(--weather-paddig-y) var(--weather-paddig-x)',
 };
 
-const innerStyle = {
-  width: '100%',
-  position: 'relative',
-  overflow: 'hidden',
-};
 const lastStyle = {
-  height: '100%',
-  padding: '2rem',
+  maxHeight: '45px',
 };
 
 function WarppedRadioGrp(props) {
   return (
-    <div style={{...innerStyle}} className={`${props.class}`}>
-      <div style={{...lastStyle}} className={`main-bg`}>
-        <RadioGrp fields={radioFields} />
+    <div className="bg-secondary-lightest dark:bg-gray-darkest">
+      <div id="__next" className={`${props.class}`}>
+        <nav id="main-menu"></nav>
+        <main style={{...innerStyle}} id="main">
+          <RadioGrp fields={radioFields} />
+        </main>
       </div>
     </div>
   );
@@ -76,7 +69,6 @@ storiesOf('Elements', module).add(
     },
     {
       showSource: true,
-      style: mainStyle,
     },
   ),
 );

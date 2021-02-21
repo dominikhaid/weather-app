@@ -3,29 +3,22 @@ import SearchField from 'src/components/SearchField';
 import {storiesOf} from '@storybook/react';
 import withPropsCombinations from 'react-storybook-addon-props-combinations';
 
-const mainStyle = {
-  display: 'block',
-  float: 'left',
-  width: '100%',
-  overflow: 'hidden',
-  position: 'relative',
-};
 const innerStyle = {
-  width: '100%',
-  position: 'relative',
-  overflow: 'hidden',
+  padding: 'var(--weather-paddig-y) var(--weather-paddig-x)',
 };
 
 const lastStyle = {
-  height: '100%',
-  padding: '2rem',
+  maxHeight: '100px',
 };
 
 function WarppedSearchField(props) {
   return (
-    <div style={{...innerStyle}} className={`${props.class}`}>
-      <div style={{...lastStyle}} className={`main-bg`}>
-        <SearchField {...props} title={'Title'} />
+    <div className="bg-secondary-lightest dark:bg-gray-darkest">
+      <div id="__next" className={`${props.class}`}>
+        <nav id="main-menu"></nav>
+        <main style={{...innerStyle}} id="main">
+          <SearchField {...props} title={'Title'} />
+        </main>
       </div>
     </div>
   );
@@ -37,7 +30,7 @@ export default {
 };
 
 storiesOf('Elements', module).add(
-  'SearchField',
+  'Search Field',
   withPropsCombinations(
     WarppedSearchField,
     {
@@ -46,7 +39,6 @@ storiesOf('Elements', module).add(
     },
     {
       showSource: true,
-      style: mainStyle,
     },
   ),
 );

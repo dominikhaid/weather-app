@@ -4,36 +4,29 @@ import {storiesOf} from '@storybook/react';
 import withPropsCombinations from 'react-storybook-addon-props-combinations';
 import Check from 'public/images/svg/check-circle.svg';
 
-const mainStyle = {
-  display: 'block',
-  float: 'left',
-  width: '100%',
-  overflow: 'hidden',
-  position: 'relative',
-};
 const innerStyle = {
-  width: '100%',
-  position: 'relative',
-  overflow: 'hidden',
+  padding: 'var(--weather-paddig-y) var(--weather-paddig-x)',
 };
 
 const lastStyle = {
-  height: '100%',
-  padding: '2rem',
+  maxHeight: '45px',
 };
 
 function WarppedIcon(props) {
   return (
-    <div style={{...innerStyle}} className={`${props.class}`}>
-      <div style={{...lastStyle}} className={`main-bg`}>
-        <DynamicIcon
-          {...props}
-          active={true}
-          style={{
-            fill: 'white',
-            fillOpacity: '0.05',
-          }}
-        />
+    <div className="bg-secondary-lightest dark:bg-gray-darkest">
+      <div id="__next" className={`${props.class}`}>
+        <nav id="main-menu"></nav>
+        <main style={innerStyle} id="main">
+          <DynamicIcon
+            {...props}
+            active={true}
+            style={{
+              fill: 'white',
+              fillOpacity: '0.05',
+            }}
+          />
+        </main>
       </div>
     </div>
   );
@@ -55,7 +48,6 @@ storiesOf('Elements', module).add(
     },
     {
       showSource: true,
-      style: mainStyle,
     },
   ),
 );

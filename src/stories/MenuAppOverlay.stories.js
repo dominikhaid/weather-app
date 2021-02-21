@@ -1,44 +1,30 @@
 import React from 'react';
-import MenuAppOverlay from 'src/stories/MenuAppOverlay.stories';
+import MenuAppOverlay from 'components/MenuAppOverlay';
 import {storiesOf} from '@storybook/react';
 import withPropsCombinations from 'react-storybook-addon-props-combinations';
 import appState from 'src/stories/data-mockup';
 
-const mainStyle = {
-  display: 'block',
-  float: 'left',
-  width: '100%',
-  overflow: 'hidden',
-  position: 'relative',
-};
-
 const innerStyle = {
-  width: '100%',
-  position: 'relative',
-  overflow: 'hidden',
-};
-
-const lastStyle = {
-  height: '100%',
-  padding: '2rem',
-  overflow: 'hidden',
-  position: 'relative',
+  padding: 'var(--weather-paddig-y) var(--weather-paddig-x)',
 };
 
 function WarppedMenuAppOverlay(props) {
   return (
-    <div style={{...innerStyle}} className={`${props.class}`}>
-      <div style={{...lastStyle}} className={`main-bg`}>
-        <MenuAppOverlay
-          {...props}
-          updateCitys={appState.updateCitys}
-          setAppState={appState.setAppState}
-          activeCity={appState.activeCity}
-          getActivecity={appState.getActivecity}
-          citys={appState.citys}
-          setSubMenu={() => {}}
-          state={{active: true, menu: 'weather'}}
-        />
+    <div className="bg-secondary-lightest dark:bg-gray-darkest">
+      <div id="__next" className={`${props.class}`}>
+        <nav id="main-menu">
+          <MenuAppOverlay
+            updateCitys={appState.updateCitys}
+            setAppState={appState.setAppState}
+            activeCity={appState.activeCity}
+            getActivecity={appState.getActivecity}
+            citys={appState.citys}
+            setSubMenu={() => {}}
+            state={{active: true, menu: 'weather'}}
+            getCityByName={appState.getCityByName}
+          />
+        </nav>
+        <main id="main"></main>
       </div>
     </div>
   );
@@ -50,7 +36,7 @@ export default {
 };
 
 storiesOf('Elements', module).add(
-  'MenuAppOverlay',
+  'Menu Weather Switcher',
   withPropsCombinations(
     WarppedMenuAppOverlay,
     {
@@ -58,7 +44,6 @@ storiesOf('Elements', module).add(
     },
     {
       showSource: true,
-      style: mainStyle,
     },
   ),
 );

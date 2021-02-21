@@ -3,28 +3,15 @@ import AppIcon from 'src/components/AppIcon';
 import {storiesOf} from '@storybook/react';
 import withPropsCombinations from 'react-storybook-addon-props-combinations';
 
-const mainStyle = {
-  display: 'block',
-  float: 'left',
-  width: '100%',
-  overflow: 'hidden',
-  position: 'relative',
-};
-
-const innerStyle = {
-  width: '100%',
-  height: 'calc(100% - 80px)',
-};
-
-const lastStyle = {
-  height: '100%',
-  padding: '2rem',
-};
-
 function WarppedIcon(props) {
   return (
-    <div style={{...innerStyle}} className={props.class}>
-      <AppIcon {...props} />
+    <div className="bg-secondary-lightest dark:bg-gray-darkest">
+      <div id="__next" className={`${props.class}`}>
+        <nav id="main-menu"></nav>
+        <main id="main">
+          <AppIcon {...props} />
+        </main>
+      </div>
     </div>
   );
 }
@@ -35,7 +22,7 @@ export default {
 };
 
 storiesOf('Backgrounds', module).add(
-  'App',
+  'App Overlay Icons',
   withPropsCombinations(
     WarppedIcon,
     {
@@ -44,7 +31,6 @@ storiesOf('Backgrounds', module).add(
     },
     {
       showSource: true,
-      style: mainStyle,
     },
   ),
 );

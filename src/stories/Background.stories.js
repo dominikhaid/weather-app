@@ -3,26 +3,15 @@ import Background from 'src/components/Background';
 import {storiesOf} from '@storybook/react';
 import withPropsCombinations from 'react-storybook-addon-props-combinations';
 
-const mainStyle = {
-  display: 'block',
-  float: 'left',
-  maxWidth: '100vw',
-  width: '100%',
-  height: '50vh',
-  overflow: 'hidden',
-};
-
-const innerStyle = {
-  width: '100%',
-  position: 'relative',
-  height: '90%',
-  maxHeight: '900px',
-};
-
 function WarppedBg(props) {
   return (
-    <div style={{...innerStyle}} className={props.class}>
-      <Background {...props} />
+    <div className="bg-secondary-lightest dark:bg-gray-darkest">
+      <div id="__next" className={`${props.class}`}>
+        <nav id="main-menu"></nav>
+        <main id="main">
+          <Background {...props} />
+        </main>
+      </div>
     </div>
   );
 }
@@ -33,7 +22,7 @@ export default {
 };
 
 storiesOf('Backgrounds', module).add(
-  'Html',
+  'App',
   withPropsCombinations(
     WarppedBg,
     {
@@ -41,7 +30,6 @@ storiesOf('Backgrounds', module).add(
     },
     {
       showSource: true,
-      style: mainStyle,
     },
   ),
 );

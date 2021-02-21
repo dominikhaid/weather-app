@@ -2,29 +2,27 @@ import React from 'react';
 import SelectionList from 'src/components/SelectionList';
 import {storiesOf} from '@storybook/react';
 import withPropsCombinations from 'react-storybook-addon-props-combinations';
-import appState from '../stories/data-mockup';
+import appState from './data-mockup';
 
-const mainStyle = {
-  display: 'block',
-  float: 'left',
-  width: '100%',
-  overflow: 'hidden',
-  position: 'relative',
-};width: '100%',
-  height: 'calc(100% - 80px)',
-  position: 'relative',
-  overflow: 'hidden',
+const innerStyle = {
+  padding: 'var(--weather-paddig-y) var(--weather-paddig-x)',
 };
+
 const lastStyle = {
-  height: '100%',
-  padding: '2rem',
+  maxHeight: '100px',
 };
 
 function WarppedSelectionList(props) {
   return (
-    <div style={{...innerStyle}} className={`${props.class}`}>
-      <div style={{...lastStyle}} className={`main-bg`}>
-        <SelectionList {...props} data={Object.values(appState.citys)} />
+    <div className="bg-secondary-lightest dark:bg-gray-darkest">
+      <div id="__next" className={`${props.class}`}>
+        <main style={{...innerStyle}} id="main">
+          <SelectionList
+            getCityByName={appState.getCityByName}
+            {...props}
+            data={Object.values(appState.citys)}
+          />
+        </main>
       </div>
     </div>
   );
@@ -36,7 +34,7 @@ export default {
 };
 
 storiesOf('Elements', module).add(
-  'SelectionList',
+  'Selection List',
   withPropsCombinations(
     WarppedSelectionList,
     {
@@ -45,7 +43,6 @@ storiesOf('Elements', module).add(
     },
     {
       showSource: true,
-      style: mainStyle,
     },
   ),
 );

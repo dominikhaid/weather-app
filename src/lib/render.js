@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {findIcon, parseDate, listItem} from './utils';
 import uuid from 'react-uuid';
@@ -166,12 +166,12 @@ const DetailWeatherBox = ({
 
   let precip1hr = <></>;
 
-  if (Precip1hr && Precip1hr.Metric.Value > 0)
+  if (Precip1hr)
     precip1hr = listItem({
       item: metric
         ? Precip1hr.Metric.Value + Precip1hr.Metric.Unit
         : Precip1hr.Imperial.Value + Precip1hr.Imperial.Unit,
-      icon: 'wi wi-flood',
+      icon: 'wi wi-raindrops',
       label: 'Niederschlag',
     });
 
@@ -184,7 +184,7 @@ const DetailWeatherBox = ({
     });
 
   let windGust = <></>;
-  if (WindGust && WindGust.Speed.Metric.Value > 0)
+  if (WindGust)
     windGust = listItem({
       item: metric
         ? [WindGust.Speed.Metric.Value, WindGust.Speed.Metric.Unit]
@@ -203,7 +203,7 @@ const DetailWeatherBox = ({
     });
 
   let pressure = <></>;
-  if (Pressure && Pressure.Metric.Value > 0)
+  if (Pressure)
     pressure = listItem({
       item: metric
         ? [Pressure.Metric.Value, Pressure.Metric.Unit]
@@ -217,7 +217,7 @@ const DetailWeatherBox = ({
     if (!daytime) return <></>;
 
     const RainProbability = () => {
-      if (!daytime.RainProbability > 0) return <></>;
+      if (!daytime.RainProbability) return <></>;
       return (
         <>
           {listItem({
@@ -227,7 +227,7 @@ const DetailWeatherBox = ({
           })}
           {listItem({
             item: daytime.Rain.Value + daytime.Rain.Unit,
-            icon: 'wi wi-flood',
+            icon: 'wi wi-raindrops',
             label: 'Niederschlag',
           })}
           {listItem({
@@ -240,8 +240,7 @@ const DetailWeatherBox = ({
     };
 
     const SnowProbability = () => {
-      if (daytime.SnowProbability > 0 || daytime.IceProbability > 0)
-        return <></>;
+      if (!daytime.SnowProbability && !daytime.IceProbability) return <></>;
       return (
         <>
           {listItem({
@@ -290,14 +289,14 @@ const DetailWeatherBox = ({
 
     const wind = listItem({
       item: metric
-        ? [
-            daytime.Wind.Direction.Localized + ' ',
-            daytime.Wind.Speed.Value,
-            daytime.Wind.Speed.Unit,
-          ]
-        : [daytime.Wind.Direction.Localized + ' ', daytime.Wind.Speed.Value],
-      icon: 'wi wi-windy',
-      label: 'Windgeschw.',
+        ? [daytime.Wind.Speed.Value, daytime.Wind.Speed.Unit]
+        : [daytime.Wind.Speed.Value],
+      icon: !daytime.Wind.Direction.Localized
+        ? 'wi wi-windy'
+        : `wi wi-wind wi-from-${daytime.Wind.Direction.Localized.toLowerCase()}`,
+      label: daytime.Wind.Direction.Localized
+        ? daytime.Wind.Direction.Localized
+        : 'Windgeschw.',
     });
 
     const windGust = listItem({

@@ -3,33 +3,26 @@ import Footer from 'src/components/Footer';
 import {storiesOf} from '@storybook/react';
 import withPropsCombinations from 'react-storybook-addon-props-combinations';
 
-const mainStyle = {
-  display: 'block',
-  float: 'left',
-  margin: '1rem',
-  width: '100%',
-  maxWidth: 'calc(100vw - 2rem)',
-  height: '50vh',
-  maxHeight: '900px',
-  overflow: 'hidden',
-};
-
 const innerStyle = {
-  width: '100%',
-  position: 'relative',
-  height: '90%',
-  maxHeight: '900px',
+  padding: 'var(--weather-paddig-y) var(--weather-paddig-x)',
 };
 
 const lastStyle = {
-  height: '100%',
+  width: '100vw',
+  textAlign: 'center',
+  height: ' 50px',
+  display: 'inline-flex',
+  justifyContent: 'center',
+  alignContent: 'center',
 };
 
 function WarppedFooter(props) {
   return (
-    <div style={{...innerStyle}} className={`${props.class}`}>
-      <div style={{...lastStyle}} className={'main-bg'}>
-        <Footer {...props} />
+    <div className={`${props.class}`}>
+      <div className="bg-secondary-lightest dark:bg-gray-darkest text-secondary-darkest text-cetner">
+        <div style={{...lastStyle}}>
+          <Footer {...props} />
+        </div>
       </div>
     </div>
   );
@@ -49,7 +42,6 @@ storiesOf('Container', module).add(
     },
     {
       showSource: true,
-      style: mainStyle,
     },
   ),
 );

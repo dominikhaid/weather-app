@@ -31,7 +31,7 @@ free licence (limit 50 querys per day)
 1.  npm run start //start next.js server in production mode
 2.  npm run dev //start next.js server in dev mode 
 3.  npm run debug //start next.js server in dev mode with debugging enabled @ 9929
-4.  npm build build a static version of the app
+4.  npm build //build a static version of the app
 5.  format format js, jsx, css files project wide with prettier
 6.  npm run storybook //start storybook component library server 
 7.  npm run screenshot //screen shot the app with storybook (Stroybook server must be online)

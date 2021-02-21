@@ -3,31 +3,27 @@ import RequestCount from 'src/components/RequestCount';
 import {storiesOf} from '@storybook/react';
 import withPropsCombinations from 'react-storybook-addon-props-combinations';
 
-const mainStyle = {
-  display: 'block',
-  float: 'left',
-  width: '100%',
-  overflow: 'hidden',
-  position: 'relative',
-};
-
 const innerStyle = {
-  height: 'calc(100% - 80px)',
-  position: 'relative',
-  overflow: 'hidden',
+  maxWidth: '50px',
 };
 
-const lastStyle = {
-  height: '100%',
-  width: '150px',
-  padding: '2rem',
+const htmlStyle = {
+  height: '100px',
+  display: 'flex',
+  justifyContent: 'center',
+  alignContent: 'center',
 };
 
 function WarrpedCount(props) {
   return (
-    <div style={{...innerStyle}} className={`${props.class}`}>
-      <div style={{...lastStyle}} className={`main-bg no-css`}>
-        <RequestCount {...props} />
+    <div
+      style={{...htmlStyle}}
+      className="bg-secondary-lightest dark:bg-gray-darkest"
+    >
+      <div className={`${props.class}`}>
+        <div className="main-bg" style={{...innerStyle}}>
+          <RequestCount {...props} />
+        </div>
       </div>
     </div>
   );
@@ -48,7 +44,6 @@ storiesOf('Elements', module).add(
     },
     {
       showSource: true,
-      style: mainStyle,
     },
   ),
 );

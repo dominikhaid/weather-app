@@ -96,6 +96,17 @@ export default function CitySearch({
         return newCity;
       });
 
+      if (cityList.length === 1 && cityList[0].city === undefined) {
+        setModal({
+          state: true,
+          data: [],
+          header: 'No Match',
+          des:
+            'Leider haben wir keine passenden Ergebnisse zu deiner Eingabe gefunden !',
+        });
+        return false;
+      }
+
       setModal({
         state: true,
         data: cityList,

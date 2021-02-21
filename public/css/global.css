@@ -246,7 +246,7 @@
   }
 
   .container-full {
-    @apply prose lg:prose-lg overflow-hidden mx-auto appearance-none break-words tracking-wide  flex-grow flex flex-col justify-center;
+    @apply prose lg:prose-lg max-w-full overflow-hidden mx-auto appearance-none break-words tracking-wide  flex-grow flex flex-col justify-center;
   }
 
   .spaced {
@@ -286,7 +286,7 @@
   }
 
   #app-weather-view .weather-main-icon p.temprature {
-    @apply text-secondary absolute m-none p-none z-10 dark:text-primary;
+    @apply absolute m-none p-none z-10 text-secondary-darkest dark:text-primary;
   }
 
   #app-view-day-selector {
@@ -397,7 +397,7 @@
 
   main#main ul#app-search-results li,
   main#main ul#app-search-results li > a {
-    @apply m-none pb-none text-secondary dark:text-primary;
+    @apply m-none pb-none pr-lg text-secondary dark:text-primary;
   }
 
   #mobile-menu {
@@ -911,7 +911,7 @@ fieldset input {
   }
 
   .weather-list li {
-    min-width: 150px;
+    min-width: 140px;
   }
   .weather-list label {
     height: 30px !important;

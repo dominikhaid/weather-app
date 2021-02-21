@@ -5,27 +5,22 @@ import withPropsCombinations from 'react-storybook-addon-props-combinations';
 import appState from 'src/stories/data-mockup';
 import AppIcon from 'components/AppIcon';
 
-const mainStyle = {
-  display: 'block',
-  float: 'left',
-  width: '100%',
-  overflow: 'hidden',
-  position: 'relative',
-};nst innerStyle = {
-  width: '100%',
-  height: 'calc(100% - 80px)',
-  position: 'relative',
-  overflow: 'hidden',
+const innerStyle = {
+  padding: 'var(--weather-paddig-y) var(--weather-paddig-x)',
 };
+
 const lastStyle = {};
 
 function Warppedlimit(props) {
   return (
-    <div style={{...innerStyle}} className={`${props.class}`}>
-      <div style={{...lastStyle}} className={`main-bg`}>
-        <AppIcon icon="limit">
-          <Limit {...props} {...appState} />
-        </AppIcon>
+    <div className="bg-secondary-lightest dark:bg-gray-darkest">
+      <div id="__next" className={`${props.class}`}>
+        <nav id="main-menu"></nav>
+        <main id="main" className="transform skew-y-1 pt-lg">
+          <AppIcon icon="limit">
+            <Limit {...props} {...appState} />
+          </AppIcon>
+        </main>
       </div>
     </div>
   );
@@ -45,7 +40,6 @@ storiesOf('Pages', module).add(
     },
     {
       showSource: true,
-      style: mainStyle,
     },
   ),
 );
