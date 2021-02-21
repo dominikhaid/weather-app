@@ -1,6 +1,6 @@
 ## Weather-App
 ---
-Weather App demo build with Next.js 10 Tailwind.css and the AccuWeather Api. We also included Storybook and some other cool stuff. Live Demo [here](https://www.dominikhaid.de/app/weather-app/?target=_blank). We build this demo using our [base server module](https://www.dominikhaid.de/app/weather-app/?target=_blank) the [next module](https://github.com/dominikhaid/node-module-next) the [tailwind module](https://github.com/dominikhaid/node-module-tailwind-css) and the [storybook module](https://github.com/dominikhaid/node-modules-storybook).
+Weather App demo build with Next.js 10 Tailwind.css and the AccuWeather Api. We also included Storybook and some other cool stuff. Live Demo [here](https://www.dominikhaid.de/app/weather-app/?target=_blank). We build this demo using our [base server module](https://github.com/dominikhaid/node-base-server) the [next module](https://github.com/dominikhaid/node-module-next) the [tailwind module](https://github.com/dominikhaid/node-module-tailwind-css) and the [storybook module](https://github.com/dominikhaid/node-modules-storybook).
 
 ---
 <br/>
