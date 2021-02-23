@@ -17,7 +17,7 @@ class AppProvider extends Component {
   };
 
   state = {
-    debug: true,
+    debug: false,
     activeCity: {},
     setAppState: e => {
       this.setState(e);

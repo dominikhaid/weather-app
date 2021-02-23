@@ -14,5 +14,6 @@ out
 **/storybook-static
 **/log/.*log
 .editorconfig
-.*\.log
+**.log
 log/access.log
+**.lock

@@ -21,7 +21,7 @@
   main#main h4,
   main#main h5,
   main#main h6 {
-    @apply text-gray-darkest font-bold dark:text-primary;
+    @apply font-bold text-gray-darkest dark:text-primary;
   }
 
   nav h1,
@@ -31,17 +31,17 @@
 
   nav h2,
   main#main h2 {
-    @apply mt-4xl  mb-xl text-left text-xl;
+    @apply text-xl text-left mt-4xl mb-xl;
   }
 
   nav h3,
   main#main h3 {
-    @apply mt-2xl mb-xl text-xl text-left text-lg;
+    @apply text-lg text-xl text-left mt-2xl mb-xl;
   }
 
   nav h4,
   main#main h4 {
-    @apply mt-xl text-lg;
+    @apply text-lg mt-xl;
   }
 
   nav h5,
@@ -51,11 +51,11 @@
 
   nav h6,
   main#main h6 {
-    @apply mt-md text-sm;
+    @apply text-sm mt-md;
   }
 
   button {
-    @apply py-xs px-xl transition-colors transition-shadow duration-500 ease-in-out justify-self-center disabled:opacity-30 disabled:cursor-not-allowed disabled:bg-gray disabled:border-gray rounded font-semibold border-2 leading-7;
+    @apply font-semibold leading-7 transition-colors transition-shadow duration-500 ease-in-out border-2 rounded py-xs px-xl justify-self-center disabled:opacity-30 disabled:cursor-not-allowed disabled:bg-gray disabled:border-gray;
   }
 
   section.modal:not(.demo) {
@@ -63,15 +63,15 @@
   }
 
   section.modal {
-    @apply bg-secondary-lightest rounded shadow-2xl p-xl;
+    @apply rounded shadow-2xl bg-secondary-lightest p-xl;
   }
 
   section.modal li {
-    @apply text-secondary border-b p-xl border-secondary-light hover:border-b-2 cursor-pointer;
+    @apply border-b cursor-pointer text-secondary p-xl border-secondary-light hover:border-b-2;
   }
 
   section.modal li.active {
-    @apply cursor-pointer border-b p-xl border-secondary-darkest bg-secondary-light;
+    @apply border-b cursor-pointer p-xl border-secondary-darkest bg-secondary-light;
   }
 
   form {
@@ -80,7 +80,7 @@
 
   fieldset,
   fieldset > button {
-    @apply flex-grow flex space-x-sm  sm:m-none sm:justify-start flex-wrap flex-row justify-start flex items-center;
+    @apply flex flex-row flex-wrap items-center justify-start flex-grow space-x-sm sm:m-none sm:justify-start;
   }
 
   main#main fieldset > input:not([type='radio']),
@@ -112,8 +112,7 @@
   fieldset > [multiple],
   fieldset > textarea,
   fieldset > select {
-    @apply py-xs px-none
-     relative outline-none ring-0 focus:ring-0 leading-7 border-b-2 dark:border-primary border-secondary-darkest border-t-0 border-l-0 border-r-0 focus:outline-none focus:shadow-none;
+    @apply relative leading-7 border-t-0 border-b-2 border-l-0 border-r-0 outline-none py-xs px-none ring-0 focus:ring-0 dark:border-primary border-secondary-darkest focus:outline-none focus:shadow-none;
   }
 
   [type='text'],
@@ -131,7 +130,7 @@
   [multiple],
   textarea,
   select {
-    @apply relative outline-none ring-0 border-b-2 dark:border-primary border-secondary-darkest border-t-0 border-l-0 border-r-0 focus:outline-none focus:shadow-none bg-transparent flex-auto flex-grow placeholder-secondary-dark dark:placeholder-gray-dark placeholder-opacity-40 text-secondary-dark dark:text-gray-darkest p-md disabled:opacity-30 font-semibold;
+    @apply relative flex-auto flex-grow font-semibold bg-transparent border-t-0 border-b-2 border-l-0 border-r-0 outline-none ring-0 dark:border-primary border-secondary-darkest focus:outline-none focus:shadow-none placeholder-secondary-dark dark:placeholder-gray-dark placeholder-opacity-40 text-secondary-dark dark:text-gray-darkest p-md disabled:opacity-30;
   }
 
   input[type='radio'] {
@@ -158,21 +157,21 @@
   }
 
   fieldset.labeled > label {
-    @apply rounded-l-lg bg-gray-lightest font-bold p-md text-secondary border-2 border-gray-lightest flex-1;
+    @apply flex-1 font-bold border-2 rounded-l-lg bg-gray-lightest p-md text-secondary border-gray-lightest;
   }
 
   label {
-    @apply font-bold p-md text-gray-darkest dark:text-gray-darkest flex-auto flex-grow;
+    @apply flex-auto flex-grow font-bold p-md text-gray-darkest dark:text-gray-darkest;
   }
 
   #__next #main a,
   #root #main a {
-    @apply text-secondary-darkest dark:text-secondary dark:hover:text-primary hover:text-secondary-dark text-sm font-semibold;
+    @apply text-sm font-semibold text-secondary-darkest dark:text-secondary dark:hover:text-primary hover:text-secondary-dark;
   }
 
   #__next #main,
   #root #main {
-    @apply text-gray-darkest dark:text-gray-darkest  overflow-hidden;
+    @apply overflow-hidden text-gray-darkest dark:text-gray-darkest;
   }
 
   #__next #main h1,
@@ -196,11 +195,11 @@
 
   nav ul > li,
   main ul > li {
-    @apply mt-lg mb-lg py-lg relative;
+    @apply relative mt-lg mb-lg py-lg;
   }
 
   footer p {
-    @apply px-4xl w-100 absolute text-primary text-center text-md;
+    @apply absolute text-center px-4xl w-100 text-primary text-md;
   }
 
   footer small {
@@ -210,7 +209,7 @@
 
 @layer components {
   .main-bg {
-    @apply shadow-2xl dark:shadow-xl  dark:from-secondary-dark dark:via-secondary-dark dark:to-secondary-darkest bg-gradient-to-t from-secondary-light via-secondary to-secondary;
+    @apply shadow-2xl dark:shadow-xl dark:from-secondary-dark dark:via-secondary-dark dark:to-secondary-darkest bg-gradient-to-t from-secondary-light via-secondary to-secondary;
   }
 
   #main {
@@ -218,35 +217,35 @@
   }
 
   .main-container {
-    @apply container-normal max-w-full h-3/4  content-start flex-row;
+    @apply flex-row content-start max-w-full container-normal h-3/4;
   }
 
   main#main .main-headline {
-    @apply px-none pt-none pb-lg dark:border-primary border-secondary-darkest border-b-2;
+    @apply border-b-2 px-none pt-none pb-lg dark:border-primary border-secondary-darkest;
   }
 
   .btn-secondary {
-    @apply border-2 border-gray-darkest bg-gray-darkest text-white hover:shadow-gray;
+    @apply text-white border-2 border-gray-darkest bg-gray-darkest hover:shadow-gray;
   }
 
   .btn-primary {
-    @apply border-2 border-secondary-dark dark:border-secondary dark:bg-secondary bg-secondary-dark text-white hover:shadow-secondary;
+    @apply text-white border-2 border-secondary-dark dark:border-secondary dark:bg-secondary bg-secondary-dark hover:shadow-secondary;
   }
 
   .btn-success {
-    @apply border-2 border-green bg-green text-white hover:shadow-green;
+    @apply text-white border-2 border-green bg-green hover:shadow-green;
   }
 
   .btn-ghost {
-    @apply border-none m-none flex content-center justify-center p-none text-gray-darkest;
+    @apply flex content-center justify-center border-none m-none p-none text-gray-darkest;
   }
 
   .container-normal {
-    @apply prose lg:prose-lg p-none overflow-hidden container mx-auto appearance-none break-words tracking-wide flex-grow flex flex-col justify-center;
+    @apply container flex flex-col justify-center flex-grow mx-auto overflow-hidden tracking-wide prose break-words appearance-none lg:prose-lg p-none;
   }
 
   .container-full {
-    @apply prose lg:prose-lg max-w-full overflow-hidden mx-auto appearance-none break-words tracking-wide  flex-grow flex flex-col justify-center;
+    @apply flex flex-col justify-center flex-grow max-w-full mx-auto overflow-hidden tracking-wide prose break-words appearance-none lg:prose-lg;
   }
 
   .spaced {
@@ -258,14 +257,14 @@
   }
 
   #background {
-    @apply absolute top-none left-none bg-secondary-lightest dark:bg-gray-darkest  w-full dark:opacity-95;
+    @apply absolute w-full top-none left-none bg-secondary-lightest dark:bg-gray-darkest dark:opacity-95;
   }
 
   main#main #app-view-day-selector,
   main#main #app-view-day-selectorp,
   main#main #app-view-day-selector a,
   main#main #app-view-day-selector i {
-    @apply dark:text-secondary dark:hover:text-gray-light text-secondary hover:text-gray-lightest text-center;
+    @apply text-center dark:text-secondary dark:hover:text-gray-light text-secondary hover:text-gray-lightest;
   }
 
   main#main .app-view-time-selector i,
@@ -274,28 +273,28 @@
   }
 
   #app-weather-view {
-    @apply absolute text-lg dark:text-primary text-secondary-darkest flex flex-wrap flex-col justify-center z-20;
+    @apply absolute z-20 flex flex-col flex-wrap justify-center text-lg dark:text-primary text-secondary-darkest;
   }
 
   #app-weather-view .weather-main-icon {
-    @apply text-white text-6xl relative  text-center  m-auto flex flex-wrap content-center justify-center;
+    @apply relative flex flex-wrap content-center justify-center m-auto text-6xl text-center text-white;
   }
 
   #app-weather-view .weather-main-icon i.icon-big {
-    @apply relative bg-gray-dark dark:bg-gray-dark dark:text-primary text-center border-4 border-white dark:border-primary rounded-full;
+    @apply relative text-center border-4 border-white rounded-full bg-gray-dark dark:bg-gray-dark dark:text-primary dark:border-primary;
   }
 
   #app-weather-view .weather-main-icon p.temprature {
-    @apply absolute m-none p-none z-10 text-secondary-darkest dark:text-primary;
+    @apply absolute z-10 m-none p-none text-secondary-darkest dark:text-primary;
   }
 
   #app-view-day-selector {
-    @apply absolute text-xl pt-md dark:bg-gray-dark bg-gray-dark dark:text-secondary text-secondary flex flex-wrap flex-col justify-center z-20;
+    @apply absolute z-20 flex flex-col flex-wrap justify-center text-xl pt-md dark:bg-gray-dark bg-gray-dark dark:text-secondary text-secondary;
   }
 
   #__next #app-view-day-selector p,
   #root #app-view-day-selector p {
-    @apply m-none text-md text-center;
+    @apply text-center m-none text-md;
   }
 
   #__next #app-view-day-selector .app-weather-phrase-long,
@@ -304,20 +303,20 @@
   }
 
   #app-weather-view .app-weather-phrase-long {
-    @apply border-b-2 dark:border-primary border-b-2 border-secondary-darkest font-semibold flex justify-center;
+    @apply flex justify-center font-semibold border-b-2 dark:border-primary border-secondary-darkest;
   }
 
   #__next #app-view-day-selector a,
   #root #app-view-day-selector a {
-    @apply flex-1 text-sm w-100 block text-center text-center;
+    @apply flex-1 block text-sm text-center w-100;
   }
 
   main#main #app-city-select-overlay {
-    @apply absolute w-100 top-0 left-0 h-100 p-2xl flex flex-wrap content-start main-bg z-50;
+    @apply absolute top-0 left-0 z-50 flex flex-wrap content-start w-100 h-100 p-2xl main-bg;
   }
 
   #menu-app-overlay {
-    @apply bg-secondary dark:bg-secondary-dark p-2xl text-white z-50  absolute;
+    @apply absolute z-50 text-white bg-secondary dark:bg-secondary-dark p-2xl;
   }
 
   .select-list li button {
@@ -327,25 +326,25 @@
   main#main #app-city-select-overlay li,
   .select-list li,
   #menu-app-overlay li {
-    @apply cursor-pointer text-gray-dark  my-none opacity-50 border-b sm:py-lg pr-none pl-none dark:border-secondary border-secondary-darkest;
+    @apply border-b opacity-50 cursor-pointer text-gray-dark my-none sm:py-lg pr-none pl-none dark:border-secondary border-secondary-darkest;
   }
 
   main#main #app-city-select-overlay li.active,
   .select-list li.active,
   #menu-app-overlay li.active {
-    @apply opacity-100 border-b-2 border-secondary-darkest dark:text-primary dark:border-primary;
+    @apply border-b-2 opacity-100 border-secondary-darkest dark:text-primary dark:border-primary;
   }
 
   .weather-list li {
-    @apply leading-10 sm:text-md font-semibold flex justify-start relative;
+    @apply relative flex justify-start font-semibold leading-10 sm:text-md;
   }
   .weather-list li i {
-    @apply flex items-center z-10 justify-center  rounded-full bg-gray-dark text-white  border-secondary-darkest dark:border-gray-dark cursor-pointer;
+    @apply z-10 flex items-center justify-center text-white rounded-full cursor-pointer bg-gray-dark border-secondary-darkest dark:border-gray-dark;
   }
 
   .weather-list li i:hover + label,
   .weather-list li i:focus + label {
-    @apply absolute bg-secondary-darkest text-gray-lightest dark:text-gray-darkest dark:bg-primary h-100  rounded-r-md  pl-xl pr-xl bg-primary  p-none inline-block;
+    @apply absolute inline-block bg-secondary-darkest text-gray-lightest dark:text-gray-darkest dark:bg-primary h-100 rounded-r-md pl-xl pr-xl bg-primary p-none;
   }
 
   nav#main-menu {
@@ -357,15 +356,15 @@
   }
 
   #main-menu ul li {
-    @apply text-center  sm:m-none flex flex-wrap justify-start;
+    @apply flex flex-wrap justify-start text-center sm:m-none;
   }
 
   #main-menu ul p {
-    @apply text-center text-sm w-100 flex flex-wrap justify-center;
+    @apply flex flex-wrap justify-center text-sm text-center w-100;
   }
 
   #main-menu ul li svg {
-    @apply border-2 border-secondary w-100 text-center  flex flex-row justify-center bg-secondary rounded-full p-xs text-center cursor-pointer opacity-70 hover:opacity-100 transition-opacity duration-500 ease-in-out;
+    @apply flex flex-row justify-center text-center transition-opacity duration-500 ease-in-out border-2 rounded-full cursor-pointer border-secondary w-100 bg-secondary p-xs opacity-70 hover:opacity-100;
   }
 
   #main-menu-icons {
@@ -373,7 +372,7 @@
   }
 
   #main-menu {
-    @apply bg-gray-dark p-sm relative;
+    @apply relative bg-gray-dark p-sm;
   }
 
   #main-menu ul {
@@ -392,7 +391,7 @@
   }
 
   ul#app-search-results {
-    @apply m-none pb-xl  bg-gray-dark border-2 text-secondary dark:text-primary border-secondary-darkest dark:border-secondary rounded-lg;
+    @apply border-2 rounded-lg m-none pb-xl bg-gray-dark text-secondary dark:text-primary border-secondary-darkest dark:border-secondary;
   }
 
   main#main ul#app-search-results li,
