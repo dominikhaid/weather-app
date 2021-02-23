@@ -20,8 +20,8 @@ free licence (limit 50 querys per day)
 
 ## Setup
 ---
-1. yarn install
-2. yarn run next-dev
+1. yarn/npm install
+2. yarn/npm run dev
 ---
 <br/>
 <br/>
