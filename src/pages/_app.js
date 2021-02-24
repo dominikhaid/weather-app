@@ -16,13 +16,6 @@ export function reportWebVitals(metric) {
   }
 }
 
-/*NOTE TAKE AWAYS
-NEXT SETUP
-DEBUG SETTINGS
-,
-TAILWINDS CONFIG
-STORIEBOOK SETUP
-*/
 class MainApp extends App {
   constructor(props) {
     super(props);
